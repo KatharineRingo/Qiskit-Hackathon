@@ -9,6 +9,11 @@ pip install -r requirements.txt
 python run_demo.py        # command-line demo, writes results/demo_*
 streamlit run app.py      # interactive UI at http://localhost:8501
 ```
+Web front end (static page, no build step):
+```powershell
+python scripts/precompute.py            # runs the optimizer for 4 budgets, writes web/data.json
+python -m http.server -d web 8000       # then open http://localhost:8000
+```
 Details, options and repo layout: see [PROJECT.md](PROJECT.md).
 
 # Use-Case Canvas
