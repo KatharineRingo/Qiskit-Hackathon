@@ -21,7 +21,7 @@
     "expected_failures_left": 6.34,
     "evac_route_open_%": 79.1,
     "hospital_access_open_%": 83.4,
-    "seconds": 0.05,
+    "seconds": 0.1,
     "note": "",
     "repairs": "S03 S07 S09 S10"
   },
@@ -34,7 +34,7 @@
     "expected_failures_left": 6.34,
     "evac_route_open_%": 79.1,
     "hospital_access_open_%": 83.4,
-    "seconds": 2.02,
+    "seconds": 4.86,
     "note": "14 qubits",
     "repairs": "S03 S07 S09 S10"
   }

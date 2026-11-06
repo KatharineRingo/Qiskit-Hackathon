@@ -1,5 +1,16 @@
 # Qiskit-Hackathon
 
+## Run it
+Windows PowerShell (macOS/Linux: use `source .venv/bin/activate`):
+```powershell
+python -m venv .venv
+.venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+python run_demo.py        # command-line demo, writes results/demo_*
+streamlit run app.py      # interactive UI at http://localhost:8501
+```
+Details, options and repo layout: see [PROJECT.md](PROJECT.md).
+
 # Use-Case Canvas
 
 ## 1. The problem

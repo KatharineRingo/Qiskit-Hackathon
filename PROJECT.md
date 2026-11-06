@@ -51,19 +51,29 @@ on the problem sizes today's hardware can handle.
 
 ## Quick start
 ```bash
-python -m venv .venv && source .venv/bin/activate      # Windows: .venv\Scripts\activate
+python -m venv .venv
+source .venv/bin/activate           # macOS/Linux
+.venv\Scripts\Activate.ps1          # Windows PowerShell (no `source`, and no `&&` in PowerShell 5.1)
 pip install -r requirements.txt
 python run_demo.py                  # ~5 seconds, writes results/demo_map.html
+streamlit run app.py                # interactive UI at http://localhost:8501
 jupyter notebook notebooks/undertow_qaoa.ipynb   # main analysis, ~1 minute
 pytest -q
 ```
 Options: `--candidates 12 --budget 10 --reps 3`, `--skip-qaoa` (fast iteration), `--data data/segments.csv`,
 `--hardware [backend_name]` (IBM hardware, see `src/undertow/hardware.py`).
 
+## Interactive UI
+`streamlit run app.py` opens a browser app wrapping the same pipeline as `run_demo.py`. Use the sidebar sliders
+(repair budget, candidates sent to the optimizer, QAOA layers), click **Run optimization**, and compare the current
+311-report policy, the classical exact solver and QAOA on the map, in a table and in bar charts.
+It uses the synthetic network; real-data upload and hardware runs are not wired into the UI yet.
+
 ## Repo layout
 ```
 notebooks/undertow_qaoa.ipynb  main analysis: circuit, transpilation, Estimator/Sampler, ideal vs noisy
 run_demo.py                 quick end-to-end pipeline + map
+app.py                      Streamlit UI: budget/candidate/QAOA sliders, map, plan comparison
 src/undertow/
   data_synthetic.py         fake Miami Beach-style network (defines the CSV schema)
   data_sources.py           real-data loaders: OSM roads, NOAA tides, USGS elevation, Miami-Dade 311

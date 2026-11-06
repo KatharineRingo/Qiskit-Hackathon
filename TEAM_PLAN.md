@@ -30,7 +30,7 @@ Owns `qubo.py`, `solve.py`, `hardware.py`, `viz.py`, `run_demo.py`, the slides.
 5. **Stretch (pick one):**
    - Repair *types*: patch vs. full-depth per segment (one-hot constraint, more qubits).
    - King tide scheduling: which week to repair before the next king tide.
-   - A small Streamlit app with a budget slider.
+   - Extend the Streamlit app (`streamlit run app.py`, already has a budget slider): add CSV upload and a hardware-run button.
 
 ## Checkpoints
 - **Checkpoint 1:** Dev A has real roads on the map (even with fake attributes). Dev B has run QAOA at 2–3 sizes.
