@@ -1,0 +1,21 @@
+segment_id,street_name,osm_street,used,along_street_vs_straight,note
+S01,W 40th St,west 40th street,straight,,no path along that street
+S02,W 40th St,west 40th street,street,1.11,
+S03,W 40th St,west 40th street,straight,0.26,"rejected (endpoint off by 186 m, path 0.3x straight)"
+S04,W 40th St,west 40th street,straight,0.0,"rejected (endpoint off by 489 m, path 0.0x straight)"
+S05,41st St,41st street,street,0.95,
+S06,41st St,41st street,street,1.12,
+S07,41st St,41st street,straight,0.57,"rejected (endpoint off by 97 m, path 0.6x straight)"
+S08,41st St,41st street,street,1.26,
+S09,W 42nd St,west 42nd street,straight,,no path along that street
+S10,W 42nd St,west 42nd street,street,1.15,
+S11,W 42nd St,west 42nd street,straight,0.44,"rejected (endpoint off by 133 m, path 0.4x straight)"
+S12,W 42nd St,west 42nd street,straight,0.0,"rejected (endpoint off by 424 m, path 0.0x straight)"
+S13,Alton Rd,alton road,straight,0.16,"rejected (endpoint off by 74 m, path 0.2x straight)"
+S14,Alton Rd,alton road,street,0.98,
+S15,Sheridan Ave,sheridan avenue,street,0.97,
+S16,Sheridan Ave,sheridan avenue,street,0.8,
+S17,Pine Tree Dr,pine tree drive,street,1.16,
+S18,Pine Tree Dr,pine tree drive,straight,0.59,"rejected (endpoint off by 133 m, path 0.6x straight)"
+S19,Collins Ave,collins avenue,street,0.86,
+S20,Collins Ave,collins avenue,straight,0.69,"rejected (endpoint off by 94 m, path 0.7x straight)"

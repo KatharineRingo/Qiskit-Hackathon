@@ -6,6 +6,7 @@ Uses data/segments.csv when present. Otherwise the synthetic network is mapped o
 
 from __future__ import annotations
 
+import json
 import math
 import sys
 from functools import lru_cache
@@ -57,6 +58,17 @@ def _remap_synthetic(df: pd.DataFrame) -> pd.DataFrame:
     df.loc[df["street_name"].isin([s[0] for s in RISK_STREETS]), "reports_311"] = 1
     df.loc[df["street_name"].isin([s[0] for s in COMPLAINT_STREETS]), "reports_311"] = 8
     return df.reset_index(drop=True)
+
+
+@lru_cache(maxsize=1)
+def load_geometry() -> dict[str, list[list[float]]]:
+    """Street-snapped paths from scripts/snap_to_roads.py, if present. Falls back to straight endpoint lines."""
+    f = ROOT / "data" / "segments_geometry.json"
+    return json.loads(f.read_text(encoding="utf-8")) if f.exists() else {}
+
+
+def seg_coords(r) -> list[list[float]]:
+    return load_geometry().get(r.segment_id) or [[r.lon1, r.lat1], [r.lon2, r.lat2]]
 
 
 @lru_cache(maxsize=1)
@@ -127,7 +139,7 @@ def scenario() -> dict:
     feats = []
     for r in df.itertuples():
         st, blk = names[r.segment_id]
-        feats.append({"type": "Feature", "geometry": {"type": "LineString", "coordinates": [[r.lon1, r.lat1], [r.lon2, r.lat2]]},
+        feats.append({"type": "Feature", "geometry": {"type": "LineString", "coordinates": seg_coords(r)},
                       "properties": {"id": r.segment_id, "street": st, "block": blk, "risk": float(r.risk),
                                      "risk_word": C.risk_level(r.risk), "reason": segment_explanation(r),
                                      "complaints": int(r.reports_311), "evac": bool(r.evac_route),
@@ -137,9 +149,10 @@ def scenario() -> dict:
     water = []
     for r in low.itertuples():
         for lvl, hw in enumerate((0.00095, 0.00065, 0.00035), start=1):
-            water.append({"type": "Feature", "geometry": {"type": "Polygon", "coordinates": _quad((r.lon1, r.lat1), (r.lon2, r.lat2), hw)},
+            water.append({"type": "Feature", "geometry": {"type": "Polygon", "coordinates": _quad(seg_coords(r)[0], seg_coords(r)[-1], hw)},
                           "properties": {"level": lvl, "elevation_ft": float(r.elevation_ft), "segment": r.segment_id}})
-    lons = df[["lon1", "lon2"]].values.ravel(); lats = df[["lat1", "lat2"]].values.ravel()
+    pts = np.array([c for r in df.itertuples() for c in seg_coords(r)])
+    lons, lats = pts[:, 0], pts[:, 1]
     xy = np.column_stack([(lons - lons.mean()) * math.cos(math.radians(lats.mean())), lats - lats.mean()])
     _, _, vt = np.linalg.svd(xy, full_matrices=False)
     theta = math.degrees(math.atan2(vt[0][0], vt[0][1])) % 180            # compass heading of the long axis, 0-180
