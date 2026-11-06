@@ -37,7 +37,7 @@ If the solver is not running, the app still works from saved results and shows a
 | Command-line demo (writes `results/demo_*`) | `python run_demo.py` | `results/demo_map.html` |
 | Streamlit app | `streamlit run app.py` | http://localhost:8501 |
 | Earlier static page | `python scripts/precompute.py` then `python -m http.server -d static 8001` | http://localhost:8001 |
-| Notebook | `jupyter notebook notebooks/undertow_qaoa.ipynb` | |
+| Notebook | `jupyter notebook notebooks/RoadQure_qaoa.ipynb` | |
 | Tests | `pytest -q` | |
 
 Refresh the saved offline results after changing the data or solver: `python scripts/make_fallback.py`

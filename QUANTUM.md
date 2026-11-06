@@ -1,91 +1,74 @@
-# How Quantum Actually Works in RoadQure 
+# How quantum is used in RoadQure (and what it does not do)
 
-## 1. The 30-Second Summary
+## 1. The 30-second version
 
-- **The Problem**: You have 8 flood-prone road segments in Miami Beach. You only have money to fix 4 of them. Which 4 do you choose?
-- **The Catch**: Roads are a network. If you fix Road A and Road B, but leave Road C between them broken, the evacuation route fails. Fixing *connected* roads gives a huge bonus ("synergy").
-- **The Quantum Part**: Finding the best combination of connected roads is mathematically identical to finding the lowest energy state of an 8-qubit molecule.
-- **The Result**: We use QAOA (Quantum Approximate Optimization Algorithm) on Qiskit to find the combination. It doubles evacuation survival from **45% to 79%** for the exact same tax dollars.
+- **The problem.** A city can afford to repair only some of its flood-damaged roads. Which combination protects the most? Roads form a network, so the answer depends on which repairs sit next to each other: fixing one block of a route is worth little if the next block still floods.
+- **The math.** That choice (repair this road or not, with a budget and bonuses for connected repairs) is a **QUBO**: a yes/no variable per road with at most pairwise terms. A QUBO maps directly onto an **Ising model**, a set of interacting spins, whose lowest-energy state is the best plan.
+- **The quantum step.** We use **QAOA** (Quantum Approximate Optimization Algorithm) in Qiskit. It prepares a quantum state that is tuned so measuring it returns good plans more often than bad ones.
+- **The result.** On our demo data the quantum search lands on a near-best plan many times more often than random guessing, and its best plan matches the exact classical optimum. That plan keeps far more of the route to the hospital open than fixing the most-complained-about roads. The exact numbers are in `results/summary.md`.
+- **The honest part.** This is a small, simulated problem. A laptop solves it exactly in milliseconds. We do **not** claim a quantum speedup.
 
----
-
-## 2. Where the Quantum Lives in the Code
-
-Here is the exact journey from Python numbers to quantum physics:
+## 2. Where quantum lives in the code
 
 ```
-[Road CSV Data]
-       │
-       ▼
-1. src/RoadQure/qubo.py  ──►  Translates roads into QUBO math (linear value + quadratic synergy)
-       │
-       ▼
-2. to_ising()             ──►  Converts math into Pauli-Z spin operators (Qubit Hamiltonians)
-       │
-       ▼
-3. QAOAAnsatz()           ──►  Builds the quantum circuit (Hadamard + Rzz entangling gates)
-       │
-       ▼
-4. SamplerV2 / QPU        ──►  Measures quantum state 4,000 times -> returns bitstring (e.g. "10110010")
-       │
-       ▼
-[Final Plan]              ──►  "1" = Repair this road. "0" = Skip.
+data/segments.csv
+      │
+      ▼
+src/undertow/risk.py      risk and importance of each road -> "value" of repairing it
+      │
+      ▼
+src/undertow/qubo.py      build_lean_program(): one binary variable (qubit) per road
+      │                    maximize  Σ value·x  +  Σ synergy·x_i·x_j   (budget enforced by a price per crew-day)
+      ▼
+to_ising()                QUBO -> Ising Hamiltonian H_C made of Z and ZZ terms
+      │
+      ▼
+QAOAAnsatz(H_C, reps=2)   the parameterized circuit: Hadamards, then alternating cost and mixer layers
+      │
+      ▼
+EstimatorV2 + COBYLA      classical optimizer tunes the angles by minimizing the expected energy <H_C>
+      │
+      ▼
+SamplerV2                 run the tuned circuit, measure many times ("shots") -> bitstrings like 10110010
+      │
+      ▼
+post-select + compare     drop plans over budget; "1" = repair this road. Compare with the exact classical answer
 ```
 
-### File 1: `src/RoadQure/qubo.py` (The Math Translator)
-- In line 91, `build_lean_program()` assigns **1 qubit per road segment**.
-- If we test 8 roads, we have 8 qubits ($q_0$ to $q_7$).
-- A road being repaired = Qubit state $|1\rangle$.
-- A road being skipped = Qubit state $|0\rangle$.
-- The **quadratic term** `synergy * x_i * x_j` rewards repairing two adjacent roads that touch each other on the evacuation route.
+- **Qubit meaning.** Qubit `i` in state |1> means "repair road `i`", and |0> means "skip it".
+- **Cost layer.** Phase rotations (`RZ` on single qubits, `RZZ` between qubits of connected roads) that encode the values and the connected-repair bonuses.
+- **Mixer layer.** `RX` rotations that let probability move between plans.
+- **Training.** The angles are tuned with `EstimatorV2` (expectation values) and COBYLA. The final circuit is sampled with `SamplerV2`.
+- **Where to read it.** `notebooks/RoadQure_qaoa.ipynb` walks through every step with results. The web app's live search is `solver/service.py`.
 
-### File 2: `notebooks/RoadQure_qaoa.ipynb` (The Circuit Builder)
-- Line 483: `QAOAAnsatz(cost_op, reps=2)`
-  1. **Hadamard Gates ($H$)**: Puts all 8 qubits into superposition. In classical code, a computer checks combinations one by one. In quantum, the circuit explores all $2^8 = 256$ combinations simultaneously.
-  2. **Cost Gates ($R_{ZZ}$)**: Connected roads get entangling gates between their qubits. The quantum wave shifts phase to reward connected repairs.
-  3. **Mixer Gates ($R_X$)**: Rotates qubits to interfere constructively on the highest-scoring plans.
+### What superposition does and does not mean
+The circuit starts in an equal superposition over all `2^n` plans, but that does **not** mean it "checks every plan at once and picks the best." Each measurement returns **one** bitstring.
+QAOA works only if the tuned interference makes good plans measurably more likely, and we show exactly that by sampling 2,000 to 4,000 times and counting.
 
-### File 3: `src/RoadQure/solve.py` (The Solver)
-- We sample the quantum circuit 4,000 times ("shots").
-- The quantum circuit concentrates probability so that measuring it gives high-value plans **16x more often than random guessing**.
+## 3. Why quantum might help, and why it does not yet
 
----
+- **Why it is a natural fit.** The number of possible plans doubles with every road (`2^n`), and the connected-repair bonuses couple the choices, which makes the problem hard in general. QAOA is designed for exactly this QUBO/Ising shape.
+- **Why it does not help at our size.** With 8 roads there are 256 plans. Exact classical solving is instant.
+- **Real cities.** Regular classical solvers (integer programming, local search, annealing) already handle hundreds of roads well. There is **no proof that QAOA beats them**, and today's quantum hardware cannot run problems that large anyway: circuits get deep, and noise grows with depth.
+- **What we do show.** The full pipeline works end to end (real-world problem, QUBO, QAOA in Qiskit, comparison with an exact solver and today's practice), including the effect of compilation, noise and error suppression. It is ready to be run on larger instances and better hardware as they arrive.
 
-## 3. Why Can't We Just Use Classical Code?
+## 4. Running on real IBM quantum hardware
 
-At 8 roads, a classical computer solves this in 0.05 seconds because there are only 256 possibilities.
+The simulator results come from Qiskit Aer, including a noise model taken from a snapshot of a real IBM device (FakeTorino). That is a simulation, **not** a hardware run.
+To run the same circuit the web app uses on a real device:
 
-**Why quantum matters**:
-A real city like Miami or Fort Myers has **500 to 1,000 critical road segments**.
-- $2^{500}$ is more combinations than there are atoms in the observable universe.
-- Classical brute force crashes.
-- Classical heuristics (like greedy 311 patching) pick isolated roads and leave flood gaps.
-- Quantum optimization (QAOA) naturally evaluates these pairwise connections across massive graph networks. We prove the pipeline works on today's small hardware so it is ready for production scale.
+1. **Get an IBM Quantum account and API key** from the IBM Quantum Platform (check the hackathon instructions for the channel and instance you may use).
+2. **Save your account once** (this stores the key on your machine; never commit it):
+   ```powershell
+   .venv\Scripts\Activate.ps1
+   python -c "from qiskit_ibm_runtime import QiskitRuntimeService as S; S.save_account(token='PASTE_YOUR_KEY', overwrite=True)"
+   ```
+3. **Run it** (a hardware job can queue for a while; run it early):
+   ```powershell
+   python scripts/run_hardware.py
+   ```
+   It picks the least-busy compatible device, transpiles the circuit for it, runs 2,000 shots, and also runs the identical circuit on an ideal and a noisy simulator.
+   Everything is saved to `results/hardware_run.json`.
+4. **See it in the notebook.** Re-run the "Real quantum hardware" cell in `notebooks/RoadQure_qaoa.ipynb`. It compares hardware, noisy simulator and ideal simulator side by side.
 
----
-
-## 4. How to Run on Real IBM Hardware (Step-by-Step)
-
-You do NOT need to rewrite any code. The partner already built the hardware bridge in `src/RoadQure/hardware.py`.
-
-### Step 1: Get Your Free IBM API Key (Takes 2 minutes)
-1. Log in to [quantum.cloud.ibm.com](https://quantum.cloud.ibm.com/).
-2. On your dashboard, look for **API Key** -> click **Copy**.
-
-### Step 2: Save It in PowerShell
-Open your terminal in the project folder and run:
-```powershell
-.venv\Scripts\activate
-python -c "from qiskit_ibm_runtime import QiskitRuntimeService; QiskitRuntimeService.save_account(channel='ibm_quantum_platform', token='PASTE_YOUR_44_CHAR_KEY_HERE', overwrite=True)"
-```
-
-### Step 3: Run the Hardware Command
-```powershell
-python run_demo.py --candidates 6 --budget 4 --hardware
-```
-
-### What Happens Behind the Scenes:
-1. `hardware.py` calls `service.least_busy(operational=True, simulator=False)`.
-2. It picks an actual superconducting quantum processor in New York (like `ibm_sherbrooke` or `ibm_brisbane`).
-3. It transpiles your 6-qubit circuit into physical microwave pulses.
-4. It submits the job to the IBM cloud queue and downloads the real measurement counts back to your terminal.
+To check the script without using hardware time, run `python scripts/run_hardware.py --dry-run`. That uses a simulated stand-in and writes `results/hardware_run_dryrun.json`, which is never treated as a hardware result.

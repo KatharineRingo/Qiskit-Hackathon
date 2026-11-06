@@ -231,3 +231,6 @@ qiskit-ibm.json
 # Allow Next.js lib directory
 !web/lib/
 !web/lib/**
+
+# Hardware stand-in output from `run_hardware.py --dry-run` (never a real result)
+results/hardware_run_dryrun.json

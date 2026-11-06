@@ -22,32 +22,32 @@ Cities react to 311 complaints, so they keep patching surfaces over saturated ba
 segments -> risk score -> shortlist (classical) -> QUBO -> QAOA (quantum) -> repair plan -> map
 ```
 
-## Quick pipeline results (run_demo.py, synthetic data, 10 candidates, 14 qubits)
-| Plan | Objective | Evac route stays open | Hospital access stays open |
+## Results (notebooks/RoadQure_qaoa.ipynb: Mid-Beach demo data, 8 roads, 8 qubits, budget 14 crew-days, 2 QAOA layers)
+Compared on the whole area. A route counts as "open" only if every block survives the next king tide.
+
+| Plan | Objective | Evacuation route open | Route to the hospital open |
 |---|---|---|---|
-| Current policy (most 311 reports) | 3.69 | 44.7% | 83.4% |
-| Classical exact | 5.85 | 79.1% | 83.4% |
-| QAOA, Aer simulator | 5.85 | 79.1% | 83.4% |
+| Today's approach (most 311 complaints) | 3.07 | 61.5% | 0.3% |
+| Classical exact (the best possible plan) | 9.45 | 61.5% | 32.7% |
+| QAOA, ideal simulator | 9.45 | 61.5% | 32.7% |
+| QAOA, noisy simulator (FakeTorino noise model) | 9.45 | 61.5% | 32.7% |
 
-These numbers come from fake data and only prove the pipeline works. Replace them with real-data results.
+The evacuation route is unchanged because on this data it sits on a low-risk road, so no plan touches it.
 
-**Honesty note for judges:** at this size a classical exact solver is just as good and faster. Quantum matters
-because the formulation (pairwise repair interactions over a whole city's road network) grows quickly,
-and this is the shape of problem quantum optimization is being built for. We show QAOA reaches the optimum
-on the problem sizes today's hardware can handle.
-
-## Main results: `notebooks/RoadQure_qaoa.ipynb` (synthetic data, 8 segments, 8 qubits)
-| Run | Good repair plans (% of shots) | vs. random guessing |
+**How often each method finds a good plan** (a valid plan within 10% of the best, out of 4,000 samples):
+| Run | Good plans | vs. random guessing |
 |---|---|---|
-| Random guessing | 1.2% | 1x |
-| QAOA, ideal simulator | 18.6% | 16x |
-| QAOA, noisy simulator (FakeTorino noise, opt. level 3) | 12.7% | 11x |
+| Random guessing | 0.8% | 1x |
+| QAOA, ideal simulator | 24.5% | 31x |
+| QAOA, noisy simulator (FakeTorino noise, compilation level 3) | 20.4% | 26x |
 
-- **What we learned:** encoding the budget with slack qubits (11 qubits, 578 two-qubit gates on device) gave only 2x over random.
-  Switching to one qubit per segment with a tuned price per cost unit (8 qubits, 100 two-qubit gates) gave 16x.
-- **Error suppression:** heavier transpilation helped slightly; dynamical decoupling did not help in simulation
-  (the noise model has little of the idle dephasing DD targets). Testing on hardware is a next step.
-- Charts and tables: `results/`.
+- **Encoding the budget:** extra "slack" qubits (12 qubits, 468 two-qubit gates on device) gave only 2.8x over random. One qubit per road with a tuned price per crew-day (8 qubits, 37 two-qubit gates) gave 31x.
+- **Error suppression:** heavier transpilation cut the two-qubit gate count (41 to 37) and helped slightly; dynamical decoupling did not help in simulation (the noise model has little of the idle dephasing it targets).
+- **Real hardware:** not run yet. `python scripts/run_hardware.py` runs the same circuit on an IBM device; see `QUANTUM.md`.
+- These numbers come from a fresh notebook run and are saved in `results/`. The data is illustrative (see `data/DATA_NOTES.md`), so they show that the method works, not what Miami Beach should repair.
+
+**Honesty note:** at this size a classical exact solver is just as good and much faster. We do not claim a quantum speedup.
+Real classical solvers handle hundreds of roads easily, and no one has shown QAOA beating them. What we show is the working pipeline, the formulation lessons, and the noise and error-suppression analysis.
 
 ## Quick start
 ```bash
@@ -57,7 +57,7 @@ source .venv/bin/activate           # macOS/Linux
 pip install -r requirements.txt
 python run_demo.py                  # ~5 seconds, writes results/demo_map.html
 streamlit run app.py                # interactive UI at http://localhost:8501
-jupyter notebook notebooks/RoadQure_qaoa.ipynb   # main analysis, ~1 minute
+jupyter notebook notebooks/RoadQure_qaoa.ipynb   # main analysis, ~3 minutes
 pytest -q
 ```
 Options: `--candidates 12 --budget 10 --reps 3`, `--skip-qaoa` (fast iteration), `--data data/segments.csv`,
