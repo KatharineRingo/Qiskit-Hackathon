@@ -1,0 +1,5 @@
+- On an ideal simulator, 18.6% of QAOA shots are good repair plans, 15.9x the rate of random guessing.
+- Real-device noise cuts that to 10.1x. Heavier compilation (level 3, 100 vs 105 two-qubit gates) gives 10.8x; adding dynamical decoupling gives 10.0x.
+- With post-selection, the best plan found reaches 100% of the optimum under noise (100% ideal).
+- Versus today's policy, the optimized plan keeps the evacuation route open 79% of the time instead of 45%, for the same budget.
+- Honest caveat: at 8 qubits there are only 256 possible bitstrings, so 4,000 shots nearly enumerate them and a classical solver is instant. The point is that the formulation works and QAOA concentrates probability on good plans; quantum advantage would need far larger instances and lower noise.
