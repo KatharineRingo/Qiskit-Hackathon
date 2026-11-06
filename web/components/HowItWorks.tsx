@@ -2,20 +2,20 @@
 
 import type { Results, Scenario } from "@/lib/types";
 
-const NOTEBOOK = "https://github.com/KatharineRingo/Qiskit-Hackathon/blob/main/notebooks/undertow_qaoa.ipynb";
+const NOTEBOOK = "https://github.com/KatharineRingo/Qiskit-Hackathon/blob/main/notebooks/RoadQure_qaoa.ipynb";
 
 const STEPS: [string, string][] = [
   ["Find the hidden damage.", "King tides soak the ground under a road, so it fails from below before potholes show. We score every street from tide exposure, groundwater and elevation."],
   ["Count what a failure costs.", "A soaked road on an evacuation or hospital route matters more than one on a quiet street."],
-  ["Search for the best repairs.", "With a limited budget, the best set of repairs is a puzzle with many possible answers. A quantum search explores them together and favors the good ones."],
+  ["Search for the best repairs.", "With a limited budget, the best set of repairs is a puzzle with many possible answers. A quantum algorithm (QAOA) is tuned so that good plans come out more often than bad ones when we measure it."],
   ["Check the answer.", "A classical computer solves the same puzzle, and we compare both with fixing the most-complained roads."],
 ];
 
 export default function HowItWorks({ open, onClose, scenario, results }: { open: boolean; onClose: () => void; scenario: Scenario; results: Results }) {
   const bars = [
     { label: "Random guessing", v: results.random, c: "bg-white/30" },
-    { label: "Quantum search, ideal", v: results.ideal, c: "bg-water" },
-    { label: "Quantum search, real-chip noise", v: results.noisy, c: "bg-water/70" },
+    { label: "Quantum search, perfect simulator", v: results.ideal, c: "bg-water" },
+    { label: "Quantum search, simulated chip noise", v: results.noisy, c: "bg-water/70" },
   ];
   const max = Math.max(...bars.map((b) => b.v));
   const q = scenario.optimizer.num_qubits;
@@ -32,7 +32,7 @@ export default function HowItWorks({ open, onClose, scenario, results }: { open:
         ))}
       </ol>
       <h3 className="mt-8 text-[15px] font-medium">How often each method finds a good plan</h3>
-      <p className="muted mt-1 text-[13px]">Share of attempts that land on a near-best plan.</p>
+      <p className="muted mt-1 text-[13px]">Share of attempts that give a valid plan within 10% of the best possible.</p>
       <div className="mt-3 space-y-3">
         {bars.map((b) => (
           <div key={b.label}>
@@ -43,9 +43,9 @@ export default function HowItWorks({ open, onClose, scenario, results }: { open:
       </div>
       <h3 className="mt-8 text-[15px] font-medium">Honest limits</h3>
       <ul className="muted mt-2 list-disc space-y-1.5 pl-5 text-[14px] leading-snug">
-        <li>Today this searches {q} qubits, a very small problem.</li>
+        <li>Today this searches {q} qubits, a very small problem. The live search runs on a quantum <em>simulator</em> (Qiskit Aer) on an ordinary computer, not on real quantum hardware.</li>
         <li>A classical computer keeps up at this size, and we show that it agrees.</li>
-        <li>Real quantum chips are still noisy, which is why the real-chip bar is lower.</li>
+        <li>Real quantum chips are still noisy. The last bar simulates that noise with a model of a real IBM chip, which is why it is lower.</li>
         <li>There is no guaranteed speedup. The goal is to show the method works and is ready to scale.</li>
         <li>{scenario.data_note}</li>
       </ul>
