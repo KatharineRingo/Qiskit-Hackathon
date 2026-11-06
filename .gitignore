@@ -226,3 +226,8 @@ __pycache__/
 data/raw/
 .env
 qiskit-ibm.json
+
+
+# Allow Next.js lib directory
+!web/lib/
+!web/lib/**
