@@ -13,7 +13,7 @@ export default function TideBar({ scenario, month, onMonth, compare }: { scenari
     <div className="fixed bottom-8 left-10 z-10 w-[min(560px,calc(100vw-520px))] min-w-[340px]">
       <div className="muted mb-5 flex flex-wrap items-center gap-x-6 gap-y-1 text-[13px]">
         <span className="flex items-center gap-2"><i className="h-[3px] w-5 rounded bg-dmg" />Hidden damage</span>
-        <span className="flex items-center gap-2"><i className="h-[3px] w-5 rounded bg-white" />Undertow repairs</span>
+        <span className="flex items-center gap-2"><i className="h-[3px] w-5 rounded bg-white" />RoadQure repairs</span>
         {compare && <span className="flex items-center gap-2"><i className="h-[3px] w-5 rounded bg-today" />Today&apos;s approach</span>}
         <span className="flex items-center gap-2"><i className="w-5 border-t border-dashed border-paper/80" />Evacuation route</span>
       </div>

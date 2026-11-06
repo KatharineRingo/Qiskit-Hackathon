@@ -29,6 +29,8 @@ CACHE = ROOT / "data" / "raw" / "osm_ways.json"
 PAD = 0.004               # degrees around the data
 MAX_ENDPOINT_M = 260      # an endpoint farther than this from its street is not trusted
 MAX_DETOUR = 2.0          # along-street length vs straight line
+NEARBY_M, NEARBY_MIN, NEARBY_MAX = 260, 0.8, 2.0   # second pass: endpoint reach (m) and allowed path/straight ratio
+MAX_OVERLAP = 0.35         # a nearby-street path may not mostly retrace roads already used by other segments
 MIN_RATIO = 0.75          # shorter than this means an endpoint snapped to the wrong spot (a stub)
 
 
@@ -146,21 +148,49 @@ def main() -> None:
         rows.append({"segment_id": sid, "street_name": r.street_name, "osm_street": graph_of[sid][0] if graph_of[sid] else "",
                      "used": used, "along_street_vs_straight": None if ratio is None else round(ratio, 2), "note": why})
 
-    # keep everything connected: an intersection used by a snapped segment keeps that exact position for its straight neighbors
+    names = list(segs)
     node_pos: dict[str, list[float]] = {}
-    for sid, r in segs.items():
-        if rows[list(segs).index(sid)]["used"] == "street":
-            node_pos.setdefault(r.u, geom[sid][0])
-            node_pos.setdefault(r.v, geom[sid][-1])
-    for i, (sid, r) in enumerate(segs.items()):
+    for i, sid in enumerate(names):
+        if rows[i]["used"] == "street":
+            node_pos.setdefault(segs[sid].u, geom[sid][0])
+            node_pos.setdefault(segs[sid].v, geom[sid][-1])
+
+    # second pass: where the labeled street is not near the researcher's line, follow the nearest real roads instead
+    Gall = nx.compose_all(list(graphs.values()))
+    used_pts = {tuple(pt) for i, sid in enumerate(names) if rows[i]["used"] == "street" for pt in geom[sid]}
+    def nearest(pt):
+        d, n = min((hav(pt, dd["pt"]), n) for n, dd in Gall.nodes(data=True))
+        return d, n
+    for i, sid in enumerate(names):
+        if rows[i]["used"] != "straight":
+            continue
+        r = segs[sid]
+        pa = tuple(node_pos.get(r.u, (r.lon1, r.lat1))); pb = tuple(node_pos.get(r.v, (r.lon2, r.lat2)))
+        (da, na), (db, nb) = nearest(pa), nearest(pb)
+        straight = hav(pa, pb)
+        if na != nb and max(da, db) <= NEARBY_M and nx.has_path(Gall, na, nb):
+            pts = [Gall.nodes[n]["pt"] for n in nx.shortest_path(Gall, na, nb, weight="length")]
+            ratio = sum(hav(p, q) for p, q in zip(pts, pts[1:])) / max(straight, 1)
+            overlap = sum(p in used_pts for p in pts) / len(pts)
+            if NEARBY_MIN <= ratio <= NEARBY_MAX and overlap <= MAX_OVERLAP:
+                geom[sid] = [list(p) for p in pts]
+                rows[i].update(used="nearby street", along_street_vs_straight=round(ratio, 2),
+                               note="followed the nearest real roads (labeled street not found at these coordinates)")
+                node_pos.setdefault(r.u, geom[sid][0]); node_pos.setdefault(r.v, geom[sid][-1])
+                used_pts |= {tuple(p) for p in pts}
+
+    # keep everything connected: straight leftovers start and end exactly where their neighbors do
+    for i, sid in enumerate(names):
         if rows[i]["used"] == "straight":
+            r = segs[sid]
             geom[sid] = [node_pos.get(r.u, [r.lon1, r.lat1]), node_pos.get(r.v, [r.lon2, r.lat2])]
 
     (ROOT / "data" / "segments_geometry.json").write_text(json.dumps(geom), encoding="utf-8")
     rep = pd.DataFrame(rows)
     rep.to_csv(ROOT / "data" / "snap_report.csv", index=False)
     print(rep.to_string(index=False))
-    print(f"\n{(rep.used == 'street').sum()} of {len(rep)} segments now follow their real street; the rest stay straight.")
+    n1, n2 = (rep.used == "street").sum(), (rep.used == "nearby street").sum()
+    print(f"\n{n1} of {len(rep)} follow their labeled street, {n2} follow other nearby real roads, {len(rep) - n1 - n2} stay straight.")
 
 
 if __name__ == "__main__":

@@ -7,8 +7,8 @@ const inter = Inter_Tight({ subsets: ["latin"], weight: ["300", "400", "500"], v
 const mono = JetBrains_Mono({ subsets: ["latin"], weight: ["400"], variable: "--font-mono" });
 
 export const metadata: Metadata = {
-  title: "Undertow",
-  description: "King tides soak Miami Beach roads from below. Undertow shows the hidden damage and the best repairs for a budget.",
+  title: "RoadQure",
+  description: "King tides soak Miami Beach roads from below. RoadQure shows the hidden damage and the best repairs for a budget.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

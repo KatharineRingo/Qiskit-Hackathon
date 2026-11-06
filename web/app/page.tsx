@@ -93,7 +93,7 @@ export default function Page() {
         focus={focus} compassNonce={compassNonce} onSelect={setSelected} onBearing={setBearing} />
 
       <header className="pointer-events-none fixed left-10 top-9 z-10">
-        <h1 className="text-[15px] font-normal tracking-[0.42em]">UNDERTOW</h1>
+        <h1 className="text-[15px] font-normal tracking-[0.42em]">ROADQURE</h1>
         <div className="muted mt-1 text-[13px]">Miami Beach · hidden road damage</div>
       </header>
       <nav className="fixed right-10 top-9 z-20 flex items-center gap-6 text-[14px]">
