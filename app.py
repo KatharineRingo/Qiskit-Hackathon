@@ -31,7 +31,8 @@ with st.sidebar:
 
 @st.cache_data(show_spinner=False)
 def run_all(budget, k, reps, use_qaoa):
-    _, df = make_grid_network()
+    csv = Path(__file__).parent / "data" / "segments.csv"
+    df = pd.read_csv(csv) if csv.exists() else make_grid_network()[1]
     df = add_scores(df)
     pairs_all = adjacency_pairs(df)
     cand = df.sort_values("value", ascending=False).head(k)
@@ -47,7 +48,9 @@ def run_all(budget, k, reps, use_qaoa):
         rows.append({"plan": r.name, **s, "seconds": round(r.seconds, 2),
                      "repairs": " ".join(sorted(r.chosen))})
     table = pd.DataFrame(rows).set_index("plan")
-    fmap = build_map(df, {r.name: r.chosen for r in reversed(results)})
+    fmap = build_map(df, {r.name: r.chosen for r in reversed(results)},
+                     scores={r["plan"]: {k: v for k, v in r.items() if k != "plan"} for r in rows},
+                     demo_data=not csv.exists())
     return df, table, fmap._repr_html_(), len(df), num_qubits(qp)
 
 

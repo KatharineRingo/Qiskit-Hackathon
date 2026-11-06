@@ -17,7 +17,7 @@
             <meta name="viewport" content="width=device-width,
                 initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
             <style>
-                #map_a55508556867f95a99739c6304835e39 {
+                #map_f461b456a88949cd34e7f9f79894321f {
                     position: relative;
                     width: 100.0%;
                     height: 100.0%;
@@ -54,39 +54,57 @@
 <body>
     
     
-            <div class="folium-map" id="map_a55508556867f95a99739c6304835e39" ></div>
+<style>
+.ut-panel{position:absolute;z-index:9999;background:rgba(255,255,255,.96);border-radius:10px;
+ box-shadow:0 1px 6px rgba(0,0,0,.3);font:14px/1.4 system-ui,sans-serif;color:#1c1c1c;padding:10px 14px}
+.ut-title{top:10px;left:56px;max-width:min(520px,calc(100vw - 80px));font-size:16px;font-weight:600}
+.ut-legend{bottom:24px;left:10px;max-width:260px;font-size:13px}
+.ut-row{display:flex;align-items:center;gap:8px;margin:3px 0}
+.ut-demo{display:block;margin-top:6px;padding:3px 8px;background:#fff3cd;border-radius:6px;font-size:12px;font-weight:400}
+.ut-legend summary{cursor:pointer;font-weight:600;font-size:13px}
+.ut-sw{display:inline-block;width:26px;height:0;border-top-width:5px;border-top-style:solid}
+.ut-halo{display:inline-block;width:26px;height:12px;border-radius:6px;opacity:.5}
+@media (max-width:600px){
+ .ut-title{left:10px;top:52px;font-size:14px;max-width:calc(100vw - 20px)}
+ .ut-legend{font-size:12px;max-width:170px;padding:6px 8px;bottom:50px}
+}
+</style>
+<div class='ut-panel ut-title'>Same budget: the route to the hospital stays open 14% of the time vs. 0% with today&#x27;s approach<span class='ut-demo'>Illustrative data: values are estimates, not measurements.</span></div><details id='ut-key' class='ut-panel ut-legend' open><summary>Map key</summary><div class='ut-row'><span class='ut-sw' style='border-top-color:#2e7d32'></span>Low hidden damage risk</div><div class='ut-row'><span class='ut-sw' style='border-top-color:#d98200'></span>Medium hidden damage risk</div><div class='ut-row'><span class='ut-sw' style='border-top-color:#b3261e'></span>High hidden damage risk</div><div class='ut-row'><span class='ut-halo' style='background:#1b5fd1'></span>Recommended repairs</div><div class='ut-row'><span class='ut-halo' style='background:#6b6b6b'></span>Today's approach (most complaints)</div><div class='ut-row'><span class='ut-sw' style='border-top-style:dashed;border-top-color:#14213d'></span>Evacuation route</div><div class='ut-row'><span class='ut-sw' style='border-top-style:dotted;border-top-color:#7b2d8e'></span>Hospital access</div></details><script>if(window.innerWidth<600){document.getElementById('ut-key').removeAttribute('open')}</script>
+    
+            <div class="folium-map" id="map_f461b456a88949cd34e7f9f79894321f" ></div>
         
 </body>
 <script>
     
     
-            var map_a55508556867f95a99739c6304835e39 = L.map(
-                "map_a55508556867f95a99739c6304835e39",
+            var map_f461b456a88949cd34e7f9f79894321f = L.map(
+                "map_f461b456a88949cd34e7f9f79894321f",
                 {
-                    center: [25.789, -80.134],
+                    center: [25.813647500000002, -80.12800525],
                     crs: L.CRS.EPSG3857,
                     ...{
   "zoom": 15,
-  "zoomControl": true,
+  "zoomControl": false,
   "preferCanvas": false,
 }
 
                 }
             );
+            L.control.zoom( { position: "bottomright" } ).addTo(map_f461b456a88949cd34e7f9f79894321f);
 
             
 
         
     
-            var tile_layer_95973c658a237ebc8fc0a52c24ba7a5f = L.tileLayer(
-                "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+            var tile_layer_ba067bed73b4cc7f2707918e99567ab2 = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
                 {
   "minZoom": 0,
-  "maxZoom": 20,
-  "maxNativeZoom": 20,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
   "noWrap": false,
-  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"https://carto.com/attributions\"\u003eCARTO\u003c/a\u003e",
-  "subdomains": "abcd",
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
   "detectRetina": false,
   "tms": false,
   "opacity": 1,
@@ -95,24 +113,110 @@
             );
         
     
-            tile_layer_95973c658a237ebc8fc0a52c24ba7a5f.addTo(map_a55508556867f95a99739c6304835e39);
+            tile_layer_ba067bed73b4cc7f2707918e99567ab2.addTo(map_f461b456a88949cd34e7f9f79894321f);
         
     
-            var feature_group_943ead8769b5d64802b39171553bf8a4 = L.featureGroup(
+            map_f461b456a88949cd34e7f9f79894321f.fitBounds(
+                [[25.81157, -80.13635], [25.81516, -80.12208]],
+                {"padding": [60, 60]}
+            );
+        
+    
+            var feature_group_c3e36432049d390fe219b9e332461fdf = L.featureGroup(
                 {
 }
             );
         
     
-            var poly_line_77819c91acf36101f74dad6c9223b3e3 = L.polyline(
-                [[25.785, -80.14], [25.785, -80.136]],
-                {"bubblingMouseEvents": true, "color": "#c0392b", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#c0392b", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.85, "smoothFactor": 1.0, "stroke": true, "weight": 6}
-            ).addTo(feature_group_943ead8769b5d64802b39171553bf8a4);
+            var poly_line_1d070cebe86466ac7dd19a6e0cd63e9a = L.polyline(
+                [[25.81375, -80.13625], [25.81385, -80.13035]],
+                {"bubblingMouseEvents": true, "color": "#1b5fd1", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#1b5fd1", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.4, "smoothFactor": 1.0, "stroke": true, "weight": 18}
+            ).addTo(feature_group_c3e36432049d390fe219b9e332461fdf);
         
     
-            poly_line_77819c91acf36101f74dad6c9223b3e3.bindTooltip(
+            var poly_line_97a2f3c13c80f321e589125a211b9ac6 = L.polyline(
+                [[25.81483, -80.13615], [25.81493, -80.13025]],
+                {"bubblingMouseEvents": true, "color": "#1b5fd1", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#1b5fd1", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.4, "smoothFactor": 1.0, "stroke": true, "weight": 18}
+            ).addTo(feature_group_c3e36432049d390fe219b9e332461fdf);
+        
+    
+            var poly_line_736216bd544fddb3dab0ddf664268b37 = L.polyline(
+                [[25.81267, -80.13635], [25.81375, -80.13625]],
+                {"bubblingMouseEvents": true, "color": "#1b5fd1", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#1b5fd1", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.4, "smoothFactor": 1.0, "stroke": true, "weight": 18}
+            ).addTo(feature_group_c3e36432049d390fe219b9e332461fdf);
+        
+    
+            var poly_line_ce213ac05e479d618d6cc62ca0676366 = L.polyline(
+                [[25.81375, -80.13625], [25.81483, -80.13615]],
+                {"bubblingMouseEvents": true, "color": "#1b5fd1", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#1b5fd1", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.4, "smoothFactor": 1.0, "stroke": true, "weight": 18}
+            ).addTo(feature_group_c3e36432049d390fe219b9e332461fdf);
+        
+    
+            feature_group_c3e36432049d390fe219b9e332461fdf.addTo(map_f461b456a88949cd34e7f9f79894321f);
+        
+    
+            var feature_group_53c3c4b04ebdbcd464900261bff000f3 = L.featureGroup(
+                {
+}
+            );
+        
+    
+            var poly_line_49d8ca04b751fc7ee81aae4914381ce3 = L.polyline(
+                [[25.813, -80.12796], [25.81264, -80.12515]],
+                {"bubblingMouseEvents": true, "color": "#6b6b6b", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#6b6b6b", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.4, "smoothFactor": 1.0, "stroke": true, "weight": 18}
+            ).addTo(feature_group_53c3c4b04ebdbcd464900261bff000f3);
+        
+    
+            var poly_line_8d1bba11822b70e92a74e824f91ebd65 = L.polyline(
+                [[25.81375, -80.13625], [25.81385, -80.13035]],
+                {"bubblingMouseEvents": true, "color": "#6b6b6b", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#6b6b6b", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.4, "smoothFactor": 1.0, "stroke": true, "weight": 18}
+            ).addTo(feature_group_53c3c4b04ebdbcd464900261bff000f3);
+        
+    
+            var poly_line_24edd30cfcb8b348509d6af8f315b219 = L.polyline(
+                [[25.81372, -80.12505], [25.81265, -80.12218]],
+                {"bubblingMouseEvents": true, "color": "#6b6b6b", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#6b6b6b", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.4, "smoothFactor": 1.0, "stroke": true, "weight": 18}
+            ).addTo(feature_group_53c3c4b04ebdbcd464900261bff000f3);
+        
+    
+            var poly_line_e3029e153b901d4fe7a0c81496c9b6c0 = L.polyline(
+                [[25.81493, -80.13025], [25.81516, -80.12776]],
+                {"bubblingMouseEvents": true, "color": "#6b6b6b", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#6b6b6b", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.4, "smoothFactor": 1.0, "stroke": true, "weight": 18}
+            ).addTo(feature_group_53c3c4b04ebdbcd464900261bff000f3);
+        
+    
+            var feature_group_fa5ee9a38d0cacb93e7b7e6b850f5668 = L.featureGroup(
+                {
+}
+            );
+        
+    
+            var poly_line_8675358b2f4a77b74519ad8bd8097dff = L.polyline(
+                [[25.81267, -80.13635], [25.81277, -80.13045]],
+                {"bubblingMouseEvents": true, "color": "#b3261e", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#b3261e", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.9, "smoothFactor": 1.0, "stroke": true, "weight": 6}
+            ).addTo(feature_group_fa5ee9a38d0cacb93e7b7e6b850f5668);
+        
+    
+        var popup_1a6d6b8a506071474b05c87d63f4903a = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_308c537afa24f12bd0a3a065e44ff461 = $(`<div id="html_308c537afa24f12bd0a3a065e44ff461" style="width: 100.0%; height: 100.0%;"><div style='font:14px/1.4 system-ui,sans-serif;min-width:200px'><b>W 40th St</b><br><span style='color:#b3261e;font-weight:600'>High hidden damage risk</span><br>Low-lying; floods during king tides; groundwater is close to the surface.<br>Not on an evacuation or hospital route<br>Recommended plan: Not repaired<br>Today's approach: Not repaired</div></div>`)[0];
+                popup_1a6d6b8a506071474b05c87d63f4903a.setContent(html_308c537afa24f12bd0a3a065e44ff461);
+            
+        
+
+        poly_line_8675358b2f4a77b74519ad8bd8097dff.bindPopup(popup_1a6d6b8a506071474b05c87d63f4903a)
+        ;
+
+        
+    
+    
+            poly_line_8675358b2f4a77b74519ad8bd8097dff.bindTooltip(
                 `<div>
-                     <b>S00</b><br>risk 0.85 | 311 reports 2<br>elev 2.58 ft | tide 0.57 | cost 2
+                     W 40th St: High hidden damage risk
                  </div>`,
                 {
   "sticky": true,
@@ -120,15 +224,32 @@
             );
         
     
-            var poly_line_ae9452c00e1cb8a2e15d863b3c534793 = L.polyline(
-                [[25.785, -80.14], [25.789, -80.14]],
-                {"bubblingMouseEvents": true, "color": "#c0392b", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#c0392b", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.85, "smoothFactor": 1.0, "stroke": true, "weight": 6}
-            ).addTo(feature_group_943ead8769b5d64802b39171553bf8a4);
+            var poly_line_0d30f1bed096ecc5ab65c1f6f547f2d8 = L.polyline(
+                [[25.81277, -80.13045], [25.813, -80.12796]],
+                {"bubblingMouseEvents": true, "color": "#b3261e", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#b3261e", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.9, "smoothFactor": 1.0, "stroke": true, "weight": 6}
+            ).addTo(feature_group_fa5ee9a38d0cacb93e7b7e6b850f5668);
         
     
-            poly_line_ae9452c00e1cb8a2e15d863b3c534793.bindTooltip(
+        var popup_b294f0901839e59185e8e7f2de5962bb = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_f5629b49807ea2fce62c0473cebae5a1 = $(`<div id="html_f5629b49807ea2fce62c0473cebae5a1" style="width: 100.0%; height: 100.0%;"><div style='font:14px/1.4 system-ui,sans-serif;min-width:200px'><b>W 40th St</b><br><span style='color:#b3261e;font-weight:600'>High hidden damage risk</span><br>Floods during king tides; groundwater is close to the surface; few complaints so far, but damage is likely building underneath.<br>Not on an evacuation or hospital route<br>Recommended plan: Not repaired<br>Today's approach: Not repaired</div></div>`)[0];
+                popup_b294f0901839e59185e8e7f2de5962bb.setContent(html_f5629b49807ea2fce62c0473cebae5a1);
+            
+        
+
+        poly_line_0d30f1bed096ecc5ab65c1f6f547f2d8.bindPopup(popup_b294f0901839e59185e8e7f2de5962bb)
+        ;
+
+        
+    
+    
+            poly_line_0d30f1bed096ecc5ab65c1f6f547f2d8.bindTooltip(
                 `<div>
-                     <b>S01</b><br>risk 0.90 | 311 reports 3<br>elev 1.8 ft | tide 0.60 | cost 3
+                     W 40th St: High hidden damage risk
                  </div>`,
                 {
   "sticky": true,
@@ -136,15 +257,32 @@
             );
         
     
-            var poly_line_4977a0b7f5387bcd031b3eec5dba46bd = L.polyline(
-                [[25.785, -80.136], [25.785, -80.132]],
-                {"bubblingMouseEvents": true, "color": "#e67e22", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#e67e22", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.85, "smoothFactor": 1.0, "stroke": true, "weight": 6}
-            ).addTo(feature_group_943ead8769b5d64802b39171553bf8a4);
+            var poly_line_f044196d4b73636242179cda664aed05 = L.polyline(
+                [[25.813, -80.12796], [25.81264, -80.12515]],
+                {"bubblingMouseEvents": true, "color": "#b3261e", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#b3261e", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.9, "smoothFactor": 1.0, "stroke": true, "weight": 6}
+            ).addTo(feature_group_fa5ee9a38d0cacb93e7b7e6b850f5668);
         
     
-            poly_line_4977a0b7f5387bcd031b3eec5dba46bd.bindTooltip(
+        var popup_9ad1ca1c52fdb630dcbcbb98a8e1a31b = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_d8771da1ac7649ff0629f4013a27d227 = $(`<div id="html_d8771da1ac7649ff0629f4013a27d227" style="width: 100.0%; height: 100.0%;"><div style='font:14px/1.4 system-ui,sans-serif;min-width:200px'><b>W 40th St</b><br><span style='color:#b3261e;font-weight:600'>High hidden damage risk</span><br>Floods during king tides; groundwater is close to the surface.<br>Not on an evacuation or hospital route<br>Recommended plan: Not repaired<br>Today's approach: Repaired</div></div>`)[0];
+                popup_9ad1ca1c52fdb630dcbcbb98a8e1a31b.setContent(html_d8771da1ac7649ff0629f4013a27d227);
+            
+        
+
+        poly_line_f044196d4b73636242179cda664aed05.bindPopup(popup_9ad1ca1c52fdb630dcbcbb98a8e1a31b)
+        ;
+
+        
+    
+    
+            poly_line_f044196d4b73636242179cda664aed05.bindTooltip(
                 `<div>
-                     <b>S02</b><br>risk 0.70 | 311 reports 3<br>elev 3.21 ft | tide 0.29 | cost 2
+                     W 40th St: High hidden damage risk
                  </div>`,
                 {
   "sticky": true,
@@ -152,15 +290,32 @@
             );
         
     
-            var poly_line_f6d4af1c7eda22dae786abb16f893dba = L.polyline(
-                [[25.785, -80.136], [25.789, -80.136]],
-                {"bubblingMouseEvents": true, "color": "#e67e22", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#e67e22", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.85, "smoothFactor": 1.0, "stroke": true, "weight": 6}
-            ).addTo(feature_group_943ead8769b5d64802b39171553bf8a4);
+            var poly_line_e9aa3d404859e6a010c58ae1d1d0443d = L.polyline(
+                [[25.81264, -80.12515], [25.81157, -80.12228]],
+                {"bubblingMouseEvents": true, "color": "#2e7d32", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#2e7d32", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.9, "smoothFactor": 1.0, "stroke": true, "weight": 6}
+            ).addTo(feature_group_fa5ee9a38d0cacb93e7b7e6b850f5668);
         
     
-            poly_line_f6d4af1c7eda22dae786abb16f893dba.bindTooltip(
+        var popup_dc2b1d34d95b14ce3355356b1bb874b1 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_103a175508068a79ef18a845554d120d = $(`<div id="html_103a175508068a79ef18a845554d120d" style="width: 100.0%; height: 100.0%;"><div style='font:14px/1.4 system-ui,sans-serif;min-width:200px'><b>W 40th St</b><br><span style='color:#2e7d32;font-weight:600'>Low hidden damage risk</span><br>Groundwater is close to the surface.<br>Not on an evacuation or hospital route<br>Recommended plan: Not repaired<br>Today's approach: Not repaired</div></div>`)[0];
+                popup_dc2b1d34d95b14ce3355356b1bb874b1.setContent(html_103a175508068a79ef18a845554d120d);
+            
+        
+
+        poly_line_e9aa3d404859e6a010c58ae1d1d0443d.bindPopup(popup_dc2b1d34d95b14ce3355356b1bb874b1)
+        ;
+
+        
+    
+    
+            poly_line_e9aa3d404859e6a010c58ae1d1d0443d.bindTooltip(
                 `<div>
-                     <b>S03</b><br>risk 0.61 | 311 reports 3<br>elev 3.09 ft | tide 0.23 | cost 1
+                     W 40th St: Low hidden damage risk
                  </div>`,
                 {
   "sticky": true,
@@ -168,15 +323,32 @@
             );
         
     
-            var poly_line_7d77ae9d71c5d85bbdf110a5bf7a6b35 = L.polyline(
-                [[25.785, -80.132], [25.785, -80.128]],
-                {"bubblingMouseEvents": true, "color": "#27ae60", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#27ae60", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.85, "smoothFactor": 1.0, "stroke": true, "weight": 6}
-            ).addTo(feature_group_943ead8769b5d64802b39171553bf8a4);
+            var poly_line_056980201bcc29fa7029233d17319c16 = L.polyline(
+                [[25.81375, -80.13625], [25.81385, -80.13035]],
+                {"bubblingMouseEvents": true, "color": "#b3261e", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#b3261e", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.9, "smoothFactor": 1.0, "stroke": true, "weight": 6}
+            ).addTo(feature_group_fa5ee9a38d0cacb93e7b7e6b850f5668);
         
     
-            poly_line_7d77ae9d71c5d85bbdf110a5bf7a6b35.bindTooltip(
+        var popup_cff31bb8a886cbdb4b47700525ff6dc1 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_bb97cbea139c45e94da7354d2a069f73 = $(`<div id="html_bb97cbea139c45e94da7354d2a069f73" style="width: 100.0%; height: 100.0%;"><div style='font:14px/1.4 system-ui,sans-serif;min-width:200px'><b>41st St</b><br><span style='color:#b3261e;font-weight:600'>High hidden damage risk</span><br>Low-lying; floods during king tides; groundwater is close to the surface.<br>Hospital access<br>Recommended plan: Repaired<br>Today's approach: Repaired</div></div>`)[0];
+                popup_cff31bb8a886cbdb4b47700525ff6dc1.setContent(html_bb97cbea139c45e94da7354d2a069f73);
+            
+        
+
+        poly_line_056980201bcc29fa7029233d17319c16.bindPopup(popup_cff31bb8a886cbdb4b47700525ff6dc1)
+        ;
+
+        
+    
+    
+            poly_line_056980201bcc29fa7029233d17319c16.bindTooltip(
                 `<div>
-                     <b>S04</b><br>risk 0.17 | 311 reports 0<br>elev 4.53 ft | tide 0.04 | cost 2
+                     41st St: High hidden damage risk
                  </div>`,
                 {
   "sticky": true,
@@ -184,15 +356,32 @@
             );
         
     
-            var poly_line_6302d31bb6cd778f87a1f0c0bc2d7b9e = L.polyline(
-                [[25.785, -80.132], [25.789, -80.132]],
-                {"bubblingMouseEvents": true, "color": "#27ae60", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#27ae60", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.85, "smoothFactor": 1.0, "stroke": true, "weight": 6}
-            ).addTo(feature_group_943ead8769b5d64802b39171553bf8a4);
+            var poly_line_7a0b58b24ddff5762e719abf99ad097a = L.polyline(
+                [[25.81385, -80.13035], [25.81408, -80.12786]],
+                {"bubblingMouseEvents": true, "color": "#d98200", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#d98200", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.9, "smoothFactor": 1.0, "stroke": true, "weight": 6}
+            ).addTo(feature_group_fa5ee9a38d0cacb93e7b7e6b850f5668);
         
     
-            poly_line_6302d31bb6cd778f87a1f0c0bc2d7b9e.bindTooltip(
+        var popup_55080059453e55ce689d68759efc63bc = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_b958242aa3f5016df034dacc3b299652 = $(`<div id="html_b958242aa3f5016df034dacc3b299652" style="width: 100.0%; height: 100.0%;"><div style='font:14px/1.4 system-ui,sans-serif;min-width:200px'><b>41st St</b><br><span style='color:#d98200;font-weight:600'>Medium hidden damage risk</span><br>Floods during king tides; groundwater is close to the surface.<br>Hospital access<br>Recommended plan: Not repaired<br>Today's approach: Not repaired</div></div>`)[0];
+                popup_55080059453e55ce689d68759efc63bc.setContent(html_b958242aa3f5016df034dacc3b299652);
+            
+        
+
+        poly_line_7a0b58b24ddff5762e719abf99ad097a.bindPopup(popup_55080059453e55ce689d68759efc63bc)
+        ;
+
+        
+    
+    
+            poly_line_7a0b58b24ddff5762e719abf99ad097a.bindTooltip(
                 `<div>
-                     <b>S05</b><br>risk 0.37 | 311 reports 4<br>elev 4.1 ft | tide 0.21 | cost 3
+                     41st St: Medium hidden damage risk
                  </div>`,
                 {
   "sticky": true,
@@ -200,15 +389,32 @@
             );
         
     
-            var poly_line_2e9b87a6079380fc8f3b2ec44b61190a = L.polyline(
-                [[25.785, -80.128], [25.789, -80.128]],
-                {"bubblingMouseEvents": true, "color": "#27ae60", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#27ae60", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.85, "smoothFactor": 1.0, "stroke": true, "weight": 6}
-            ).addTo(feature_group_943ead8769b5d64802b39171553bf8a4);
+            var poly_line_4e3a6bdcebb3179e6afbd6b9e814a245 = L.polyline(
+                [[25.81408, -80.12786], [25.81372, -80.12505]],
+                {"bubblingMouseEvents": true, "color": "#d98200", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#d98200", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.9, "smoothFactor": 1.0, "stroke": true, "weight": 6}
+            ).addTo(feature_group_fa5ee9a38d0cacb93e7b7e6b850f5668);
         
     
-            poly_line_2e9b87a6079380fc8f3b2ec44b61190a.bindTooltip(
+        var popup_62abcad1c46000990ca612bd2bf7043c = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_18817e437c44e82230ff22e9fa0ad585 = $(`<div id="html_18817e437c44e82230ff22e9fa0ad585" style="width: 100.0%; height: 100.0%;"><div style='font:14px/1.4 system-ui,sans-serif;min-width:200px'><b>41st St</b><br><span style='color:#d98200;font-weight:600'>Medium hidden damage risk</span><br>Floods during king tides; groundwater is close to the surface; few complaints so far, but damage is likely building underneath.<br>Hospital access<br>Recommended plan: Not repaired<br>Today's approach: Not repaired</div></div>`)[0];
+                popup_62abcad1c46000990ca612bd2bf7043c.setContent(html_18817e437c44e82230ff22e9fa0ad585);
+            
+        
+
+        poly_line_4e3a6bdcebb3179e6afbd6b9e814a245.bindPopup(popup_62abcad1c46000990ca612bd2bf7043c)
+        ;
+
+        
+    
+    
+            poly_line_4e3a6bdcebb3179e6afbd6b9e814a245.bindTooltip(
                 `<div>
-                     <b>S06</b><br>risk 0.06 | 311 reports 1<br>elev 5.55 ft | tide 0.00 | cost 2<br>hospital access
+                     41st St: Medium hidden damage risk
                  </div>`,
                 {
   "sticky": true,
@@ -216,15 +422,32 @@
             );
         
     
-            var poly_line_7b3fe6914300cc897d6d1a52e647134b = L.polyline(
-                [[25.789, -80.14], [25.789, -80.136]],
-                {"bubblingMouseEvents": true, "color": "#c0392b", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#c0392b", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.85, "smoothFactor": 1.0, "stroke": true, "weight": 6}
-            ).addTo(feature_group_943ead8769b5d64802b39171553bf8a4);
+            var poly_line_2b04ee9ae4afd590d57d93cbb2ada6f2 = L.polyline(
+                [[25.81372, -80.12505], [25.81265, -80.12218]],
+                {"bubblingMouseEvents": true, "color": "#2e7d32", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#2e7d32", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.9, "smoothFactor": 1.0, "stroke": true, "weight": 6}
+            ).addTo(feature_group_fa5ee9a38d0cacb93e7b7e6b850f5668);
         
     
-            poly_line_7b3fe6914300cc897d6d1a52e647134b.bindTooltip(
+        var popup_c779d0485b83e14abf7b568de512c1fe = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_5bcf0fc12744947d43a48cd2213fa756 = $(`<div id="html_5bcf0fc12744947d43a48cd2213fa756" style="width: 100.0%; height: 100.0%;"><div style='font:14px/1.4 system-ui,sans-serif;min-width:200px'><b>41st St</b><br><span style='color:#2e7d32;font-weight:600'>Low hidden damage risk</span><br>Groundwater is close to the surface.<br>Not on an evacuation or hospital route<br>Recommended plan: Not repaired<br>Today's approach: Repaired</div></div>`)[0];
+                popup_c779d0485b83e14abf7b568de512c1fe.setContent(html_5bcf0fc12744947d43a48cd2213fa756);
+            
+        
+
+        poly_line_2b04ee9ae4afd590d57d93cbb2ada6f2.bindPopup(popup_c779d0485b83e14abf7b568de512c1fe)
+        ;
+
+        
+    
+    
+            poly_line_2b04ee9ae4afd590d57d93cbb2ada6f2.bindTooltip(
                 `<div>
-                     <b>S07</b><br>risk 0.86 | 311 reports 6<br>elev 2.51 ft | tide 0.60 | cost 1<br>evac route
+                     41st St: Low hidden damage risk
                  </div>`,
                 {
   "sticky": true,
@@ -232,15 +455,32 @@
             );
         
     
-            var poly_line_58b87697f5c6959b89b31ee8b75307a9 = L.polyline(
-                [[25.789, -80.14], [25.793, -80.14]],
-                {"bubblingMouseEvents": true, "color": "#c0392b", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#c0392b", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.85, "smoothFactor": 1.0, "stroke": true, "weight": 6}
-            ).addTo(feature_group_943ead8769b5d64802b39171553bf8a4);
+            var poly_line_11911d187104ef4caaf6a5b8eb7dd5a2 = L.polyline(
+                [[25.81483, -80.13615], [25.81493, -80.13025]],
+                {"bubblingMouseEvents": true, "color": "#b3261e", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#b3261e", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.9, "smoothFactor": 1.0, "stroke": true, "weight": 6}
+            ).addTo(feature_group_fa5ee9a38d0cacb93e7b7e6b850f5668);
         
     
-            poly_line_58b87697f5c6959b89b31ee8b75307a9.bindTooltip(
+        var popup_d048535d6ddf023ca1003cd5abb65a6d = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_355d9e985d600b3f804eaa9e3e2050ca = $(`<div id="html_355d9e985d600b3f804eaa9e3e2050ca" style="width: 100.0%; height: 100.0%;"><div style='font:14px/1.4 system-ui,sans-serif;min-width:200px'><b>W 42nd St</b><br><span style='color:#b3261e;font-weight:600'>High hidden damage risk</span><br>Floods during king tides; groundwater is close to the surface; few complaints so far, but damage is likely building underneath.<br>Not on an evacuation or hospital route<br>Recommended plan: Repaired<br>Today's approach: Not repaired</div></div>`)[0];
+                popup_d048535d6ddf023ca1003cd5abb65a6d.setContent(html_355d9e985d600b3f804eaa9e3e2050ca);
+            
+        
+
+        poly_line_11911d187104ef4caaf6a5b8eb7dd5a2.bindPopup(popup_d048535d6ddf023ca1003cd5abb65a6d)
+        ;
+
+        
+    
+    
+            poly_line_11911d187104ef4caaf6a5b8eb7dd5a2.bindTooltip(
                 `<div>
-                     <b>S08</b><br>risk 0.91 | 311 reports 4<br>elev 1.92 ft | tide 0.72 | cost 3
+                     W 42nd St: High hidden damage risk
                  </div>`,
                 {
   "sticky": true,
@@ -248,15 +488,32 @@
             );
         
     
-            var poly_line_3f429e5d852d3c7ab17f63adf9ee013e = L.polyline(
-                [[25.789, -80.136], [25.789, -80.132]],
-                {"bubblingMouseEvents": true, "color": "#e67e22", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#e67e22", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.85, "smoothFactor": 1.0, "stroke": true, "weight": 6}
-            ).addTo(feature_group_943ead8769b5d64802b39171553bf8a4);
+            var poly_line_e28f7e39c3893f28613b234adfee9a62 = L.polyline(
+                [[25.81493, -80.13025], [25.81516, -80.12776]],
+                {"bubblingMouseEvents": true, "color": "#2e7d32", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#2e7d32", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.9, "smoothFactor": 1.0, "stroke": true, "weight": 6}
+            ).addTo(feature_group_fa5ee9a38d0cacb93e7b7e6b850f5668);
         
     
-            poly_line_3f429e5d852d3c7ab17f63adf9ee013e.bindTooltip(
+        var popup_d093cc9e869e8dca3bdf0997dff62144 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_d5412418254179844f59cf6126fd0d6c = $(`<div id="html_d5412418254179844f59cf6126fd0d6c" style="width: 100.0%; height: 100.0%;"><div style='font:14px/1.4 system-ui,sans-serif;min-width:200px'><b>W 42nd St</b><br><span style='color:#2e7d32;font-weight:600'>Low hidden damage risk</span><br>Floods during king tides; groundwater is close to the surface.<br>Not on an evacuation or hospital route<br>Recommended plan: Not repaired<br>Today's approach: Repaired</div></div>`)[0];
+                popup_d093cc9e869e8dca3bdf0997dff62144.setContent(html_d5412418254179844f59cf6126fd0d6c);
+            
+        
+
+        poly_line_e28f7e39c3893f28613b234adfee9a62.bindPopup(popup_d093cc9e869e8dca3bdf0997dff62144)
+        ;
+
+        
+    
+    
+            poly_line_e28f7e39c3893f28613b234adfee9a62.bindTooltip(
                 `<div>
-                     <b>S09</b><br>risk 0.46 | 311 reports 3<br>elev 4.03 ft | tide 0.30 | cost 3<br>evac route
+                     W 42nd St: Low hidden damage risk
                  </div>`,
                 {
   "sticky": true,
@@ -264,15 +521,32 @@
             );
         
     
-            var poly_line_1840b1ade99e4286b808ec60870e29e9 = L.polyline(
-                [[25.789, -80.136], [25.793, -80.136]],
-                {"bubblingMouseEvents": true, "color": "#c0392b", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#c0392b", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.85, "smoothFactor": 1.0, "stroke": true, "weight": 6}
-            ).addTo(feature_group_943ead8769b5d64802b39171553bf8a4);
+            var poly_line_656d913a5a168a68e1e0ac4ee0a09458 = L.polyline(
+                [[25.81516, -80.12776], [25.8148, -80.12495]],
+                {"bubblingMouseEvents": true, "color": "#2e7d32", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#2e7d32", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.9, "smoothFactor": 1.0, "stroke": true, "weight": 6}
+            ).addTo(feature_group_fa5ee9a38d0cacb93e7b7e6b850f5668);
         
     
-            poly_line_1840b1ade99e4286b808ec60870e29e9.bindTooltip(
+        var popup_96b9f9ce717a438c68b00fb92aa26e02 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_c19781e6566fdd3b1457ebaa778f26b3 = $(`<div id="html_c19781e6566fdd3b1457ebaa778f26b3" style="width: 100.0%; height: 100.0%;"><div style='font:14px/1.4 system-ui,sans-serif;min-width:200px'><b>W 42nd St</b><br><span style='color:#2e7d32;font-weight:600'>Low hidden damage risk</span><br>Floods during king tides; groundwater is close to the surface.<br>Not on an evacuation or hospital route<br>Recommended plan: Not repaired<br>Today's approach: Not repaired</div></div>`)[0];
+                popup_96b9f9ce717a438c68b00fb92aa26e02.setContent(html_c19781e6566fdd3b1457ebaa778f26b3);
+            
+        
+
+        poly_line_656d913a5a168a68e1e0ac4ee0a09458.bindPopup(popup_96b9f9ce717a438c68b00fb92aa26e02)
+        ;
+
+        
+    
+    
+            poly_line_656d913a5a168a68e1e0ac4ee0a09458.bindTooltip(
                 `<div>
-                     <b>S10</b><br>risk 0.74 | 311 reports 2<br>elev 3.12 ft | tide 0.42 | cost 3
+                     W 42nd St: Low hidden damage risk
                  </div>`,
                 {
   "sticky": true,
@@ -280,15 +554,32 @@
             );
         
     
-            var poly_line_54af63db02cad7c0851d7f37bde7f02c = L.polyline(
-                [[25.789, -80.132], [25.789, -80.128]],
-                {"bubblingMouseEvents": true, "color": "#27ae60", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#27ae60", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.85, "smoothFactor": 1.0, "stroke": true, "weight": 6}
-            ).addTo(feature_group_943ead8769b5d64802b39171553bf8a4);
+            var poly_line_bbe05789c372e8cf6c6bae4dca94aa7e = L.polyline(
+                [[25.8148, -80.12495], [25.81373, -80.12208]],
+                {"bubblingMouseEvents": true, "color": "#2e7d32", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#2e7d32", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.9, "smoothFactor": 1.0, "stroke": true, "weight": 6}
+            ).addTo(feature_group_fa5ee9a38d0cacb93e7b7e6b850f5668);
         
     
-            poly_line_54af63db02cad7c0851d7f37bde7f02c.bindTooltip(
+        var popup_c6268551119909e4fcb4bd2cffd50666 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_3a9d834adf38f3b151a8f66b1bb895cd = $(`<div id="html_3a9d834adf38f3b151a8f66b1bb895cd" style="width: 100.0%; height: 100.0%;"><div style='font:14px/1.4 system-ui,sans-serif;min-width:200px'><b>W 42nd St</b><br><span style='color:#2e7d32;font-weight:600'>Low hidden damage risk</span><br>Groundwater is close to the surface.<br>Not on an evacuation or hospital route<br>Recommended plan: Not repaired<br>Today's approach: Not repaired</div></div>`)[0];
+                popup_c6268551119909e4fcb4bd2cffd50666.setContent(html_3a9d834adf38f3b151a8f66b1bb895cd);
+            
+        
+
+        poly_line_bbe05789c372e8cf6c6bae4dca94aa7e.bindPopup(popup_c6268551119909e4fcb4bd2cffd50666)
+        ;
+
+        
+    
+    
+            poly_line_bbe05789c372e8cf6c6bae4dca94aa7e.bindTooltip(
                 `<div>
-                     <b>S11</b><br>risk 0.12 | 311 reports 1<br>elev 5.18 ft | tide 0.08 | cost 3<br>evac route
+                     W 42nd St: Low hidden damage risk
                  </div>`,
                 {
   "sticky": true,
@@ -296,15 +587,32 @@
             );
         
     
-            var poly_line_eb7d499b300fb683881891ab2e220ec9 = L.polyline(
-                [[25.789, -80.132], [25.793, -80.132]],
-                {"bubblingMouseEvents": true, "color": "#27ae60", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#27ae60", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.85, "smoothFactor": 1.0, "stroke": true, "weight": 6}
-            ).addTo(feature_group_943ead8769b5d64802b39171553bf8a4);
+            var poly_line_fdb2c87ed4a1d1f12875e0d17a3c961c = L.polyline(
+                [[25.81267, -80.13635], [25.81375, -80.13625]],
+                {"bubblingMouseEvents": true, "color": "#b3261e", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#b3261e", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.9, "smoothFactor": 1.0, "stroke": true, "weight": 6}
+            ).addTo(feature_group_fa5ee9a38d0cacb93e7b7e6b850f5668);
         
     
-            poly_line_eb7d499b300fb683881891ab2e220ec9.bindTooltip(
+        var popup_572cfdfb83af21b4ed60eff214388ea5 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_2bcad7befa473da376b0dbd3f94e0fc6 = $(`<div id="html_2bcad7befa473da376b0dbd3f94e0fc6" style="width: 100.0%; height: 100.0%;"><div style='font:14px/1.4 system-ui,sans-serif;min-width:200px'><b>Alton Rd</b><br><span style='color:#b3261e;font-weight:600'>High hidden damage risk</span><br>Low-lying; floods during king tides; groundwater is close to the surface.<br>Hospital access<br>Recommended plan: Repaired<br>Today's approach: Not repaired</div></div>`)[0];
+                popup_572cfdfb83af21b4ed60eff214388ea5.setContent(html_2bcad7befa473da376b0dbd3f94e0fc6);
+            
+        
+
+        poly_line_fdb2c87ed4a1d1f12875e0d17a3c961c.bindPopup(popup_572cfdfb83af21b4ed60eff214388ea5)
+        ;
+
+        
+    
+    
+            poly_line_fdb2c87ed4a1d1f12875e0d17a3c961c.bindTooltip(
                 `<div>
-                     <b>S12</b><br>risk 0.33 | 311 reports 6<br>elev 4.47 ft | tide 0.08 | cost 3
+                     Alton Rd: High hidden damage risk
                  </div>`,
                 {
   "sticky": true,
@@ -312,15 +620,32 @@
             );
         
     
-            var poly_line_c36356a8361bf81bd060c9a95cfc46e9 = L.polyline(
-                [[25.789, -80.128], [25.793, -80.128]],
-                {"bubblingMouseEvents": true, "color": "#27ae60", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#27ae60", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.85, "smoothFactor": 1.0, "stroke": true, "weight": 6}
-            ).addTo(feature_group_943ead8769b5d64802b39171553bf8a4);
+            var poly_line_c162857a64032488dfed1c315b4488ee = L.polyline(
+                [[25.81375, -80.13625], [25.81483, -80.13615]],
+                {"bubblingMouseEvents": true, "color": "#b3261e", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#b3261e", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.9, "smoothFactor": 1.0, "stroke": true, "weight": 6}
+            ).addTo(feature_group_fa5ee9a38d0cacb93e7b7e6b850f5668);
         
     
-            poly_line_c36356a8361bf81bd060c9a95cfc46e9.bindTooltip(
+        var popup_1b98d5667528bceab1497b8b0e5b293b = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_4b07f709433ceec3c7e434109de37c3f = $(`<div id="html_4b07f709433ceec3c7e434109de37c3f" style="width: 100.0%; height: 100.0%;"><div style='font:14px/1.4 system-ui,sans-serif;min-width:200px'><b>Alton Rd</b><br><span style='color:#b3261e;font-weight:600'>High hidden damage risk</span><br>Floods during king tides; groundwater is close to the surface; few complaints so far, but damage is likely building underneath.<br>Hospital access<br>Recommended plan: Repaired<br>Today's approach: Not repaired</div></div>`)[0];
+                popup_1b98d5667528bceab1497b8b0e5b293b.setContent(html_4b07f709433ceec3c7e434109de37c3f);
+            
+        
+
+        poly_line_c162857a64032488dfed1c315b4488ee.bindPopup(popup_1b98d5667528bceab1497b8b0e5b293b)
+        ;
+
+        
+    
+    
+            poly_line_c162857a64032488dfed1c315b4488ee.bindTooltip(
                 `<div>
-                     <b>S13</b><br>risk 0.11 | 311 reports 0<br>elev 5.42 ft | tide 0.06 | cost 2<br>hospital access
+                     Alton Rd: High hidden damage risk
                  </div>`,
                 {
   "sticky": true,
@@ -328,15 +653,32 @@
             );
         
     
-            var poly_line_77bdbb265f577ab65dacda51574ba5a8 = L.polyline(
-                [[25.793, -80.14], [25.793, -80.136]],
-                {"bubblingMouseEvents": true, "color": "#c0392b", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#c0392b", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.85, "smoothFactor": 1.0, "stroke": true, "weight": 6}
-            ).addTo(feature_group_943ead8769b5d64802b39171553bf8a4);
+            var poly_line_a1a744bd5f2a061d316b883a2b25c9ae = L.polyline(
+                [[25.813, -80.12796], [25.81408, -80.12786]],
+                {"bubblingMouseEvents": true, "color": "#d98200", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#d98200", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.9, "smoothFactor": 1.0, "stroke": true, "weight": 6}
+            ).addTo(feature_group_fa5ee9a38d0cacb93e7b7e6b850f5668);
         
     
-            poly_line_77bdbb265f577ab65dacda51574ba5a8.bindTooltip(
+        var popup_71a1fd73e3fbedd46762c924a845bb76 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_8194f29939d6bda22f4217e1719be072 = $(`<div id="html_8194f29939d6bda22f4217e1719be072" style="width: 100.0%; height: 100.0%;"><div style='font:14px/1.4 system-ui,sans-serif;min-width:200px'><b>Sheridan Ave</b><br><span style='color:#d98200;font-weight:600'>Medium hidden damage risk</span><br>Floods during king tides; groundwater is close to the surface.<br>Not on an evacuation or hospital route<br>Recommended plan: Not repaired<br>Today's approach: Not repaired</div></div>`)[0];
+                popup_71a1fd73e3fbedd46762c924a845bb76.setContent(html_8194f29939d6bda22f4217e1719be072);
+            
+        
+
+        poly_line_a1a744bd5f2a061d316b883a2b25c9ae.bindPopup(popup_71a1fd73e3fbedd46762c924a845bb76)
+        ;
+
+        
+    
+    
+            poly_line_a1a744bd5f2a061d316b883a2b25c9ae.bindTooltip(
                 `<div>
-                     <b>S14</b><br>risk 0.78 | 311 reports 1<br>elev 2.6 ft | tide 0.46 | cost 3
+                     Sheridan Ave: Medium hidden damage risk
                  </div>`,
                 {
   "sticky": true,
@@ -344,15 +686,32 @@
             );
         
     
-            var poly_line_5e1f3a69bf67c03059a521b96b97f957 = L.polyline(
-                [[25.793, -80.136], [25.793, -80.132]],
-                {"bubblingMouseEvents": true, "color": "#e67e22", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#e67e22", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.85, "smoothFactor": 1.0, "stroke": true, "weight": 6}
-            ).addTo(feature_group_943ead8769b5d64802b39171553bf8a4);
+            var poly_line_ecba635200257a873148fc955bb10793 = L.polyline(
+                [[25.81408, -80.12786], [25.81516, -80.12776]],
+                {"bubblingMouseEvents": true, "color": "#d98200", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#d98200", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.9, "smoothFactor": 1.0, "stroke": true, "weight": 6}
+            ).addTo(feature_group_fa5ee9a38d0cacb93e7b7e6b850f5668);
         
     
-            poly_line_5e1f3a69bf67c03059a521b96b97f957.bindTooltip(
+        var popup_0946b6a6f85105e419ae4c7442141355 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_8bef448cdafa28b121037100c43318c2 = $(`<div id="html_8bef448cdafa28b121037100c43318c2" style="width: 100.0%; height: 100.0%;"><div style='font:14px/1.4 system-ui,sans-serif;min-width:200px'><b>Sheridan Ave</b><br><span style='color:#d98200;font-weight:600'>Medium hidden damage risk</span><br>Floods during king tides; groundwater is close to the surface.<br>Not on an evacuation or hospital route<br>Recommended plan: Not repaired<br>Today's approach: Not repaired</div></div>`)[0];
+                popup_0946b6a6f85105e419ae4c7442141355.setContent(html_8bef448cdafa28b121037100c43318c2);
+            
+        
+
+        poly_line_ecba635200257a873148fc955bb10793.bindPopup(popup_0946b6a6f85105e419ae4c7442141355)
+        ;
+
+        
+    
+    
+            poly_line_ecba635200257a873148fc955bb10793.bindTooltip(
                 `<div>
-                     <b>S15</b><br>risk 0.67 | 311 reports 2<br>elev 3.51 ft | tide 0.32 | cost 2
+                     Sheridan Ave: Medium hidden damage risk
                  </div>`,
                 {
   "sticky": true,
@@ -360,15 +719,32 @@
             );
         
     
-            var poly_line_ff56891f2ae03260ff91b5fd191f2b83 = L.polyline(
-                [[25.793, -80.132], [25.793, -80.128]],
-                {"bubblingMouseEvents": true, "color": "#27ae60", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#27ae60", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.85, "smoothFactor": 1.0, "stroke": true, "weight": 6}
-            ).addTo(feature_group_943ead8769b5d64802b39171553bf8a4);
+            var poly_line_35327abea379b9d4a8dfe81ca4845cca = L.polyline(
+                [[25.81264, -80.12515], [25.81372, -80.12505]],
+                {"bubblingMouseEvents": true, "color": "#d98200", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#d98200", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.9, "smoothFactor": 1.0, "stroke": true, "weight": 6}
+            ).addTo(feature_group_fa5ee9a38d0cacb93e7b7e6b850f5668);
         
     
-            poly_line_ff56891f2ae03260ff91b5fd191f2b83.bindTooltip(
+        var popup_a534e92bc2d47819c17e00fc4e57059c = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_6b6d42f7ad493f33f556a27380230270 = $(`<div id="html_6b6d42f7ad493f33f556a27380230270" style="width: 100.0%; height: 100.0%;"><div style='font:14px/1.4 system-ui,sans-serif;min-width:200px'><b>Pine Tree Dr</b><br><span style='color:#d98200;font-weight:600'>Medium hidden damage risk</span><br>Floods during king tides; groundwater is close to the surface; few complaints so far, but damage is likely building underneath.<br>Not on an evacuation or hospital route<br>Recommended plan: Not repaired<br>Today's approach: Not repaired</div></div>`)[0];
+                popup_a534e92bc2d47819c17e00fc4e57059c.setContent(html_6b6d42f7ad493f33f556a27380230270);
+            
+        
+
+        poly_line_35327abea379b9d4a8dfe81ca4845cca.bindPopup(popup_a534e92bc2d47819c17e00fc4e57059c)
+        ;
+
+        
+    
+    
+            poly_line_35327abea379b9d4a8dfe81ca4845cca.bindTooltip(
                 `<div>
-                     <b>S16</b><br>risk 0.37 | 311 reports 4<br>elev 4.22 ft | tide 0.17 | cost 3
+                     Pine Tree Dr: Medium hidden damage risk
                  </div>`,
                 {
   "sticky": true,
@@ -376,24 +752,32 @@
             );
         
     
-            feature_group_943ead8769b5d64802b39171553bf8a4.addTo(map_a55508556867f95a99739c6304835e39);
+            var poly_line_839e79bed62a9f4343eb1a71537004ce = L.polyline(
+                [[25.81372, -80.12505], [25.8148, -80.12495]],
+                {"bubblingMouseEvents": true, "color": "#2e7d32", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#2e7d32", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.9, "smoothFactor": 1.0, "stroke": true, "weight": 6}
+            ).addTo(feature_group_fa5ee9a38d0cacb93e7b7e6b850f5668);
         
     
-            var feature_group_622119f1d46c9f192f8677c5efd91e1f = L.featureGroup(
-                {
-}
-            );
+        var popup_1efed2a45611491d78897c921da1dba1 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_fc10bbf953e974fdf3a10bdd84379c5d = $(`<div id="html_fc10bbf953e974fdf3a10bdd84379c5d" style="width: 100.0%; height: 100.0%;"><div style='font:14px/1.4 system-ui,sans-serif;min-width:200px'><b>Pine Tree Dr</b><br><span style='color:#2e7d32;font-weight:600'>Low hidden damage risk</span><br>Groundwater is close to the surface.<br>Not on an evacuation or hospital route<br>Recommended plan: Not repaired<br>Today's approach: Not repaired</div></div>`)[0];
+                popup_1efed2a45611491d78897c921da1dba1.setContent(html_fc10bbf953e974fdf3a10bdd84379c5d);
+            
+        
+
+        poly_line_839e79bed62a9f4343eb1a71537004ce.bindPopup(popup_1efed2a45611491d78897c921da1dba1)
+        ;
+
         
     
-            var poly_line_0c3017d40a6be730859542785aff0261 = L.polyline(
-                [[25.785, -80.136], [25.789, -80.136]],
-                {"bubblingMouseEvents": true, "color": "#2c3e50", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#2c3e50", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.45, "smoothFactor": 1.0, "stroke": true, "weight": 14}
-            ).addTo(feature_group_622119f1d46c9f192f8677c5efd91e1f);
-        
     
-            poly_line_0c3017d40a6be730859542785aff0261.bindTooltip(
+            poly_line_839e79bed62a9f4343eb1a71537004ce.bindTooltip(
                 `<div>
-                     QAOA simulator (reps=2): repair S03
+                     Pine Tree Dr: Low hidden damage risk
                  </div>`,
                 {
   "sticky": true,
@@ -401,15 +785,32 @@
             );
         
     
-            var poly_line_cda617b25353816da333ac44a9f67d1f = L.polyline(
-                [[25.789, -80.14], [25.789, -80.136]],
-                {"bubblingMouseEvents": true, "color": "#2c3e50", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#2c3e50", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.45, "smoothFactor": 1.0, "stroke": true, "weight": 14}
-            ).addTo(feature_group_622119f1d46c9f192f8677c5efd91e1f);
+            var poly_line_d7f7f151aa41bcfc9b7640a4b3615a17 = L.polyline(
+                [[25.81157, -80.12228], [25.81265, -80.12218]],
+                {"bubblingMouseEvents": true, "color": "#2e7d32", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#2e7d32", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.9, "smoothFactor": 1.0, "stroke": true, "weight": 6}
+            ).addTo(feature_group_fa5ee9a38d0cacb93e7b7e6b850f5668);
         
     
-            poly_line_cda617b25353816da333ac44a9f67d1f.bindTooltip(
+        var popup_1b7a25671d12185176fa5508207d53c1 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_c3411f484186b6fec1d651bc31c51e86 = $(`<div id="html_c3411f484186b6fec1d651bc31c51e86" style="width: 100.0%; height: 100.0%;"><div style='font:14px/1.4 system-ui,sans-serif;min-width:200px'><b>Collins Ave</b><br><span style='color:#2e7d32;font-weight:600'>Low hidden damage risk</span><br>Groundwater is close to the surface.<br>Evacuation route<br>Recommended plan: Not repaired<br>Today's approach: Not repaired</div></div>`)[0];
+                popup_1b7a25671d12185176fa5508207d53c1.setContent(html_c3411f484186b6fec1d651bc31c51e86);
+            
+        
+
+        poly_line_d7f7f151aa41bcfc9b7640a4b3615a17.bindPopup(popup_1b7a25671d12185176fa5508207d53c1)
+        ;
+
+        
+    
+    
+            poly_line_d7f7f151aa41bcfc9b7640a4b3615a17.bindTooltip(
                 `<div>
-                     QAOA simulator (reps=2): repair S07
+                     Collins Ave: Low hidden damage risk
                  </div>`,
                 {
   "sticky": true,
@@ -417,15 +818,32 @@
             );
         
     
-            var poly_line_1df7c5f4435a888887b5e1c0edd0fdc3 = L.polyline(
-                [[25.789, -80.136], [25.789, -80.132]],
-                {"bubblingMouseEvents": true, "color": "#2c3e50", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#2c3e50", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.45, "smoothFactor": 1.0, "stroke": true, "weight": 14}
-            ).addTo(feature_group_622119f1d46c9f192f8677c5efd91e1f);
+            var poly_line_c90d8848e51eba310f0e4ead2c283d91 = L.polyline(
+                [[25.81265, -80.12218], [25.81373, -80.12208]],
+                {"bubblingMouseEvents": true, "color": "#2e7d32", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#2e7d32", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.9, "smoothFactor": 1.0, "stroke": true, "weight": 6}
+            ).addTo(feature_group_fa5ee9a38d0cacb93e7b7e6b850f5668);
         
     
-            poly_line_1df7c5f4435a888887b5e1c0edd0fdc3.bindTooltip(
+        var popup_2c5193bab66dba20c7da10987d6e2199 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_e605aac06d91fdb8501f741751a16eba = $(`<div id="html_e605aac06d91fdb8501f741751a16eba" style="width: 100.0%; height: 100.0%;"><div style='font:14px/1.4 system-ui,sans-serif;min-width:200px'><b>Collins Ave</b><br><span style='color:#2e7d32;font-weight:600'>Low hidden damage risk</span><br>Groundwater is close to the surface.<br>Evacuation route<br>Recommended plan: Not repaired<br>Today's approach: Not repaired</div></div>`)[0];
+                popup_2c5193bab66dba20c7da10987d6e2199.setContent(html_e605aac06d91fdb8501f741751a16eba);
+            
+        
+
+        poly_line_c90d8848e51eba310f0e4ead2c283d91.bindPopup(popup_2c5193bab66dba20c7da10987d6e2199)
+        ;
+
+        
+    
+    
+            poly_line_c90d8848e51eba310f0e4ead2c283d91.bindTooltip(
                 `<div>
-                     QAOA simulator (reps=2): repair S09
+                     Collins Ave: Low hidden damage risk
                  </div>`,
                 {
   "sticky": true,
@@ -433,185 +851,80 @@
             );
         
     
-            var poly_line_14de199ce55aa7d88e90b65ea3c3896f = L.polyline(
-                [[25.789, -80.136], [25.793, -80.136]],
-                {"bubblingMouseEvents": true, "color": "#2c3e50", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#2c3e50", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.45, "smoothFactor": 1.0, "stroke": true, "weight": 14}
-            ).addTo(feature_group_622119f1d46c9f192f8677c5efd91e1f);
+            feature_group_fa5ee9a38d0cacb93e7b7e6b850f5668.addTo(map_f461b456a88949cd34e7f9f79894321f);
         
     
-            poly_line_14de199ce55aa7d88e90b65ea3c3896f.bindTooltip(
-                `<div>
-                     QAOA simulator (reps=2): repair S10
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
-        
-    
-            feature_group_622119f1d46c9f192f8677c5efd91e1f.addTo(map_a55508556867f95a99739c6304835e39);
-        
-    
-            var feature_group_75d352c1ec07ce7e3ee77b75ca6f9efb = L.featureGroup(
+            var feature_group_9c1b1f697fa13632971ad449ca9038ce = L.featureGroup(
                 {
 }
             );
         
     
-            var poly_line_4e3229842abe0244ff9bd63cb1a619de = L.polyline(
-                [[25.785, -80.136], [25.789, -80.136]],
-                {"bubblingMouseEvents": true, "color": "#8e44ad", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#8e44ad", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.45, "smoothFactor": 1.0, "stroke": true, "weight": 14}
-            ).addTo(feature_group_75d352c1ec07ce7e3ee77b75ca6f9efb);
+            var poly_line_3f025e177acd3e18ad38a8ac8ca5812b = L.polyline(
+                [[25.81375, -80.13625], [25.81385, -80.13035]],
+                {"bubblingMouseEvents": true, "color": "#7b2d8e", "dashArray": "2 7", "dashOffset": null, "fill": false, "fillColor": "#7b2d8e", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(feature_group_9c1b1f697fa13632971ad449ca9038ce);
         
     
-            poly_line_4e3229842abe0244ff9bd63cb1a619de.bindTooltip(
-                `<div>
-                     Classical exact: repair S03
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
+            var poly_line_079a13a28a4bc631f522cfbac2c4e179 = L.polyline(
+                [[25.81385, -80.13035], [25.81408, -80.12786]],
+                {"bubblingMouseEvents": true, "color": "#7b2d8e", "dashArray": "2 7", "dashOffset": null, "fill": false, "fillColor": "#7b2d8e", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(feature_group_9c1b1f697fa13632971ad449ca9038ce);
         
     
-            var poly_line_edeb0fbe2eec2ed2cc2fdb159936b098 = L.polyline(
-                [[25.789, -80.14], [25.789, -80.136]],
-                {"bubblingMouseEvents": true, "color": "#8e44ad", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#8e44ad", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.45, "smoothFactor": 1.0, "stroke": true, "weight": 14}
-            ).addTo(feature_group_75d352c1ec07ce7e3ee77b75ca6f9efb);
+            var poly_line_f2991d81faabba7d250b9240aaed995e = L.polyline(
+                [[25.81408, -80.12786], [25.81372, -80.12505]],
+                {"bubblingMouseEvents": true, "color": "#7b2d8e", "dashArray": "2 7", "dashOffset": null, "fill": false, "fillColor": "#7b2d8e", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(feature_group_9c1b1f697fa13632971ad449ca9038ce);
         
     
-            poly_line_edeb0fbe2eec2ed2cc2fdb159936b098.bindTooltip(
-                `<div>
-                     Classical exact: repair S07
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
+            var poly_line_7107e009d44229212e9d6801eb41a8e7 = L.polyline(
+                [[25.81267, -80.13635], [25.81375, -80.13625]],
+                {"bubblingMouseEvents": true, "color": "#7b2d8e", "dashArray": "2 7", "dashOffset": null, "fill": false, "fillColor": "#7b2d8e", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(feature_group_9c1b1f697fa13632971ad449ca9038ce);
         
     
-            var poly_line_88ba04befa3741229e351155e7e7f642 = L.polyline(
-                [[25.789, -80.136], [25.789, -80.132]],
-                {"bubblingMouseEvents": true, "color": "#8e44ad", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#8e44ad", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.45, "smoothFactor": 1.0, "stroke": true, "weight": 14}
-            ).addTo(feature_group_75d352c1ec07ce7e3ee77b75ca6f9efb);
+            var poly_line_fa89e81d7781f4be0d356398dbf326eb = L.polyline(
+                [[25.81375, -80.13625], [25.81483, -80.13615]],
+                {"bubblingMouseEvents": true, "color": "#7b2d8e", "dashArray": "2 7", "dashOffset": null, "fill": false, "fillColor": "#7b2d8e", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(feature_group_9c1b1f697fa13632971ad449ca9038ce);
         
     
-            poly_line_88ba04befa3741229e351155e7e7f642.bindTooltip(
-                `<div>
-                     Classical exact: repair S09
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
+            var poly_line_c8df8ec840e499b9675273e33835e880 = L.polyline(
+                [[25.81157, -80.12228], [25.81265, -80.12218]],
+                {"bubblingMouseEvents": true, "color": "#14213d", "dashArray": "8 8", "dashOffset": null, "fill": false, "fillColor": "#14213d", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1, "smoothFactor": 1.0, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_9c1b1f697fa13632971ad449ca9038ce);
         
     
-            var poly_line_485b015d2af2dce2c388aec7f6ffd43f = L.polyline(
-                [[25.789, -80.136], [25.793, -80.136]],
-                {"bubblingMouseEvents": true, "color": "#8e44ad", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#8e44ad", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.45, "smoothFactor": 1.0, "stroke": true, "weight": 14}
-            ).addTo(feature_group_75d352c1ec07ce7e3ee77b75ca6f9efb);
+            var poly_line_0d4d12390dae18bbeca624f50390477d = L.polyline(
+                [[25.81265, -80.12218], [25.81373, -80.12208]],
+                {"bubblingMouseEvents": true, "color": "#14213d", "dashArray": "8 8", "dashOffset": null, "fill": false, "fillColor": "#14213d", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1, "smoothFactor": 1.0, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_9c1b1f697fa13632971ad449ca9038ce);
         
     
-            poly_line_485b015d2af2dce2c388aec7f6ffd43f.bindTooltip(
-                `<div>
-                     Classical exact: repair S10
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
+            feature_group_9c1b1f697fa13632971ad449ca9038ce.addTo(map_f461b456a88949cd34e7f9f79894321f);
         
     
-            var feature_group_211d2c79716bda1942d5238bd2cb384e = L.featureGroup(
-                {
-}
-            );
-        
-    
-            var poly_line_9a16feecfe6de59baafdc45ac8856882 = L.polyline(
-                [[25.785, -80.136], [25.789, -80.136]],
-                {"bubblingMouseEvents": true, "color": "#2980b9", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#2980b9", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.45, "smoothFactor": 1.0, "stroke": true, "weight": 14}
-            ).addTo(feature_group_211d2c79716bda1942d5238bd2cb384e);
-        
-    
-            poly_line_9a16feecfe6de59baafdc45ac8856882.bindTooltip(
-                `<div>
-                     Current policy (most 311 reports): repair S03
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
-        
-    
-            var poly_line_0a9b3afc68f6b27d3df86489c3919ab6 = L.polyline(
-                [[25.789, -80.14], [25.789, -80.136]],
-                {"bubblingMouseEvents": true, "color": "#2980b9", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#2980b9", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.45, "smoothFactor": 1.0, "stroke": true, "weight": 14}
-            ).addTo(feature_group_211d2c79716bda1942d5238bd2cb384e);
-        
-    
-            poly_line_0a9b3afc68f6b27d3df86489c3919ab6.bindTooltip(
-                `<div>
-                     Current policy (most 311 reports): repair S07
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
-        
-    
-            var poly_line_90fe3cf0301be76b547355e10db0f406 = L.polyline(
-                [[25.789, -80.132], [25.793, -80.132]],
-                {"bubblingMouseEvents": true, "color": "#2980b9", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#2980b9", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.45, "smoothFactor": 1.0, "stroke": true, "weight": 14}
-            ).addTo(feature_group_211d2c79716bda1942d5238bd2cb384e);
-        
-    
-            poly_line_90fe3cf0301be76b547355e10db0f406.bindTooltip(
-                `<div>
-                     Current policy (most 311 reports): repair S12
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
-        
-    
-            var poly_line_7213b22b880c4ad126a6a8dfb4f46f91 = L.polyline(
-                [[25.793, -80.132], [25.793, -80.128]],
-                {"bubblingMouseEvents": true, "color": "#2980b9", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#2980b9", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.45, "smoothFactor": 1.0, "stroke": true, "weight": 14}
-            ).addTo(feature_group_211d2c79716bda1942d5238bd2cb384e);
-        
-    
-            poly_line_7213b22b880c4ad126a6a8dfb4f46f91.bindTooltip(
-                `<div>
-                     Current policy (most 311 reports): repair S16
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
-        
-    
-            var layer_control_2a75cda226826d704c2e65cf67287d7e_layers = {
+            var layer_control_74b806d3377df464318023d9a7909532_layers = {
                 base_layers : {
-                    "cartodbpositron" : tile_layer_95973c658a237ebc8fc0a52c24ba7a5f,
+                    "openstreetmap" : tile_layer_ba067bed73b4cc7f2707918e99567ab2,
                 },
                 overlays :  {
-                    "Hidden-damage risk" : feature_group_943ead8769b5d64802b39171553bf8a4,
-                    "Repairs: QAOA simulator (reps=2)" : feature_group_622119f1d46c9f192f8677c5efd91e1f,
-                    "Repairs: Classical exact" : feature_group_75d352c1ec07ce7e3ee77b75ca6f9efb,
-                    "Repairs: Current policy (most 311 reports)" : feature_group_211d2c79716bda1942d5238bd2cb384e,
+                    "Recommended repairs" : feature_group_c3e36432049d390fe219b9e332461fdf,
+                    "Today\u0027s approach (most complaints)" : feature_group_53c3c4b04ebdbcd464900261bff000f3,
+                    "Hidden damage risk" : feature_group_fa5ee9a38d0cacb93e7b7e6b850f5668,
+                    "Evacuation \u0026 hospital routes" : feature_group_9c1b1f697fa13632971ad449ca9038ce,
                 },
             };
-            let layer_control_2a75cda226826d704c2e65cf67287d7e = L.control.layers(
-                layer_control_2a75cda226826d704c2e65cf67287d7e_layers.base_layers,
-                layer_control_2a75cda226826d704c2e65cf67287d7e_layers.overlays,
+            let layer_control_74b806d3377df464318023d9a7909532 = L.control.layers(
+                layer_control_74b806d3377df464318023d9a7909532_layers.base_layers,
+                layer_control_74b806d3377df464318023d9a7909532_layers.overlays,
                 {
   "position": "topright",
-  "collapsed": false,
+  "collapsed": true,
   "autoZIndex": true,
 }
-            ).addTo(map_a55508556867f95a99739c6304835e39);
+            ).addTo(map_f461b456a88949cd34e7f9f79894321f);
 
         
 </script>

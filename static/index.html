@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Undertow</title>
+<meta name="description" content="Which roads are failing from below, and which repairs keep evacuation and hospital routes open.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
+<link href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css" rel="stylesheet">
+<style>
+:root{
+  --ink:#070b18; --ink-2:#0d1428; --text:#eef1f8; --muted:#9aa6c4; --line:rgba(255,255,255,.12);
+  --glass:rgba(14,20,40,.62); --glass-strong:rgba(14,20,40,.8);
+  --accent:#ff9a5a; --accent-2:#ff6b4a; --ice:#cfe8ff; --calm:#4a628c;
+  --radius:18px; --ease:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--ink);color:var(--text);font:15px/1.5 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+#map{position:fixed;inset:0}
+.glass{background:var(--glass);-webkit-backdrop-filter:blur(18px) saturate(140%);backdrop-filter:blur(18px) saturate(140%);
+  border:1px solid var(--line);border-radius:var(--radius);box-shadow:0 20px 60px rgba(0,0,0,.45)}
+.maplibregl-ctrl-bottom-right{bottom:150px}
+.maplibregl-ctrl-attrib{background:rgba(7,11,24,.6)!important;color:var(--muted)!important}
+.maplibregl-ctrl-attrib a{color:var(--muted)!important}
+
+/* ---- main panel ---- */
+#panel{position:fixed;top:20px;left:20px;width:min(400px,calc(100vw - 40px));padding:24px 26px 22px;z-index:5}
+.brand{display:flex;align-items:center;gap:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;font-size:12px;color:var(--muted)}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 14px 3px rgba(255,154,90,.7)}
+.tag{margin-left:auto;font-size:11px;letter-spacing:.04em;text-transform:none;font-weight:500;color:#ffd9bd;
+  background:rgba(255,154,90,.14);border:1px solid rgba(255,154,90,.35);border-radius:999px;padding:2px 10px}
+.tagline{margin:10px 0 0;color:var(--muted);font-size:14px}
+#headline{font-family:"Playfair Display",Georgia,serif;font-weight:500;font-size:29px;line-height:1.2;margin:18px 0 20px;letter-spacing:-.005em;
+  transition:opacity .3s var(--ease)}
+#headline em{font-style:normal;color:var(--accent)}
+.label{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:0 0 8px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:6px}
+.chip{appearance:none;border:1px solid var(--line);background:rgba(255,255,255,.04);color:var(--text);font:500 13px Inter,sans-serif;
+  padding:8px 14px;border-radius:999px;cursor:pointer;transition:all .3s var(--ease)}
+.chip:hover{background:rgba(255,255,255,.1)}
+.chip[aria-pressed=true]{background:var(--text);color:var(--ink);border-color:var(--text)}
+#budgetnote{color:var(--muted);font-size:13px;margin:6px 0 18px;min-height:20px}
+.seg{position:relative;display:grid;grid-template-columns:1fr 1fr;background:rgba(255,255,255,.06);border:1px solid var(--line);border-radius:999px;padding:4px}
+.seg button{position:relative;z-index:1;appearance:none;border:0;background:none;color:var(--muted);font:500 13px Inter,sans-serif;padding:10px 8px;cursor:pointer;
+  border-radius:999px;transition:color .3s var(--ease)}
+.seg button[aria-pressed=true]{color:var(--ink)}
+.thumb{position:absolute;top:4px;bottom:4px;left:4px;width:calc(50% - 4px);background:var(--text);border-radius:999px;transition:transform .3s var(--ease)}
+.seg[data-mode=undertow] .thumb{transform:translateX(100%)}
+.legend{display:flex;align-items:center;gap:10px;margin-top:18px;font-size:12px;color:var(--muted);flex-wrap:wrap}
+.ramp{width:90px;height:6px;border-radius:3px;background:linear-gradient(90deg,#4a628c,#ffb064,#ff6b4a)}
+.sw{display:inline-block;width:18px;height:6px;border-radius:3px;background:var(--ice);box-shadow:0 0 10px 2px rgba(207,232,255,.6);vertical-align:middle;margin-right:6px}
+
+/* ---- top-right ---- */
+#help{position:fixed;top:20px;right:20px;z-index:5;appearance:none;color:var(--text);font:500 13px Inter,sans-serif;padding:10px 16px;cursor:pointer;border-radius:999px}
+#help:hover{background:var(--glass-strong)}
+#road{position:fixed;top:68px;right:20px;width:min(310px,calc(100vw - 40px));padding:18px 20px;z-index:5;transition:opacity .3s var(--ease),transform .3s var(--ease)}
+#road[hidden]{display:block;opacity:0;pointer-events:none;transform:translateY(-6px)}
+#road h3{margin:0 0 4px;font-size:16px;font-weight:600;padding-right:22px}
+#road .risk{font-size:13px;font-weight:600}
+#road p{margin:8px 0;color:var(--muted);font-size:13px}
+#road .row{display:flex;justify-content:space-between;font-size:13px;border-top:1px solid var(--line);padding:8px 0 0;margin-top:8px}
+#road .row b{font-weight:500}
+#road .x{position:absolute;top:10px;right:12px;appearance:none;border:0;background:none;color:var(--muted);font-size:22px;line-height:1;cursor:pointer}
+
+/* ---- bottom ---- */
+#bottom{position:fixed;left:0;right:0;bottom:0;z-index:5;padding:0 20px 14px;display:flex;flex-direction:column;align-items:center;gap:10px;pointer-events:none}
+#strip{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;width:min(900px,100%);pointer-events:auto}
+.card{padding:16px 20px}
+.card .k{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.card .v{font-family:"Playfair Display",Georgia,serif;font-size:38px;line-height:1.1;margin:6px 0 4px;font-weight:500;font-variant-numeric:tabular-nums}
+.card .cmp{display:flex;gap:14px;font-size:12px;color:var(--muted)}
+.card .cmp span.on{color:var(--text);font-weight:600}
+#help2{display:none;appearance:none;border:0;background:none;color:var(--text);font:500 12px Inter,sans-serif;text-decoration:underline;cursor:pointer;margin-left:8px}
+#foot{font-size:12px;color:var(--muted);text-shadow:0 1px 8px #000;pointer-events:auto}
+
+/* ---- how it works ---- */
+#how{position:fixed;inset:0;z-index:10;display:grid;place-items:center;background:rgba(5,8,18,.55);padding:20px;transition:opacity .3s var(--ease)}
+#how[hidden]{display:grid;opacity:0;pointer-events:none}
+#how .sheet{max-width:560px;max-height:calc(100vh - 40px);overflow:auto;padding:30px 32px;background:var(--glass-strong)}
+#how h2{font-family:"Playfair Display",Georgia,serif;font-weight:500;font-size:30px;margin:0 0 6px}
+#how ol{padding:0;margin:18px 0;list-style:none;counter-reset:s}
+#how li{counter-increment:s;position:relative;padding-left:44px;margin:0 0 16px;color:var(--muted)}
+#how li b{color:var(--text);font-weight:600}
+#how li::before{content:counter(s);position:absolute;left:0;top:0;width:28px;height:28px;border-radius:50%;border:1px solid var(--accent);color:var(--accent);display:grid;place-items:center;font-size:13px;font-weight:600}
+#how .limits{border-left:2px solid var(--accent);padding:2px 0 2px 14px;color:var(--text);font-size:14px;margin:18px 0}
+#how a{color:var(--accent)}
+#how .close{margin-top:6px;appearance:none;border:1px solid var(--line);background:rgba(255,255,255,.06);color:var(--text);font:500 13px Inter,sans-serif;padding:9px 18px;border-radius:999px;cursor:pointer}
+#err{position:fixed;inset:0;display:none;place-items:center;text-align:center;padding:30px;color:var(--muted);z-index:20;background:var(--ink)}
+
+@media (max-width:700px){
+  #panel{top:12px;left:12px;right:12px;width:auto;padding:16px 18px 16px}
+  #headline{font-size:19px;margin:8px 0 10px!important}
+  .tagline,.label,#budgetnote,.legend{display:none}
+  .chips{margin-bottom:10px;gap:6px}
+  .chip{padding:6px 12px;font-size:12px}
+  .seg button{padding:8px 6px;font-size:12px}
+  #help{display:none}
+  #help2{display:inline!important}
+  #road{top:auto;bottom:196px;right:12px;left:12px;width:auto}
+  #bottom{padding:0 10px 8px}
+  #strip{gap:8px}
+  .card{padding:10px 12px}
+  .card .v{font-size:24px}
+  .card .cmp{flex-direction:column;gap:0}
+  .maplibregl-ctrl-bottom-right{display:none}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<div id="map"></div>
+
+<section id="panel" class="glass" aria-label="Undertow">
+  <div class="brand"><span class="dot"></span>Undertow<span class="tag" id="tag" hidden></span></div>
+  <p class="tagline">Roads fail from below, before potholes show. See which ones, and which repairs matter most.</p>
+  <h1 id="headline" style="margin-bottom:20px"></h1>
+  <p class="label">Repair budget</p>
+  <div class="chips" id="chips" role="group" aria-label="Repair budget"></div>
+  <div id="budgetnote"></div>
+  <div class="seg" id="seg" data-mode="undertow" role="group" aria-label="Which plan to show">
+    <span class="thumb"></span>
+    <button data-mode="today" aria-pressed="false">Today's approach</button>
+    <button data-mode="undertow" aria-pressed="true">Undertow plan</button>
+  </div>
+  <div class="legend"><span class="ramp"></span>Lower to higher hidden damage risk<span><i class="sw"></i>Repaired</span></div>
+</section>
+
+<button id="help" class="glass">How it works</button>
+<aside id="road" class="glass" hidden aria-live="polite">
+  <button class="x" id="roadx" aria-label="Close">&times;</button>
+  <h3 id="r-name"></h3><div class="risk" id="r-risk"></div>
+  <p id="r-reason"></p>
+  <div class="row"><span>Today's approach</span><b id="r-today"></b></div>
+  <div class="row" style="border:0;margin-top:2px;padding-top:2px"><span>Undertow plan</span><b id="r-ut"></b></div>
+</aside>
+
+<div id="bottom">
+  <div id="strip"></div>
+  <div id="foot"><button id="help2">How it works</button></div>
+</div>
+
+<div id="how" hidden role="dialog" aria-modal="true" aria-label="How it works">
+  <div class="sheet glass">
+    <h2>How it works</h2>
+    <ol>
+      <li><b>We score every road for hidden damage.</b> King tides and a high water table soak the ground under a road. We combine tide exposure, groundwater depth and elevation into one risk score.</li>
+      <li><b>We shortlist the roads that matter most.</b> A damaged road on an evacuation or hospital route counts for more than one on a quiet side street.</li>
+      <li><b>A quantum optimizer picks the best combination within your budget.</b> Repairs on connected roads reinforce each other, so the best set is not simply the worst roads. This was computed ahead of time with IBM's Qiskit on a simulator.</li>
+      <li><b>We compare it with today's approach:</b> fixing the roads that get the most complaints.</li>
+    </ol>
+    <p class="limits">Honest limits: this is a small problem, and a regular computer finds the same answer today. Real quantum hardware is still too noisy for city-sized problems. The point is that the method works and is ready to scale.</p>
+    <p id="how-data" style="color:var(--muted);font-size:13px"></p>
+    <p style="font-size:13px"><a href="https://github.com/KatharineRingo/Qiskit-Hackathon/blob/main/notebooks/undertow_qaoa.ipynb" target="_blank" rel="noopener">See the full analysis in the notebook</a></p>
+    <button class="close" id="howx">Close</button>
+  </div>
+</div>
+<div id="err"><div><h2 style="font-family:'Playfair Display',serif;color:var(--text)">Couldn't load data</h2>Run <code>python scripts/precompute.py</code>, then serve this folder with <code>python -m http.server -d web 8000</code>.</div></div>
+
+<script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+<script src="https://unpkg.com/deck.gl@9.0.38/dist.min.js"></script>
+<script>
+(async function () {
+  const $ = (id) => document.getElementById(id);
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const METRIC_KEYS = { evac_open_pct: 'evac_route_open_%', hospital_open_pct: 'hospital_access_open_%' };
+
+  let D;
+  try { D = await (await fetch('data.json', { cache: 'no-store' })).json(); }
+  catch (e) { $('err').style.display = 'grid'; return; }
+
+  const state = { b: Math.min(1, D.budgets.length - 1), mode: 'undertow', selected: null };
+  const budget = () => D.budgets[state.b];
+
+  // ---------- helpers ----------
+  const pct = (v) => (v < 10 && v > 0 ? v.toFixed(1) : v.toFixed(0)) + '%';
+  const fmtFail = (v) => v.toFixed(1);
+  const fmtInt = (v) => String(Math.round(v));
+  const lerp = (a, b, t) => a + (b - a) * t;
+  const mix = (c1, c2, t) => c1.map((v, i) => Math.round(lerp(v, c2[i], t)));
+  const CALM = [74, 98, 140], WARM = [255, 176, 100], HOT = [255, 107, 74], ICE = [207, 232, 255];
+  const riskColor = (r) => (r < 0.5 ? mix(CALM, WARM, r / 0.5) : mix(WARM, HOT, Math.min(1, (r - 0.5) / 0.4)));
+
+  const repairedSet = (key) => new Set(budget().plans[key].repairs);
+  const metricGain = (b, k) => b.plans.undertow.metrics[k] - b.plans.today.metrics[k];
+  function leadMetric(b) {  // the route measure the plan improves most
+    return Object.keys(METRIC_KEYS).reduce((best, k) => (metricGain(b, k) > metricGain(b, best) ? k : best), 'evac_open_pct');
+  }
+
+  // ---------- UI: header, chips, strip ----------
+  const tag = $('tag');
+  if (D.data_note) { tag.hidden = false; tag.textContent = D.synthetic ? 'Demo data' : 'Illustrative data'; tag.title = D.data_note; }
+  $('how-data').textContent = D.data_note || '';
+  D.budgets.forEach((b, i) => {
+    const c = document.createElement('button');
+    c.className = 'chip'; c.textContent = b.label; c.setAttribute('aria-pressed', i === state.b);
+    c.onclick = () => { state.b = i; state.selected = null; refresh(true); };
+    $('chips').appendChild(c);
+  });
+  $('foot').insertAdjacentText('afterbegin', 'Repair plan optimized with quantum computing (IBM Qiskit)');
+
+  const cards = [
+    { id: 'c0', fmt: pct, label: () => 'Chance the ' + D.route_labels[METRIC_KEYS[leadMetric(budget())]] + ' stays open',
+      get: (b, p) => b.plans[p].metrics[leadMetric(b)] },
+    { id: 'c1', fmt: fmtFail, label: () => 'Expected road failures avoided', get: (b, p) => b.plans[p].metrics.failures_avoided },
+    { id: 'c2', fmt: fmtInt, label: () => 'Budget used (' + D.budget_unit + ')', get: (b, p) => b.plans[p].metrics.budget_used },
+  ];
+  cards.forEach((c) => {
+    const el = document.createElement('div'); el.className = 'card glass'; el.id = c.id;
+    el.innerHTML = '<div class="k"></div><div class="v">0</div><div class="cmp"><span data-p="today"></span><span data-p="undertow"></span></div>';
+    $('strip').appendChild(el);
+  });
+
+  const counters = new WeakMap();
+  function countTo(el, to, fmt) {
+    const from = counters.has(el) ? counters.get(el).v : 0;
+    if (counters.has(el)) cancelAnimationFrame(counters.get(el).raf);
+    if (reduce) { el.textContent = fmt(to); counters.set(el, { v: to }); return; }
+    const t0 = performance.now(), dur = 700;
+    const st = { v: from, raf: 0 }; counters.set(el, st);
+    (function step(now) {
+      const t = Math.min(1, (now - t0) / dur), e = 1 - Math.pow(1 - t, 3);
+      st.v = lerp(from, to, e); el.textContent = fmt(st.v);
+      if (t < 1) st.raf = requestAnimationFrame(step);
+    })(t0);
+  }
+
+  function renderText() {
+    const b = budget(), k = leadMetric(b), u = b.plans.undertow.metrics, t = b.plans.today.metrics;
+    const route = D.route_labels[METRIC_KEYS[k]];
+    $('headline').innerHTML = metricGain(b, k) > 0.5
+      ? `Same budget. The ${route} stays open <em>${pct(u[k])}</em> of the time instead of ${pct(t[k])}.`
+      : `Same budget. Undertow avoids <em>${fmtFail(u.failures_avoided)}</em> expected road failures, against ${fmtFail(t.failures_avoided)} today.`;
+    $('budgetnote').textContent = `${b.budget} ${D.budget_unit} to spend. Undertow uses ${u.budget_used}, today's approach ${t.budget_used}.`;
+    [...$('chips').children].forEach((c, i) => c.setAttribute('aria-pressed', i === state.b));
+    $('seg').dataset.mode = state.mode;
+    [...$('seg').querySelectorAll('button')].forEach((x) => x.setAttribute('aria-pressed', x.dataset.mode === state.mode));
+    cards.forEach((c) => {
+      const el = $(c.id);
+      el.querySelector('.k').textContent = c.label();
+      countTo(el.querySelector('.v'), c.get(b, state.mode), c.fmt);
+      ['today', 'undertow'].forEach((p) => {
+        const s = el.querySelector(`[data-p=${p}]`);
+        s.textContent = (p === 'today' ? "Today's approach " : 'Undertow ') + c.fmt(c.get(b, p));
+        s.className = p === state.mode ? 'on' : '';
+      });
+    });
+    renderRoad();
+  }
+
+  function renderRoad() {
+    const card = $('road'), i = state.selected;
+    if (i == null) { card.hidden = true; return; }
+    const s = D.segments[i], tod = repairedSet('today').has(i), ut = repairedSet('undertow').has(i);
+    card.hidden = false;
+    $('r-name').textContent = s.name;
+    const rc = riskColor(s.risk);
+    $('r-risk').textContent = s.risk_word + ' hidden damage risk' + (s.evac ? ' · evacuation route' : '') + (s.hospital ? ' · hospital route' : '');
+    $('r-risk').style.color = `rgb(${rc.join(',')})`;
+    $('r-reason').textContent = s.reason;
+    $('r-today').textContent = tod ? 'Repaired' : 'Not repaired';
+    $('r-ut').textContent = ut ? 'Repaired' : 'Not repaired';
+  }
+
+  // ---------- map ----------
+  const FALLBACK_STYLE = { version: 8, sources: {}, layers: [{ id: 'bg', type: 'background', paint: { 'background-color': '#0a1020' } }] };
+  const map = new maplibregl.Map({
+    container: 'map', style: 'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json',
+    center: D.center, zoom: 15, pitch: 50, bearing: -18, attributionControl: { compact: true }, maxPitch: 70,
+  });
+  let styleOk = false;
+  map.on('style.load', () => { styleOk = true; });
+  setTimeout(() => { if (!styleOk) map.setStyle(FALLBACK_STYLE); }, 6000);
+  map.on('error', (e) => { if (!styleOk && e && e.error && /style|401|403|404/i.test(String(e.error.message || e.error.status))) map.setStyle(FALLBACK_STYLE); });
+
+  function fit() {
+    const wide = innerWidth > 700;
+    const cam = map.cameraForBounds(D.bounds, {
+      padding: wide ? { top: 70, bottom: 190, left: 470, right: 60 } : { top: 230, bottom: 210, left: 24, right: 24 }, bearing: -18, pitch: 50 });
+    if (cam) map.easeTo({ ...cam, bearing: -18, pitch: 50, duration: reduce ? 0 : 1600 });
+  }
+
+  const overlay = new deck.MapboxOverlay({ interleaved: false, layers: [], getCursor: ({ isHovering }) => (isHovering ? 'pointer' : 'grab') });
+  map.addControl(overlay);
+  map.addControl(new maplibregl.NavigationControl({ visualizePitch: true }), 'bottom-right');
+
+  function layers() {
+    const rep = repairedSet(state.mode), trig = [state.b, state.mode, state.selected];
+    const T = reduce ? {} : { getColor: 650, getWidth: 650 };
+    const common = { data: D.segments, getPath: (d) => d.path, widthUnits: 'pixels', capRounded: true, jointRounded: true, transitions: T };
+    return [
+      new deck.PathLayer({ ...common, id: 'risk-glow', getWidth: 20, getColor: (d) => [...riskColor(d.risk), Math.round(Math.pow(d.risk, 2.2) * 90)] }),
+      new deck.PathLayer({ ...common, id: 'repair-glow', data: D.segments.map((d, i) => ({ ...d, i })),
+        getWidth: (d) => (rep.has(d.i) ? 30 : 0), getColor: (d) => [...ICE, rep.has(d.i) ? 80 : 0],
+        updateTriggers: { getWidth: trig, getColor: trig } }),
+      new deck.PathLayer({ ...common, id: 'selected', data: state.selected == null ? [] : [D.segments[state.selected]], getWidth: 16, getColor: [255, 255, 255, 70] }),
+      new deck.PathLayer({ ...common, id: 'roads', data: D.segments.map((d, i) => ({ ...d, i })), pickable: true, autoHighlight: true,
+        highlightColor: [255, 255, 255, 110],
+        getWidth: (d) => (rep.has(d.i) ? 10 : 4.5), getColor: (d) => (rep.has(d.i) ? [...ICE, 255] : [...riskColor(d.risk), 235]),
+        updateTriggers: { getWidth: trig, getColor: trig },
+        onClick: ({ object }) => { state.selected = object ? object.i : null; refresh(false); } }),
+    ];
+  }
+
+  function refresh() { renderText(); overlay.setProps({ layers: layers() }); }
+
+  // ---------- events ----------
+  $('seg').querySelectorAll('button').forEach((b) => (b.onclick = () => { state.mode = b.dataset.mode; refresh(); }));
+  $('roadx').onclick = () => { state.selected = null; refresh(); };
+  const how = (open) => { $('how').hidden = !open; };
+  $('help').onclick = $('help2').onclick = () => how(true); $('howx').onclick = () => how(false);
+  $('how').onclick = (e) => { if (e.target.id === 'how') how(false); };
+  addEventListener('keydown', (e) => { if (e.key === 'Escape') { how(false); state.selected = null; refresh(); } });
+  addEventListener('resize', fit);
+
+  refresh();
+  map.once('load', () => { fit(); refresh(); });
+})();
+</script>
+</body>
+</html>

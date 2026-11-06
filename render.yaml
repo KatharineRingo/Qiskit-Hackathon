@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: undertow-solver
+    runtime: docker
+    dockerfilePath: ./solver/Dockerfile
+    dockerContext: .
+    plan: free            # free instances sleep when idle; the web app falls back to precomputed results meanwhile
+    healthCheckPath: /health
+    envVars:
+      - key: ALLOWED_ORIGINS
+        value: http://localhost:3000
+      - key: ALLOWED_ORIGIN_REGEX
+        value: https://.*\.vercel\.app
