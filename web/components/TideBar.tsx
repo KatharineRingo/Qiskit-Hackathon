@@ -16,6 +16,7 @@ export default function TideBar({ scenario, month, onMonth, compare }: { scenari
         <span className="flex items-center gap-2"><i className="h-[3px] w-5 rounded bg-white" />RoadQure repairs</span>
         {compare && <span className="flex items-center gap-2"><i className="h-[3px] w-5 rounded bg-today" />Today&apos;s approach</span>}
         <span className="flex items-center gap-2"><i className="w-5 border-t border-dashed border-paper/80" />Evacuation route</span>
+        <span className="flex items-center gap-2"><i className="grid h-4 w-4 place-items-center rounded-full bg-paper text-[10px] font-semibold not-italic text-water">H</i>Hospital</span>
       </div>
       <div className="flex items-end justify-between">
         <div className="text-[44px] font-light leading-none tracking-tight">{FULL[month]}</div>

@@ -123,10 +123,10 @@ export default function MapView(p: Props) {
 
   // ---- slow pulse for the repair glow and the king tide ground tint ----
   useEffect(() => {
-    if (reduce() || !(p.undertowIds.length || p.kingTide)) return;
-    const id = setInterval(() => setPulse((performance.now() % 4200) / 4200), 70);
+    if (reduce()) return;
+    const id = setInterval(() => setPulse((performance.now() % 4200) / 4200), 80);
     return () => clearInterval(id);
-  }, [p.undertowIds.length, p.kingTide]);
+  }, []);
 
   // ---- deck layers ----
   useEffect(() => {
@@ -185,13 +185,24 @@ export default function MapView(p: Props) {
       p.selectedId && new PathLayer<SegFeature>({
         ...common, id: "sel", data: feats.filter((f) => f.properties.id === p.selectedId), getPath: path, getWidth: 14, getColor: [255, 255, 255, 60],
       }),
+      // hospital: a clear landmark (pulsing ring, white disc with an H, bold label)
       new ScatterplotLayer({
-        id: "hospital", data: [p.scenario.hospital], getPosition: (d) => d.coord, getRadius: 9, radiusUnits: "pixels",
-        getFillColor: [...BLUE, 255], getLineColor: [255, 255, 255, 255], stroked: true, getLineWidth: 2, lineWidthUnits: "pixels",
+        id: "hospital-ring", data: [p.scenario.hospital], getPosition: (d) => d.coord, radiusUnits: "pixels",
+        getRadius: 24 + wave * 16, getFillColor: [...BLUE, Math.round(70 - wave * 55)] as [number, number, number, number],
+        updateTriggers: { getRadius: [pulse], getFillColor: [pulse] },
+      }),
+      new ScatterplotLayer({
+        id: "hospital", data: [p.scenario.hospital], getPosition: (d) => d.coord, getRadius: 15, radiusUnits: "pixels",
+        getFillColor: [255, 255, 255, 255], getLineColor: [...BLUE, 255], stroked: true, getLineWidth: 3, lineWidthUnits: "pixels",
       }),
       new TextLayer({
-        id: "hospital-label", data: [p.scenario.hospital], getPosition: (d) => d.coord, getText: (d) => d.name, getSize: 12,
-        getColor: [...PAPER, 220], getPixelOffset: [0, -20], fontFamily: "Inter Tight, system-ui, sans-serif", background: false,
+        id: "hospital-h", data: [p.scenario.hospital], getPosition: (d) => d.coord, getText: () => "H", getSize: 19,
+        getColor: [...BLUE, 255], fontWeight: 700, fontFamily: "Inter Tight, system-ui, sans-serif", getTextAnchor: "middle", getAlignmentBaseline: "center",
+      }),
+      new TextLayer({
+        id: "hospital-label", data: [p.scenario.hospital], getPosition: (d) => d.coord, getText: (d) => d.name, getSize: 15,
+        getColor: [...PAPER, 255], fontWeight: 500, getPixelOffset: [0, -38], fontFamily: "Inter Tight, system-ui, sans-serif",
+        background: true, getBackgroundColor: [5, 6, 10, 215], backgroundPadding: [10, 5], getBorderColor: [...BLUE, 200], getBorderWidth: 1,
       }),
     ].filter((l): l is NonNullable<typeof l> & object => typeof l === "object" && l !== null);
     overlay.setProps({ layers, getCursor: ({ isHovering }: { isHovering: boolean }) => (isHovering ? "pointer" : "grab") });
