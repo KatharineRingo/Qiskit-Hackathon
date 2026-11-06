@@ -1,4 +1,4 @@
 plan,segments_repaired,cost_used,objective,hidden_risk_removed,expected_failures_left,evac_route_open_%,hospital_access_open_%,seconds,note,repairs
 Current policy (most 311 reports),4,8,3.694,2.17,6.85,44.7,83.4,0.0,,S03 S07 S12 S16
-Classical exact,4,8,5.846,2.68,6.34,79.1,83.4,0.1,,S03 S07 S09 S10
-QAOA simulator (reps=2),4,8,5.846,2.68,6.34,79.1,83.4,4.86,14 qubits,S03 S07 S09 S10
+Classical exact,4,8,5.846,2.68,6.34,79.1,83.4,0.03,,S03 S07 S09 S10
+QAOA simulator (reps=2),4,8,5.846,2.68,6.34,79.1,83.4,2.3,14 qubits,S03 S07 S09 S10

@@ -47,7 +47,9 @@ def run_all(budget, k, reps, use_qaoa):
         rows.append({"plan": r.name, **s, "seconds": round(r.seconds, 2),
                      "repairs": " ".join(sorted(r.chosen))})
     table = pd.DataFrame(rows).set_index("plan")
-    fmap = build_map(df, {r.name: r.chosen for r in reversed(results)})
+    fmap = build_map(df, {r.name: r.chosen for r in reversed(results)},
+                     scores={r["plan"]: {k: v for k, v in r.items() if k != "plan"} for r in rows},
+                     demo_data=True)
     return df, table, fmap._repr_html_(), len(df), num_qubits(qp)
 
 
