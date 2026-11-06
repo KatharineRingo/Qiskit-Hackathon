@@ -136,7 +136,8 @@ def scenario() -> dict:
     return {
         "demo": True, "data_note": data_source_note(df),
         "center": [float(lons.mean()), float(lats.mean())],
-        "bounds": [[float(lons.min()), float(lats.min())], [float(lons.max()), float(lats.max())]],
+        "bounds": [[float(min(lons.min(), HOSPITAL["coord"][0])), float(min(lats.min(), HOSPITAL["coord"][1]))],
+                   [float(max(lons.max(), HOSPITAL["coord"][0])), float(max(lats.max(), HOSPITAL["coord"][1]))]],
         "bearing": round(theta - 90, 1),
         "segments": {"type": "FeatureCollection", "features": feats},
         "route": {"type": "FeatureCollection", "features": route},
