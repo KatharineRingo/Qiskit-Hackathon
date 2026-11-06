@@ -1,0 +1,10 @@
+fastapi
+uvicorn[standard]
+numpy==2.5.3
+pandas==3.0.5
+scipy==1.18.1
+networkx==3.7
+qiskit==2.6.2
+qiskit-aer==0.18.2
+qiskit-algorithms==0.4.0
+qiskit-optimization==0.7.0
