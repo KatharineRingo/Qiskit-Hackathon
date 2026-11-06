@@ -47,15 +47,23 @@ DEMO_DATA_NOTE = "Demo data: made-up roads for illustration, not real measuremen
 BUDGET_UNIT = "crew-days"
 
 
-def headline(recommended_pct: float | None, today_pct: float | None) -> str:
+# score_plan() column -> how a resident would say it
+ROUTE_METRICS = {
+    "evac_route_open_%": "evacuation route",
+    "hospital_access_open_%": "route to the hospital",
+}
+ESTIMATED_DATA_NOTE = "Illustrative data: values are estimates, not measurements."
+
+
+def headline(recommended_pct: float | None, today_pct: float | None, route: str = "evacuation route") -> str:
     if recommended_pct is None:
         return "Hidden damage risk and recommended repairs"
     if today_pct is None:
-        return f"Evacuation route stays open {recommended_pct:.0f}% of the time with the recommended repairs"
+        return f"The {route} stays open {recommended_pct:.0f}% of the time with the recommended repairs"
     if recommended_pct > today_pct:
-        return (f"Same budget: evacuation route stays open {recommended_pct:.0f}% of the time "
+        return (f"Same budget: the {route} stays open {recommended_pct:.0f}% of the time "
                 f"vs. {today_pct:.0f}% with today's approach")
-    return (f"Same budget: evacuation route stays open {recommended_pct:.0f}% of the time "
+    return (f"Same budget: the {route} stays open {recommended_pct:.0f}% of the time "
             f"(today's approach: {today_pct:.0f}%)")
 
 

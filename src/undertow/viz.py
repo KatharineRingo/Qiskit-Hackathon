@@ -24,11 +24,31 @@ def pick_plans(plans: dict[str, set[str]]) -> tuple[str | None, str | None]:
 
 
 def headline_text(scores: dict[str, dict] | None, plans: dict[str, set[str]]) -> str:
-    """One-line headline computed from score_plan() output, keyed by plan name."""
+    """One-line headline computed from score_plan() output, keyed by plan name.
+    Uses whichever route measure (evacuation / hospital) the recommended plan improves most."""
     rec, today = pick_plans(plans)
-    key = "evac_route_open_%"
-    get = lambda n: (scores or {}).get(n, {}).get(key) if n else None  # noqa: E731
-    return C.headline(get(rec), get(today))
+    best = None  # (gain, key, rec_pct, today_pct)
+    for key in C.ROUTE_METRICS:
+        r = (scores or {}).get(rec, {}).get(key) if rec else None
+        o = (scores or {}).get(today, {}).get(key) if today else None
+        if r is None:
+            continue
+        gain = r - o if o is not None else 0.0
+        if best is None or gain > best[0]:
+            best = (gain, key, r, o)
+    if best is None:
+        return C.headline(None, None)
+    return C.headline(best[2], best[3], C.ROUTE_METRICS[best[1]])
+
+
+def data_note(df: pd.DataFrame, demo_data: bool = False) -> str | None:
+    """Note shown on the map when numbers are not real measurements."""
+    if demo_data:
+        return C.DEMO_DATA_NOTE
+    src = df["data_source"].astype(str).str.lower() if "data_source" in df else pd.Series(dtype=str)
+    if src.str.contains("estimated|simulated|synthetic").any():
+        return C.ESTIMATED_DATA_NOTE
+    return None
 
 
 def segment_explanation(row) -> str:
@@ -163,7 +183,8 @@ def build_map(df: pd.DataFrame, plans: dict[str, set[str]], scores: dict[str, di
     folium.LayerControl(collapsed=True, position="topright").add_to(m)
 
     head = html.escape(headline_text(scores, plans))
-    demo = f"<span class='ut-demo'>{html.escape(C.DEMO_DATA_NOTE)}</span>" if demo_data else ""
+    note = data_note(df, demo_data)
+    demo = f"<span class='ut-demo'>{html.escape(note)}</span>" if note else ""
     panels = _CSS + f"<div class='ut-panel ut-title'>{head}{demo}</div>" + _legend_html(has_today)
     m.get_root().html.add_child(Element(panels))
     return m

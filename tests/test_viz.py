@@ -73,3 +73,18 @@ def test_charts_titles_are_computed_and_plain():
     g = {"Random guessing": 1.0, "Ideal simulator": 10.0, "Noisy, level 3": 5.0}
     fig = good_plans_chart(g, slide=True)
     assert "10x" in fig._suptitle.get_text() and fig.get_size_inches().tolist() == [16, 9]
+
+
+def test_headline_picks_the_route_measure_that_improves_most():
+    scores = {"QAOA simulator (reps=2)": {"evac_route_open_%": 61.5, "hospital_access_open_%": 32.7},
+              "Current policy (most 311 reports)": {"evac_route_open_%": 61.5, "hospital_access_open_%": 0.3}}
+    h = headline_text(scores, PLANS)
+    assert "hospital" in h and "33%" in h and "0%" in h
+
+
+def test_estimated_data_gets_a_note_even_when_not_demo():
+    from undertow.viz import data_note
+    df = _df()
+    assert data_note(df, demo_data=False) is None
+    df["data_source"] = "estimated elevation/tides"
+    assert "Illustrative" in data_note(df, demo_data=False)
