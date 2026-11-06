@@ -1,0 +1,41 @@
+[
+  {
+    "plan": "Current policy (most 311 reports)",
+    "segments_repaired": 4,
+    "cost_used": 8,
+    "objective": 3.694,
+    "hidden_risk_removed": 2.17,
+    "expected_failures_left": 6.85,
+    "evac_route_open_%": 44.7,
+    "hospital_access_open_%": 83.4,
+    "seconds": 0.0,
+    "note": "",
+    "repairs": "S03 S07 S12 S16"
+  },
+  {
+    "plan": "Classical exact",
+    "segments_repaired": 4,
+    "cost_used": 8,
+    "objective": 5.846,
+    "hidden_risk_removed": 2.68,
+    "expected_failures_left": 6.34,
+    "evac_route_open_%": 79.1,
+    "hospital_access_open_%": 83.4,
+    "seconds": 0.1,
+    "note": "",
+    "repairs": "S03 S07 S09 S10"
+  },
+  {
+    "plan": "QAOA simulator (reps=2)",
+    "segments_repaired": 4,
+    "cost_used": 8,
+    "objective": 5.846,
+    "hidden_risk_removed": 2.68,
+    "expected_failures_left": 6.34,
+    "evac_route_open_%": 79.1,
+    "hospital_access_open_%": 83.4,
+    "seconds": 4.86,
+    "note": "14 qubits",
+    "repairs": "S03 S07 S09 S10"
+  }
+]
