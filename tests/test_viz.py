@@ -63,3 +63,13 @@ def test_build_map_no_demo_note_for_real_data_and_uses_street_name():
     df["street_name"] = "Collins Ave"
     html = build_map(df, PLANS, SCORES, demo_data=False).get_root().render()
     assert "Demo data" not in html and "Collins Ave" in html
+
+
+def test_charts_titles_are_computed_and_plain():
+    from undertow.charts import evac_route_chart, good_plans_chart
+    e = {"Current policy (most 311 reports)": 44.7, "Classical exact": 79.1, "QAOA, ideal simulator": 79.1}
+    t = evac_route_chart(e, slide=True)._suptitle.get_text()
+    assert "79%" in t and "45%" in t and "QAOA" not in t
+    g = {"Random guessing": 1.0, "Ideal simulator": 10.0, "Noisy, level 3": 5.0}
+    fig = good_plans_chart(g, slide=True)
+    assert "10x" in fig._suptitle.get_text() and fig.get_size_inches().tolist() == [16, 9]
