@@ -128,7 +128,7 @@ def scenario() -> dict:
     for r in low.itertuples():
         for lvl, hw in enumerate((0.00095, 0.00065, 0.00035), start=1):
             water.append({"type": "Feature", "geometry": {"type": "Polygon", "coordinates": _quad((r.lon1, r.lat1), (r.lon2, r.lat2), hw)},
-                          "properties": {"level": lvl, "elevation_ft": float(r.elevation_ft)}})
+                          "properties": {"level": lvl, "elevation_ft": float(r.elevation_ft), "segment": r.segment_id}})
     lons = df[["lon1", "lon2"]].values.ravel(); lats = df[["lat1", "lat2"]].values.ravel()
     xy = np.column_stack([(lons - lons.mean()) * math.cos(math.radians(lats.mean())), lats - lats.mean()])
     _, _, vt = np.linalg.svd(xy, full_matrices=False)

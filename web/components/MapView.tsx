@@ -116,18 +116,18 @@ export default function MapView(p: Props) {
     const path = (f: SegFeature) => f.geometry.coordinates;
     const tide = 0.35 + 0.65 * p.tideLevel;
     const wave = reduce() ? 0.5 : 0.5 + 0.5 * Math.sin(pulse * Math.PI * 2);
+    const lowIds = new Set(p.scenario.water.features.map((w) => w.properties.segment));
     const ids = (s: Set<string>) => feats.filter((f) => s.has(f.properties.id));
     const common = { widthUnits: "pixels" as const, capRounded: true, jointRounded: true };
 
     const layers = [
-      p.waterOn && new PolygonLayer({
-        id: "water", data: p.scenario.water.features, getPolygon: (d) => d.geometry.coordinates, stroked: false,
-        getFillColor: (d) => [...BLUE, [0, 34, 52, 78][d.properties.level] ?? 40] as [number, number, number, number],
-        transitions: { getFillColor: 800 },
-      }),
+      ...(p.waterOn ? [[120, 16], [78, 24], [42, 34]] : []).map(([w, a], i) => new PathLayer<SegFeature>({
+        ...common, id: `water-glow-${i}`, data: feats.filter((f) => lowIds.has(f.properties.id)), getPath: path, getWidth: w,
+        getColor: [...BLUE, a] as [number, number, number, number], capRounded: true,
+      })),
       p.waterOn && new PolygonLayer({
         id: "water-contours", data: p.scenario.water.features, getPolygon: (d) => d.geometry.coordinates, filled: false, stroked: true,
-        getLineColor: [150, 200, 255, 170], getLineWidth: 1, lineWidthUnits: "pixels",
+        getLineColor: [150, 200, 255, 110], getLineWidth: 1, lineWidthUnits: "pixels",
       }),
       new PathLayer<SegFeature>({
         ...common, id: "dmg-glow", data: feats, getPath: path,
