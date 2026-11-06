@@ -88,16 +88,4 @@ python run_demo.py --candidates 6 --budget 4 --hardware
 1. `hardware.py` calls `service.least_busy(operational=True, simulator=False)`.
 2. It picks an actual superconducting quantum processor in New York (like `ibm_sherbrooke` or `ibm_brisbane`).
 3. It transpiles your 6-qubit circuit into physical microwave pulses.
-4. It submits the job to the IBM cloud queue and downloads the real measurement counts back to your terminal!
-
-> **Pro-Tip for Demo/Video**: Hardware queues can take 15–30 minutes at peak times. Run it once, let it finish, and save the output table to show on your slide!
-
----
-
-## 5. The 60-Second Video Pitch Script (Say This on Slide 1)
-
-> *"In South Florida, roads don't fail from snow—they fail from below. King tides and rising water tables soak the road base, but cities only react when visible potholes get reported on 311.*
-> 
-> *Undertow flips this model. We calculate hidden underwater flood risk, then map the city road network into an IBM Quantum QUBO. Because adjacent road repairs reinforce each other on evacuation corridors, Qiskit's QAOA finds the optimal connected repair plan.*
-> 
-> *For the exact same taxpayer budget, our quantum repair schedule boosts the chance your hurricane evacuation route stays open from 45% to 79%."*
+4. It submits the job to the IBM cloud queue and downloads the real measurement counts back to your terminal.
