@@ -23,7 +23,7 @@ export default function Page() {
   const [compassNonce, setCompassNonce] = useState(0);
   const [waterOn, setWaterOn] = useState(false);
   const [month, setMonth] = useState(0);
-  const [budgetIdx, setBudgetIdx] = useState(1);
+  const [budgetUnits, setBudgetUnits] = useState<number | null>(null);
   const [phase, setPhase] = useState<Phase>("idle");
   const [step, setStep] = useState(0);
   const [reveal, setReveal] = useState(0);
@@ -41,6 +41,7 @@ export default function Page() {
       setOffline(r.offline);
       const peak = r.scenario.tide.reduce((b, t, i, a) => (t.level > a[b].level ? i : b), 0);
       setMonth(peak);
+      setBudgetUnits(r.scenario.budget_range.default_units);
     });
   }, []);
 
@@ -50,10 +51,10 @@ export default function Page() {
   }, []);
 
   const onSolve = useCallback(async () => {
-    if (!data) return;
+    if (!data || budgetUnits == null) return;
     const id = ++run.current;
     setPhase("solving"); setStep(0); setReveal(0); setResult(null); setCompare(false); setFocus(null); setError(null); setSelected(null);
-    const units = data.scenario.budgets[budgetIdx].units;
+    const units = budgetUnits;
     const [res] = await Promise.all([solve(units).catch(() => null), sleep(800)]);
     if (id !== run.current) return;
     if (!res) { setPhase("idle"); setError("The search could not run. Please try again."); return; }
@@ -76,18 +77,18 @@ export default function Page() {
     if (id !== run.current) return;
     setPhase("done");
     setFocus({ ids: res.result.plans.undertow.segments, nonce: Date.now() });
-  }, [data, budgetIdx]);
+  }, [data, budgetUnits]);
 
   const done = phase === "done" && result;
   const undertowIds = useMemo(() => (done ? result.plans.undertow.segments : []), [done, result]);
   const todayIds = useMemo(() => (done ? result.plans.today.segments : []), [done, result]);
 
-  if (!data) return <div className="fixed inset-0 grid place-items-center text-sm muted">Loading…</div>;
+  if (!data || budgetUnits == null) return <div className="fixed inset-0 grid place-items-center text-sm muted">Loading…</div>;
   const { scenario, results } = data;
 
   return (
     <main>
-      <MapView scenario={scenario} threeD={threeD} tideLevel={scenario.tide[month]?.level ?? 1} waterOn={waterOn}
+      <MapView scenario={scenario} threeD={threeD} tideLevel={scenario.tide[month]?.level ?? 1} kingTide={!!scenario.tide[month]?.king_tide} waterOn={waterOn}
         undertowIds={undertowIds} todayIds={todayIds} compare={compare && !!done} selectedId={selected?.id ?? null}
         focus={focus} compassNonce={compassNonce} onSelect={setSelected} onBearing={setBearing} />
 
@@ -103,8 +104,8 @@ export default function Page() {
       <StreetCard seg={selected} onClose={() => setSelected(null)} />
 
       <div className="scroll-hidden fixed bottom-24 right-8 top-[88px] z-10 flex w-[400px] max-w-[calc(100vw-32px)] flex-col gap-4 overflow-y-auto">
-        <ControlPanel scenario={scenario} waterOn={waterOn} onWater={setWaterOn} budgetIdx={budgetIdx}
-          onBudget={(i) => { setBudgetIdx(i); resetSolve(); }} solving={phase === "solving"} onSolve={onSolve} />
+        <ControlPanel scenario={scenario} waterOn={waterOn} onWater={setWaterOn} budgetUnits={budgetUnits}
+          onBudget={(u) => { setBudgetUnits(u); resetSolve(); }} solving={phase === "solving"} onSolve={onSolve} />
         <SolvePanel phase={phase} step={step} reveal={reveal} result={result} scenario={scenario} compare={compare} onCompare={setCompare} offline={offline} />
         {error && <p className="glass p-5 text-sm">{error}</p>}
       </div>

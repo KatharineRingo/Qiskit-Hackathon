@@ -37,9 +37,9 @@ def scenario():
 
 @app.post("/solve")
 def solve(body: SolveIn):
-    total = int(S.load_df()["repair_cost"].sum())
-    if body.budget_units > total:
-        raise HTTPException(422, f"budget_units must be at most {total}")
+    rng = S.budget_range(S.load_df())
+    if not rng["min_units"] <= body.budget_units <= rng["max_units"]:
+        raise HTTPException(422, f"budget_units must be between {rng['min_units']} and {rng['max_units']}")
     return {k: v for k, v in service.solve(body.budget_units).items() if k != "theta"}
 
 

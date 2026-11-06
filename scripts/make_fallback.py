@@ -15,7 +15,8 @@ from solver.app import app  # noqa: E402
 
 client = TestClient(app)
 scenario = client.get("/scenario").json()
-solves = {str(b["units"]): client.post("/solve", json={"budget_units": b["units"]}).json() for b in scenario["budgets"]}
+rng = scenario["budget_range"]
+solves = {str(u): client.post("/solve", json={"budget_units": u}).json() for u in range(rng["min_units"], rng["max_units"] + 1)}
 out = {"scenario": scenario, "results": client.get("/results").json(), "solves": solves}
 dest = ROOT / "web" / "public" / "fallback.json"
 dest.parent.mkdir(parents=True, exist_ok=True)
