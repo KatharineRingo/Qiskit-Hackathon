@@ -1,0 +1,7 @@
+.venv
+.git
+web/node_modules
+web/.next
+notebooks
+results/*.png
+**/__pycache__
