@@ -121,9 +121,12 @@ def solve(budget: int) -> dict:
 def warm_angles() -> None:
     """Train once per preset budget and save the angles (run via scripts/make_fallback.py)."""
     out = _load_angles()
-    for b in S.budgets(S.load_df()):
+    rng = S.budget_range(S.load_df())
+    for units in range(rng["min_units"], rng["max_units"] + 1):
+        if str(units) in out:
+            continue
         solve.cache_clear()
-        r = solve(b["units"])
-        out[str(b["units"])] = {"theta": r["theta"], "price": r["price"]}
+        r = solve(units)
+        out[str(units)] = {"theta": r["theta"], "price": r["price"]}
         ANGLES.write_text(json.dumps(out))
     solve.cache_clear()

@@ -2,7 +2,7 @@
 
 import { Switch } from "./ControlPanel";
 import DotGrid from "./DotGrid";
-import { days, fmtPct, useCountUp } from "@/lib/hooks";
+import { fmtPct, useCountUp, usd } from "@/lib/hooks";
 import type { Scenario, SolveResult } from "@/lib/types";
 
 export type Phase = "idle" | "solving" | "done";
@@ -63,7 +63,7 @@ export default function SolvePanel({ phase, step, reveal, result, scenario, comp
         {rows.map((r) => (
           <li key={r.id} className="flex justify-between gap-3 py-2">
             <span>{r.street}{r.block !== "full length" && <span className="muted"> · {r.block}</span>}</span>
-            <span className="muted shrink-0">{days(r.crew_days)}</span>
+            <span className="muted shrink-0">{usd(r.crew_days * scenario.budget_range.dollars_per_crew_day)}</span>
           </li>
         ))}
       </ul>

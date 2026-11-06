@@ -143,7 +143,7 @@ export default function MapView(p: Props) {
     const lowSegs = feats.filter((f) => lowIds.has(f.properties.id));
     const layers = [
       // king tide: the low-lying ground takes on a soft blue wash that rises with the tide
-      ...(!p.waterOn ? [[150, 26], [100, 36], [56, 46]] : []).map(([w, a], i) => new PathLayer<SegFeature>({
+      ...(!p.waterOn ? [[130, 9], [88, 12], [50, 16]] : []).map(([w, a], i) => new PathLayer<SegFeature>({
         ...common, id: `tide-ground-${i}`, data: lowSegs, getPath: path, getWidth: w,
         getColor: [...BLUE, Math.round(a * level * breathe)] as [number, number, number, number],
         updateTriggers: { getColor: [level, breathe] },

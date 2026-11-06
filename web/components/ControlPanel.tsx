@@ -1,13 +1,14 @@
 "use client";
 
+import { usd } from "@/lib/hooks";
 import type { Scenario } from "@/lib/types";
 
 interface Props {
   scenario: Scenario;
   waterOn: boolean;
   onWater: (v: boolean) => void;
-  budgetIdx: number;
-  onBudget: (i: number) => void;
+  budgetUnits: number;
+  onBudget: (units: number) => void;
   solving: boolean;
   onSolve: () => void;
 }
@@ -21,8 +22,8 @@ export function Switch({ on, onChange, label }: { on: boolean; onChange: (v: boo
   );
 }
 
-export default function ControlPanel({ scenario, waterOn, onWater, budgetIdx, onBudget, solving, onSolve }: Props) {
-  const b = scenario.budgets[budgetIdx];
+export default function ControlPanel({ scenario, waterOn, onWater, budgetUnits, onBudget, solving, onSolve }: Props) {
+  const r = scenario.budget_range, rate = r.dollars_per_crew_day;
   return (
     <section className="glass p-7" aria-label="Controls">
       <div className="flex items-baseline gap-3"><span className="step-no">01</span><h2 className="text-[17px] font-medium">Hidden damage</h2></div>
@@ -34,14 +35,11 @@ export default function ControlPanel({ scenario, waterOn, onWater, budgetIdx, on
       <hr className="my-6 border-white/10" />
       <div className="flex items-baseline justify-between">
         <div className="flex items-baseline gap-3"><span className="step-no">02</span><h2 className="text-[17px] font-medium">Repair budget</h2></div>
-        <span className="muted text-sm">{b.units} {scenario.crew_day_label}</span>
+        <span className="text-[22px] font-light tabular-nums">{usd(budgetUnits * rate)}</span>
       </div>
-      <div className="mt-4 grid grid-cols-4 rounded-2xl bg-white/[0.07] p-1" role="group" aria-label="Repair budget">
-        {scenario.budgets.map((x, i) => (
-          <button key={x.key} onClick={() => onBudget(i)} aria-pressed={i === budgetIdx}
-            className={`rounded-xl py-2 text-sm transition-colors duration-500 ${i === budgetIdx ? "bg-paper font-medium text-ink" : "muted hover:text-paper"}`}>{x.label}</button>
-        ))}
-      </div>
+      <input className="mt-3" type="range" min={r.min_units} max={r.max_units} step={1} value={budgetUnits}
+        onChange={(e) => onBudget(Number(e.target.value))} aria-label="Repair budget in dollars" aria-valuetext={usd(budgetUnits * rate)} />
+      <div className="muted -mt-1 flex justify-between text-[12px] tabular-nums"><span>{usd(r.min_units * rate)}</span><span>{usd(r.max_units * rate)}</span></div>
 
       <hr className="my-6 border-white/10" />
       <div className="flex items-baseline gap-3"><span className="step-no">03</span><h2 className="text-[17px] font-medium">Best repairs</h2></div>
