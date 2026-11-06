@@ -85,7 +85,9 @@ def main() -> None:
     df.to_csv(OUT / "demo_segments_scored.csv", index=False)
     table.to_csv(OUT / "demo_plan_comparison.csv")
     (OUT / "demo_qubo.lp").write_text(qp.export_as_lp_string())
-    build_map(df, {r.name: r.chosen for r in reversed(results)}).save(str(OUT / "demo_map.html"))
+    build_map(df, {r.name: r.chosen for r in reversed(results)},
+              scores={r["plan"]: {k: v for k, v in r.items() if k != "plan"} for r in rows},
+              demo_data=not args.data).save(str(OUT / "demo_map.html"))
     (OUT / "demo_summary.json").write_text(json.dumps(rows, indent=2, default=str))
     print(f"\nWrote {OUT}/demo_map.html, demo_plan_comparison.csv, demo_segments_scored.csv, demo_qubo.lp")
 

@@ -1,0 +1,556 @@
+{
+ "synthetic": false,
+ "data_note": "Illustrative data: values are estimates, not measurements.",
+ "budget_unit": "crew-days",
+ "route_labels": {
+  "evac_route_open_%": "evacuation route",
+  "hospital_access_open_%": "route to the hospital"
+ },
+ "center": [
+  -80.12800525,
+  25.813647500000002
+ ],
+ "bounds": [
+  [
+   -80.13635,
+   25.81157
+  ],
+  [
+   -80.12208,
+   25.81516
+  ]
+ ],
+ "segments": [
+  {
+   "name": "W 40th St, block 1",
+   "path": [
+    [
+     -80.13635,
+     25.81267
+    ],
+    [
+     -80.13045,
+     25.81277
+    ]
+   ],
+   "risk": 0.936,
+   "risk_word": "High",
+   "reason": "Low-lying; floods during king tides; groundwater is close to the surface.",
+   "evac": false,
+   "hospital": false
+  },
+  {
+   "name": "W 40th St, block 2",
+   "path": [
+    [
+     -80.13045,
+     25.81277
+    ],
+    [
+     -80.12796,
+     25.813
+    ]
+   ],
+   "risk": 0.755,
+   "risk_word": "High",
+   "reason": "Floods during king tides; groundwater is close to the surface; few complaints so far, but damage is likely building underneath.",
+   "evac": false,
+   "hospital": false
+  },
+  {
+   "name": "W 40th St, block 3",
+   "path": [
+    [
+     -80.12796,
+     25.813
+    ],
+    [
+     -80.12515,
+     25.81264
+    ]
+   ],
+   "risk": 0.755,
+   "risk_word": "High",
+   "reason": "Floods during king tides; groundwater is close to the surface.",
+   "evac": false,
+   "hospital": false
+  },
+  {
+   "name": "W 40th St, block 4",
+   "path": [
+    [
+     -80.12515,
+     25.81264
+    ],
+    [
+     -80.12228,
+     25.81157
+    ]
+   ],
+   "risk": 0.36,
+   "risk_word": "Low",
+   "reason": "Groundwater is close to the surface.",
+   "evac": false,
+   "hospital": false
+  },
+  {
+   "name": "41st St, block 1",
+   "path": [
+    [
+     -80.13625,
+     25.81375
+    ],
+    [
+     -80.13035,
+     25.81385
+    ]
+   ],
+   "risk": 0.873,
+   "risk_word": "High",
+   "reason": "Low-lying; floods during king tides; groundwater is close to the surface.",
+   "evac": false,
+   "hospital": true
+  },
+  {
+   "name": "41st St, block 2",
+   "path": [
+    [
+     -80.13035,
+     25.81385
+    ],
+    [
+     -80.12786,
+     25.81408
+    ]
+   ],
+   "risk": 0.599,
+   "risk_word": "Medium",
+   "reason": "Floods during king tides; groundwater is close to the surface.",
+   "evac": false,
+   "hospital": true
+  },
+  {
+   "name": "41st St, block 3",
+   "path": [
+    [
+     -80.12786,
+     25.81408
+    ],
+    [
+     -80.12505,
+     25.81372
+    ]
+   ],
+   "risk": 0.599,
+   "risk_word": "Medium",
+   "reason": "Floods during king tides; groundwater is close to the surface; few complaints so far, but damage is likely building underneath.",
+   "evac": false,
+   "hospital": true
+  },
+  {
+   "name": "41st St, block 4",
+   "path": [
+    [
+     -80.12505,
+     25.81372
+    ],
+    [
+     -80.12218,
+     25.81265
+    ]
+   ],
+   "risk": 0.192,
+   "risk_word": "Low",
+   "reason": "Groundwater is close to the surface.",
+   "evac": false,
+   "hospital": false
+  },
+  {
+   "name": "W 42nd St, block 1",
+   "path": [
+    [
+     -80.13615,
+     25.81483
+    ],
+    [
+     -80.13025,
+     25.81493
+    ]
+   ],
+   "risk": 0.744,
+   "risk_word": "High",
+   "reason": "Floods during king tides; groundwater is close to the surface; few complaints so far, but damage is likely building underneath.",
+   "evac": false,
+   "hospital": false
+  },
+  {
+   "name": "W 42nd St, block 2",
+   "path": [
+    [
+     -80.13025,
+     25.81493
+    ],
+    [
+     -80.12776,
+     25.81516
+    ]
+   ],
+   "risk": 0.381,
+   "risk_word": "Low",
+   "reason": "Floods during king tides; groundwater is close to the surface.",
+   "evac": false,
+   "hospital": false
+  },
+  {
+   "name": "W 42nd St, block 3",
+   "path": [
+    [
+     -80.12776,
+     25.81516
+    ],
+    [
+     -80.12495,
+     25.8148
+    ]
+   ],
+   "risk": 0.381,
+   "risk_word": "Low",
+   "reason": "Floods during king tides; groundwater is close to the surface.",
+   "evac": false,
+   "hospital": false
+  },
+  {
+   "name": "W 42nd St, block 4",
+   "path": [
+    [
+     -80.12495,
+     25.8148
+    ],
+    [
+     -80.12208,
+     25.81373
+    ]
+   ],
+   "risk": 0.101,
+   "risk_word": "Low",
+   "reason": "Groundwater is close to the surface.",
+   "evac": false,
+   "hospital": false
+  },
+  {
+   "name": "Alton Rd, block 1",
+   "path": [
+    [
+     -80.13635,
+     25.81267
+    ],
+    [
+     -80.13625,
+     25.81375
+    ]
+   ],
+   "risk": 0.909,
+   "risk_word": "High",
+   "reason": "Low-lying; floods during king tides; groundwater is close to the surface.",
+   "evac": false,
+   "hospital": true
+  },
+  {
+   "name": "Alton Rd, block 2",
+   "path": [
+    [
+     -80.13625,
+     25.81375
+    ],
+    [
+     -80.13615,
+     25.81483
+    ]
+   ],
+   "risk": 0.804,
+   "risk_word": "High",
+   "reason": "Floods during king tides; groundwater is close to the surface; few complaints so far, but damage is likely building underneath.",
+   "evac": false,
+   "hospital": true
+  },
+  {
+   "name": "Sheridan Ave, block 1",
+   "path": [
+    [
+     -80.12796,
+     25.813
+    ],
+    [
+     -80.12786,
+     25.81408
+    ]
+   ],
+   "risk": 0.679,
+   "risk_word": "Medium",
+   "reason": "Floods during king tides; groundwater is close to the surface.",
+   "evac": false,
+   "hospital": false
+  },
+  {
+   "name": "Sheridan Ave, block 2",
+   "path": [
+    [
+     -80.12786,
+     25.81408
+    ],
+    [
+     -80.12776,
+     25.81516
+    ]
+   ],
+   "risk": 0.507,
+   "risk_word": "Medium",
+   "reason": "Floods during king tides; groundwater is close to the surface.",
+   "evac": false,
+   "hospital": false
+  },
+  {
+   "name": "Pine Tree Dr, block 1",
+   "path": [
+    [
+     -80.12515,
+     25.81264
+    ],
+    [
+     -80.12505,
+     25.81372
+    ]
+   ],
+   "risk": 0.45,
+   "risk_word": "Medium",
+   "reason": "Floods during king tides; groundwater is close to the surface; few complaints so far, but damage is likely building underneath.",
+   "evac": false,
+   "hospital": false
+  },
+  {
+   "name": "Pine Tree Dr, block 2",
+   "path": [
+    [
+     -80.12505,
+     25.81372
+    ],
+    [
+     -80.12495,
+     25.8148
+    ]
+   ],
+   "risk": 0.285,
+   "risk_word": "Low",
+   "reason": "Groundwater is close to the surface.",
+   "evac": false,
+   "hospital": false
+  },
+  {
+   "name": "Collins Ave, block 1",
+   "path": [
+    [
+     -80.12228,
+     25.81157
+    ],
+    [
+     -80.12218,
+     25.81265
+    ]
+   ],
+   "risk": 0.285,
+   "risk_word": "Low",
+   "reason": "Groundwater is close to the surface.",
+   "evac": true,
+   "hospital": false
+  },
+  {
+   "name": "Collins Ave, block 2",
+   "path": [
+    [
+     -80.12218,
+     25.81265
+    ],
+    [
+     -80.12208,
+     25.81373
+    ]
+   ],
+   "risk": 0.14,
+   "risk_word": "Low",
+   "reason": "Groundwater is close to the surface.",
+   "evac": true,
+   "hospital": false
+  }
+ ],
+ "budgets": [
+  {
+   "key": "small",
+   "label": "Small",
+   "budget": 7,
+   "optimizer": "qaoa",
+   "plans": {
+    "undertow": {
+     "repairs": [
+      4,
+      12
+     ],
+     "metrics": {
+      "evac_open_pct": 61.5,
+      "hospital_open_pct": 2.8,
+      "failures_avoided": 1.68,
+      "budget_used": 6,
+      "budget": 7,
+      "roads_repaired": 2
+     }
+    },
+    "today": {
+     "repairs": [
+      2,
+      7
+     ],
+     "metrics": {
+      "evac_open_pct": 61.5,
+      "hospital_open_pct": 0.0,
+      "failures_avoided": 0.85,
+      "budget_used": 7,
+      "budget": 7,
+      "roads_repaired": 2
+     }
+    }
+   }
+  },
+  {
+   "key": "medium",
+   "label": "Medium",
+   "budget": 14,
+   "optimizer": "qaoa",
+   "plans": {
+    "undertow": {
+     "repairs": [
+      0,
+      4,
+      12,
+      13
+     ],
+     "metrics": {
+      "evac_open_pct": 61.5,
+      "hospital_open_pct": 13.8,
+      "failures_avoided": 3.32,
+      "budget_used": 13,
+      "budget": 14,
+      "roads_repaired": 4
+     }
+    },
+    "today": {
+     "repairs": [
+      2,
+      4,
+      7,
+      9
+     ],
+     "metrics": {
+      "evac_open_pct": 61.5,
+      "hospital_open_pct": 0.3,
+      "failures_avoided": 2.0,
+      "budget_used": 14,
+      "budget": 14,
+      "roads_repaired": 4
+     }
+    }
+   }
+  },
+  {
+   "key": "large",
+   "label": "Large",
+   "budget": 21,
+   "optimizer": "qaoa",
+   "plans": {
+    "undertow": {
+     "repairs": [
+      0,
+      1,
+      4,
+      8,
+      12,
+      13
+     ],
+     "metrics": {
+      "evac_open_pct": 61.5,
+      "hospital_open_pct": 13.8,
+      "failures_avoided": 4.72,
+      "budget_used": 20,
+      "budget": 21,
+      "roads_repaired": 6
+     }
+    },
+    "today": {
+     "repairs": [
+      2,
+      4,
+      7,
+      9,
+      15,
+      17
+     ],
+     "metrics": {
+      "evac_open_pct": 61.5,
+      "hospital_open_pct": 0.3,
+      "failures_avoided": 2.69,
+      "budget_used": 20,
+      "budget": 21,
+      "roads_repaired": 6
+     }
+    }
+   }
+  },
+  {
+   "key": "max",
+   "label": "Max",
+   "budget": 32,
+   "optimizer": "qaoa",
+   "plans": {
+    "undertow": {
+     "repairs": [
+      0,
+      1,
+      4,
+      5,
+      6,
+      8,
+      12,
+      13
+     ],
+     "metrics": {
+      "evac_open_pct": 61.5,
+      "hospital_open_pct": 77.4,
+      "failures_avoided": 5.82,
+      "budget_used": 29,
+      "budget": 32,
+      "roads_repaired": 8
+     }
+    },
+    "today": {
+     "repairs": [
+      0,
+      2,
+      4,
+      7,
+      9,
+      12,
+      14,
+      15,
+      17
+     ],
+     "metrics": {
+      "evac_open_pct": 61.5,
+      "hospital_open_pct": 2.8,
+      "failures_avoided": 5.07,
+      "budget_used": 31,
+      "budget": 32,
+      "roads_repaired": 9
+     }
+    }
+   }
+  }
+ ]
+}

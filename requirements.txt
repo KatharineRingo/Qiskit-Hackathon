@@ -13,3 +13,4 @@ matplotlib==3.11.2
 pylatexenc==2.11
 requests==2.34.2
 pytest
+streamlit
