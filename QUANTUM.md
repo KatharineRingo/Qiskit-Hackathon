@@ -1,8 +1,4 @@
-# How Quantum Actually Works in Undertow (Plain English Guide)
-
-This guide is written for tired humans. No physics degrees, no complicated Greek letters.
-
----
+# How Quantum Actually Works in Undertow 
 
 ## 1. The 30-Second Summary
 
