@@ -9,6 +9,16 @@ const mono = JetBrains_Mono({ subsets: ["latin"], weight: ["400"], variable: "--
 export const metadata: Metadata = {
   title: "RoadQure",
   description: "King tides soak Miami Beach roads from below. RoadQure shows the hidden damage and the best repairs for a budget.",
+  openGraph: {
+    title: "RoadQure",
+    description: "King tides soak Miami Beach roads from below. RoadQure shows the hidden damage and the best repairs for a budget.",
+    siteName: "RoadQure",
+  },
+  twitter: {
+    card: "summary",
+    title: "RoadQure",
+    description: "King tides soak Miami Beach roads from below. RoadQure shows the hidden damage and the best repairs for a budget.",
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
