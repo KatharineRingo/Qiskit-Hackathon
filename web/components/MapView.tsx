@@ -19,6 +19,7 @@ interface Props {
   scenario: Scenario;
   threeD: boolean;
   tideLevel: number;       // 0-1 for the selected month
+  kingTide: boolean;       // selected month is in king tide season
   waterOn: boolean;
   undertowIds: string[];
   todayIds: string[];
@@ -39,6 +40,8 @@ export default function MapView(p: Props) {
   const overlayRef = useRef<MapboxOverlay | null>(null);
   const [ready, setReady] = useState(false);
   const [pulse, setPulse] = useState(0);
+  const [shownTide, setShownTide] = useState(p.tideLevel);
+  const tideRef = useRef(p.tideLevel);
 
   const feats = p.scenario.segments.features;
   const byId = useMemo(() => new Map(feats.map((f) => [f.properties.id, f])), [feats]);
@@ -102,25 +105,49 @@ export default function MapView(p: Props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [p.compassNonce]);
 
-  // ---- slow pulse for the repair glow ----
+  // ---- ease the tide level so the ground tint fades smoothly between months ----
   useEffect(() => {
-    if (reduce() || !p.undertowIds.length) return;
-    const id = setInterval(() => setPulse((performance.now() % 3200) / 3200), 70);
+    if (reduce()) { tideRef.current = p.tideLevel; setShownTide(p.tideLevel); return; }
+    let raf = 0, start = 0;
+    const from = tideRef.current;
+    const tick = (now: number) => {
+      start ||= now;
+      const k = Math.min(1, (now - start) / 900), e = 1 - Math.pow(1 - k, 3);
+      tideRef.current = from + (p.tideLevel - from) * e;
+      setShownTide(tideRef.current);
+      if (k < 1) raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [p.tideLevel]);
+
+  // ---- slow pulse for the repair glow and the king tide ground tint ----
+  useEffect(() => {
+    if (reduce() || !(p.undertowIds.length || p.kingTide)) return;
+    const id = setInterval(() => setPulse((performance.now() % 4200) / 4200), 70);
     return () => clearInterval(id);
-  }, [p.undertowIds.length]);
+  }, [p.undertowIds.length, p.kingTide]);
 
   // ---- deck layers ----
   useEffect(() => {
     const overlay = overlayRef.current;
     if (!overlay) return;
     const path = (f: SegFeature) => f.geometry.coordinates;
-    const tide = 0.35 + 0.65 * p.tideLevel;
+    const level = Math.pow(Math.max(0, Math.min(1, shownTide)), 1.5);       // calm months stay almost clear
+    const breathe = p.kingTide && !reduce() ? 0.82 + 0.18 * (0.5 + 0.5 * Math.sin(pulse * Math.PI * 2 * 1.0)) : 1;
     const wave = reduce() ? 0.5 : 0.5 + 0.5 * Math.sin(pulse * Math.PI * 2);
     const lowIds = new Set(p.scenario.water.features.map((w) => w.properties.segment));
     const ids = (s: Set<string>) => feats.filter((f) => s.has(f.properties.id));
     const common = { widthUnits: "pixels" as const, capRounded: true, jointRounded: true };
 
+    const lowSegs = feats.filter((f) => lowIds.has(f.properties.id));
     const layers = [
+      // king tide: the low-lying ground takes on a soft blue wash that rises with the tide
+      ...(!p.waterOn ? [[150, 26], [100, 36], [56, 46]] : []).map(([w, a], i) => new PathLayer<SegFeature>({
+        ...common, id: `tide-ground-${i}`, data: lowSegs, getPath: path, getWidth: w,
+        getColor: [...BLUE, Math.round(a * level * breathe)] as [number, number, number, number],
+        updateTriggers: { getColor: [level, breathe] },
+      })),
       ...(p.waterOn ? [[120, 16], [78, 24], [42, 34]] : []).map(([w, a], i) => new PathLayer<SegFeature>({
         ...common, id: `water-glow-${i}`, data: feats.filter((f) => lowIds.has(f.properties.id)), getPath: path, getWidth: w,
         getColor: [...BLUE, a] as [number, number, number, number], capRounded: true,
@@ -131,16 +158,13 @@ export default function MapView(p: Props) {
       }),
       new PathLayer<SegFeature>({
         ...common, id: "dmg-glow", data: feats, getPath: path,
-        getWidth: (f) => 10 + f.properties.risk * 34 * tide,
-        getColor: (f) => [...ORANGE, Math.round(Math.pow(f.properties.risk, 2) * 70 * tide)] as [number, number, number, number],
-        updateTriggers: { getWidth: [tide], getColor: [tide] },
-        transitions: { getWidth: 700, getColor: 700 },
+        getWidth: (f) => 12 + f.properties.risk * 22,
+        getColor: (f) => [...ORANGE, Math.round(Math.pow(f.properties.risk, 2) * 60)] as [number, number, number, number],
       }),
       new PathLayer<SegFeature>({
         ...common, id: "dmg", data: feats, getPath: path, pickable: true, autoHighlight: true, highlightColor: [255, 255, 255, 90],
         getWidth: (f) => 2.5 + f.properties.risk * 3.5,
-        getColor: (f) => [...ORANGE, Math.round(70 + 185 * f.properties.risk * (0.55 + 0.45 * tide))] as [number, number, number, number],
-        updateTriggers: { getColor: [tide] }, transitions: { getColor: 700 },
+        getColor: (f) => [...ORANGE, Math.round(70 + 150 * f.properties.risk)] as [number, number, number, number],
         onClick: ({ object }) => p.onSelect(object ? (object as SegFeature).properties : null),
       }),
       new PathLayer<SegFeature>({
@@ -171,7 +195,7 @@ export default function MapView(p: Props) {
       }),
     ].filter((l): l is NonNullable<typeof l> & object => typeof l === "object" && l !== null);
     overlay.setProps({ layers, getCursor: ({ isHovering }: { isHovering: boolean }) => (isHovering ? "pointer" : "grab") });
-  }, [ready, feats, p.scenario, p.tideLevel, p.waterOn, p.compare, ut, td, p.selectedId, pulse]);
+  }, [ready, feats, p.scenario, shownTide, p.kingTide, p.waterOn, p.compare, ut, td, p.selectedId, pulse]);
 
   return <div ref={box} className="fixed inset-0" aria-label="Map of Miami Beach roads" />;
 }

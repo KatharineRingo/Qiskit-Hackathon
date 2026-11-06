@@ -87,7 +87,7 @@ export default function Page() {
 
   return (
     <main>
-      <MapView scenario={scenario} threeD={threeD} tideLevel={scenario.tide[month]?.level ?? 1} waterOn={waterOn}
+      <MapView scenario={scenario} threeD={threeD} tideLevel={scenario.tide[month]?.level ?? 1} kingTide={!!scenario.tide[month]?.king_tide} waterOn={waterOn}
         undertowIds={undertowIds} todayIds={todayIds} compare={compare && !!done} selectedId={selected?.id ?? null}
         focus={focus} compassNonce={compassNonce} onSelect={setSelected} onBearing={setBearing} />
 
