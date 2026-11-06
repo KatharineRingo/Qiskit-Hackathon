@@ -1,48 +1,27 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
-export function prefersReducedMotion(): boolean {
-  if (typeof window === "undefined") return false;
-  return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-}
+export const prefersReducedMotion = () => typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-export function fmtPct(v: number): string {
-  return v % 1 === 0 ? String(v) : v.toFixed(1);
-}
-
-export function days(n: number): string {
-  return `${n} ${n === 1 ? "crew-day" : "crew-days"}`;
-}
-
-export function useCountUp(target: number, durationMs = 800): number {
-  const [val, setVal] = useState(target);
-
+/** Animates a number toward `value`. */
+export function useCountUp(value: number, ms = 1100): number {
+  const [shown, setShown] = useState(0);
+  const from = useRef(0);
   useEffect(() => {
-    if (prefersReducedMotion()) {
-      setVal(target);
-      return;
-    }
-    const start = val;
-    const diff = target - start;
-    if (diff === 0) return;
-
-    const t0 = performance.now();
-    let frameId: number;
-
-    const step = (now: number) => {
-      const elapsed = now - t0;
-      const progress = Math.min(1, elapsed / durationMs);
-      const eased = 1 - Math.pow(1 - progress, 3);
-      setVal(Math.round((start + diff * eased) * 10) / 10);
-      if (progress < 1) {
-        frameId = requestAnimationFrame(step);
-      } else {
-        setVal(target);
-      }
+    if (prefersReducedMotion()) { setShown(value); from.current = value; return; }
+    const start = performance.now(), a = from.current;
+    let raf = 0;
+    const tick = (now: number) => {
+      const t = Math.min(1, (now - start) / ms), e = 1 - Math.pow(1 - t, 3);
+      const v = a + (value - a) * e;
+      from.current = v; setShown(v);
+      if (t < 1) raf = requestAnimationFrame(tick);
     };
-
-    frameId = requestAnimationFrame(step);
-    return () => cancelAnimationFrame(frameId);
-  }, [target]);
-
-  return val;
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [value, ms]);
+  return shown;
 }
+
+export const fmtPct = (v: number) => (v > 0 && v < 10 ? v.toFixed(1) : v.toFixed(0));
+export const days = (n: number) => `${n} ${n === 1 ? "day" : "days"}`;
+export const usd = (n: number) => new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(n);

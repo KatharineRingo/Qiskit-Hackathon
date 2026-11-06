@@ -1,3 +1,5 @@
+export type Coord = [number, number];
+
 export interface SegProps {
   id: string;
   street: string;
@@ -10,59 +12,32 @@ export interface SegProps {
   hospital: boolean;
   crew_days: number;
 }
-
 export interface SegFeature {
   type: "Feature";
-  geometry: {
-    type: "LineString";
-    coordinates: [number, number][];
-  };
+  geometry: { type: "LineString"; coordinates: Coord[] };
   properties: SegProps;
+}
+export interface PolyFeature {
+  type: "Feature";
+  geometry: { type: "Polygon"; coordinates: Coord[][] };
+  properties: { level: number; elevation_ft: number; segment: string };
 }
 
 export interface Scenario {
   demo: boolean;
   data_note: string;
-  center: [number, number];
-  bounds: [[number, number], [number, number]];
+  center: Coord;
+  bounds: [Coord, Coord];
   bearing: number;
-  segments: {
-    type: "FeatureCollection";
-    features: SegFeature[];
-  };
-  route: {
-    type: "FeatureCollection";
-    features: SegFeature[];
-  };
-  hospital: {
-    name: string;
-    coord: [number, number];
-  };
-  water: {
-    type: "FeatureCollection";
-    features: any[];
-  };
-  tide: {
-    month: string;
-    level: number;
-    king_tide: boolean;
-  }[];
-  budgets: {
-    key: string;
-    label: string;
-    units: number;
-  }[];
-  optimizer: {
-    candidates: string[];
-    num_qubits: number;
-  };
+  segments: { features: SegFeature[] };
+  route: { features: SegFeature[] };
+  hospital: { name: string; coord: Coord };
+  water: { features: PolyFeature[] };
+  tide: { month: string; level: number; king_tide: boolean }[];
+  budgets: { key: string; label: string; units: number }[];
+  budget_range: { min_units: number; max_units: number; default_units: number; dollars_per_crew_day: number };
+  optimizer: { candidates: string[]; num_qubits: number };
   crew_day_label: string;
-}
-
-export interface Results {
-  random: number;
-  ideal: number;
-  noisy: number;
 }
 
 export interface PlanMetrics {
@@ -72,39 +47,26 @@ export interface PlanMetrics {
   expected_failures: number;
   crew_days: number;
 }
-
-export interface Plan {
-  segments: string[];
-  metrics: PlanMetrics;
-}
-
-export interface Headline {
-  key: string;
-  label: string;
-  undertow: number;
-  today: number;
-}
-
-export interface TopSample {
-  bits: string;
-  count: number;
-  feasible: boolean;
-}
-
 export interface SolveResult {
   budget_units: number;
-  plans: {
-    undertow: Plan;
-    today: Plan;
-  };
-  headline: Headline;
+  plans: { undertow: { segments: string[]; metrics: PlanMetrics }; today: { segments: string[]; metrics: PlanMetrics } };
+  headline: { key: string; label: string; undertow: number; today: number };
   candidates: string[];
   counts: number[];
   best_state: number;
-  top_samples: TopSample[];
+  top_samples: { bits: string; count: number; feasible: boolean }[];
   num_qubits: number;
   shots: number;
   classical_match: boolean;
   solve_ms: number;
-  price: number;
+}
+export interface Results {
+  random: number;
+  ideal: number;
+  noisy: number;
+}
+export interface Fallback {
+  scenario: Scenario;
+  results: Results;
+  solves: Record<string, SolveResult>;
 }
