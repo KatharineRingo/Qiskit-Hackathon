@@ -1,5 +1,6 @@
-- On an ideal simulator, 18.6% of QAOA shots are good repair plans, 15.9x the rate of random guessing.
-- Real-device noise cuts that to 10.1x. Heavier compilation (level 3, 100 vs 105 two-qubit gates) gives 10.8x; adding dynamical decoupling gives 10.0x.
-- With post-selection, the best plan found reaches 100% of the optimum under noise (100% ideal).
-- Versus today's policy, the optimized plan keeps the evacuation route open 79% of the time instead of 45%, for the same budget.
-- Honest caveat: at 8 qubits there are only 256 possible bitstrings, so 4,000 shots nearly enumerate them and a classical solver is instant. The point is that the formulation works and QAOA concentrates probability on good plans; quantum advantage would need far larger instances and lower noise.
+- **Quantum search vs. random guessing.** On an ideal simulator, 24.5% of QAOA samples are good repair plans (31.4x random guessing). With the noise model of a real IBM chip it falls to 24.0x (light compilation) or 26.1x (heavier compilation, 37 vs 41 two-qubit gates); adding dynamical decoupling gives 25.6x.
+- **Best plan found.** With post-selection, the best plan sampled reaches 100% of the optimum on the ideal simulator and 100% under noise.
+- **Encoding the budget.** The lean encoding uses 8 qubits and 37 two-qubit gates (31.5x random guessing) versus 12 qubits and 468 gates (2.8x) for the slack encoding.
+- **Against the classical baseline.** The quantum search's best plan is the same plan as the exact classical optimum (objective 9.45 vs 9.45).
+- **Against today's approach.** The route to the hospital stays open 32.7% of the time with the optimized plan, versus 0.3% when the same budget goes to the most-complained-about roads. Expected failures left: 7.5 vs 8.5.
+- **Honest caveat.** With 8 qubits there are only 256 possible plans, and 4,000 shots sample most of them. A classical solver is instant here. This shows the formulation works and that QAOA concentrates probability on good plans. It does not show a quantum speedup.

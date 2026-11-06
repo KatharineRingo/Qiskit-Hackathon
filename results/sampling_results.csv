@@ -1,6 +1,6 @@
 run,P(feasible plan),P(optimal plan),"P(good plan, >=90% of optimum)",best plan found,best / optimum,seconds,x better than random
-Ideal simulator,0.3575,0.16075,0.186,4.612,1.0,0.1,15.9
-"Noisy, level 1",0.3195,0.09175,0.11825,4.612,1.0,1.7,10.1
-"Noisy, level 3",0.3315,0.09925,0.127,4.612,1.0,1.0,10.8
-"Noisy, level 3 + DD",0.33325,0.087,0.11775,4.612,1.0,2.5,10.0
-Random guessing,0.1875,0.00390625,0.01171875,4.612,1.0,0.0,1.0
+Ideal simulator,0.45,0.152,0.24525,9.45,1.0,0.1,31.4
+"Noisy, level 1",0.48275,0.1165,0.18775,9.45,1.0,1.4,24.0
+"Noisy, level 3",0.4675,0.12525,0.204,9.45,1.0,1.4,26.1
+"Noisy, level 3 + DD",0.4755,0.122,0.2,9.45,1.0,3.6,25.6
+Random guessing,0.41796875,0.00390625,0.0078125,9.45,1.0,0.0,1.0
