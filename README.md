@@ -1,4 +1,4 @@
-# Qiskit-Hackathon
+# RoadQure
 
 ## Run it
 

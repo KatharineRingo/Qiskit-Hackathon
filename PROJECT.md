@@ -1,6 +1,6 @@
-# Undertow
+# RoadQure
 
-**Miami fills the potholes it can see. Undertow finds the roads failing underwater, then uses
+**Miami fills the potholes it can see. RoadQure finds the roads failing underwater, then uses
 quantum optimization to decide which repairs keep the city connected when the next king tide hits.**
 
 Built for the Qiskit IBM hackathon through Florida Gulf Coast University.
@@ -10,7 +10,7 @@ In South Florida, roads don't fail from freeze-thaw. They fail from below: king 
 water table soak the base under the pavement, and the road loses strength long before a pothole shows up.
 Cities react to 311 complaints, so they keep patching surfaces over saturated bases, and the potholes come back.
 
-## What Undertow does
+## What RoadQure does
 1. **Hidden-damage risk (classical).** Scores each road segment on tide exposure, groundwater depth and elevation,
    not on complaints.
 2. **Repair planning (quantum).** Picks which segments to repair under a fixed budget. Repairs on connected
@@ -36,7 +36,7 @@ because the formulation (pairwise repair interactions over a whole city's road n
 and this is the shape of problem quantum optimization is being built for. We show QAOA reaches the optimum
 on the problem sizes today's hardware can handle.
 
-## Main results: `notebooks/undertow_qaoa.ipynb` (synthetic data, 8 segments, 8 qubits)
+## Main results: `notebooks/RoadQure_qaoa.ipynb` (synthetic data, 8 segments, 8 qubits)
 | Run | Good repair plans (% of shots) | vs. random guessing |
 |---|---|---|
 | Random guessing | 1.2% | 1x |
@@ -57,11 +57,11 @@ source .venv/bin/activate           # macOS/Linux
 pip install -r requirements.txt
 python run_demo.py                  # ~5 seconds, writes results/demo_map.html
 streamlit run app.py                # interactive UI at http://localhost:8501
-jupyter notebook notebooks/undertow_qaoa.ipynb   # main analysis, ~1 minute
+jupyter notebook notebooks/RoadQure_qaoa.ipynb   # main analysis, ~1 minute
 pytest -q
 ```
 Options: `--candidates 12 --budget 10 --reps 3`, `--skip-qaoa` (fast iteration), `--data data/segments.csv`,
-`--hardware [backend_name]` (IBM hardware, see `src/undertow/hardware.py`).
+`--hardware [backend_name]` (IBM hardware, see `src/RoadQure/hardware.py`).
 
 ## Interactive UI
 `streamlit run app.py` opens a browser app wrapping the same pipeline as `run_demo.py`. Use the sidebar sliders
@@ -71,10 +71,10 @@ It uses the synthetic network; real-data upload and hardware runs are not wired 
 
 ## Repo layout
 ```
-notebooks/undertow_qaoa.ipynb  main analysis: circuit, transpilation, Estimator/Sampler, ideal vs noisy
+notebooks/RoadQure_qaoa.ipynb  main analysis: circuit, transpilation, Estimator/Sampler, ideal vs noisy
 run_demo.py                 quick end-to-end pipeline + map
 app.py                      Streamlit UI: budget/candidate/QAOA sliders, map, plan comparison
-src/undertow/
+src/RoadQure/
   data_synthetic.py         fake Miami Beach-style network (defines the CSV schema)
   data_sources.py           real-data loaders: OSM roads, NOAA tides, USGS elevation, Miami-Dade 311
   risk.py                   hidden-damage risk + corridor criticality

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Undertow</title>
+<title>RoadQure</title>
 <meta name="description" content="Which roads are failing from below, and which repairs keep evacuation and hospital routes open.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -113,7 +113,7 @@ html,body{margin:0;height:100%;background:var(--ink);color:var(--text);font:15px
 <div id="map"></div>
 
 <section id="panel" class="glass" aria-label="Undertow">
-  <div class="brand"><span class="dot"></span>Undertow<span class="tag" id="tag" hidden></span></div>
+  <div class="brand"><span class="dot"></span>RoadQure<span class="tag" id="tag" hidden></span></div>
   <p class="tagline">Roads fail from below, before potholes show. See which ones, and which repairs matter most.</p>
   <h1 id="headline" style="margin-bottom:20px"></h1>
   <p class="label">Repair budget</p>
@@ -122,7 +122,7 @@ html,body{margin:0;height:100%;background:var(--ink);color:var(--text);font:15px
   <div class="seg" id="seg" data-mode="undertow" role="group" aria-label="Which plan to show">
     <span class="thumb"></span>
     <button data-mode="today" aria-pressed="false">Today's approach</button>
-    <button data-mode="undertow" aria-pressed="true">Undertow plan</button>
+    <button data-mode="undertow" aria-pressed="true">RoadQure plan</button>
   </div>
   <div class="legend"><span class="ramp"></span>Lower to higher hidden damage risk<span><i class="sw"></i>Repaired</span></div>
 </section>
@@ -133,7 +133,7 @@ html,body{margin:0;height:100%;background:var(--ink);color:var(--text);font:15px
   <h3 id="r-name"></h3><div class="risk" id="r-risk"></div>
   <p id="r-reason"></p>
   <div class="row"><span>Today's approach</span><b id="r-today"></b></div>
-  <div class="row" style="border:0;margin-top:2px;padding-top:2px"><span>Undertow plan</span><b id="r-ut"></b></div>
+  <div class="row" style="border:0;margin-top:2px;padding-top:2px"><span>RoadQure plan</span><b id="r-ut"></b></div>
 </aside>
 
 <div id="bottom">
@@ -231,8 +231,8 @@ html,body{margin:0;height:100%;background:var(--ink);color:var(--text);font:15px
     const route = D.route_labels[METRIC_KEYS[k]];
     $('headline').innerHTML = metricGain(b, k) > 0.5
       ? `Same budget. The ${route} stays open <em>${pct(u[k])}</em> of the time instead of ${pct(t[k])}.`
-      : `Same budget. Undertow avoids <em>${fmtFail(u.failures_avoided)}</em> expected road failures, against ${fmtFail(t.failures_avoided)} today.`;
-    $('budgetnote').textContent = `${b.budget} ${D.budget_unit} to spend. Undertow uses ${u.budget_used}, today's approach ${t.budget_used}.`;
+      : `Same budget. RoadQure avoids <em>${fmtFail(u.failures_avoided)}</em> expected road failures, against ${fmtFail(t.failures_avoided)} today.`;
+    $('budgetnote').textContent = `${b.budget} ${D.budget_unit} to spend. RoadQure uses ${u.budget_used}, today's approach ${t.budget_used}.`;
     [...$('chips').children].forEach((c, i) => c.setAttribute('aria-pressed', i === state.b));
     $('seg').dataset.mode = state.mode;
     [...$('seg').querySelectorAll('button')].forEach((x) => x.setAttribute('aria-pressed', x.dataset.mode === state.mode));
@@ -242,7 +242,7 @@ html,body{margin:0;height:100%;background:var(--ink);color:var(--text);font:15px
       countTo(el.querySelector('.v'), c.get(b, state.mode), c.fmt);
       ['today', 'undertow'].forEach((p) => {
         const s = el.querySelector(`[data-p=${p}]`);
-        s.textContent = (p === 'today' ? "Today's approach " : 'Undertow ') + c.fmt(c.get(b, p));
+        s.textContent = (p === 'today' ? "Today's approach " : 'RoadQure ') + c.fmt(c.get(b, p));
         s.className = p === state.mode ? 'on' : '';
       });
     });
@@ -320,3 +320,4 @@ html,body{margin:0;height:100%;background:var(--ink);color:var(--text);font:15px
 </script>
 </body>
 </html>
+
