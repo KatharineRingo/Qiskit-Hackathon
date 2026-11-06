@@ -1,4 +1,4 @@
-"""Run the optimization ahead of time and write web/data.json for the front end.
+"""Run the optimization ahead of time and write static/data.json for the front end.
 
     python scripts/precompute.py                 # uses data/segments.csv if present, else synthetic
     python scripts/precompute.py --data other.csv --candidates 10
@@ -40,7 +40,7 @@ from undertow.solve import solve_current_policy, solve_exact  # noqa: E402
 from undertow.viz import data_note, segment_explanation  # noqa: E402
 
 BUDGET_PRESETS = [("small", "Small", 0.10), ("medium", "Medium", 0.20), ("large", "Large", 0.30), ("max", "Max", 0.45)]
-OUT = ROOT / "web" / "data.json"
+OUT = ROOT / "static" / "data.json"
 
 
 def qaoa_lean_plan(cand: pd.DataFrame, pairs, budget: int, reps: int, seed: int = 42) -> tuple[set[str], str]:
