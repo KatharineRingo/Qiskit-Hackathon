@@ -14,3 +14,7 @@ pylatexenc==2.11
 requests==2.34.2
 pytest
 streamlit
+
+fastapi
+uvicorn
+httpx
