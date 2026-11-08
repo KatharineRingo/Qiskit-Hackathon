@@ -32,6 +32,7 @@ export default function Page() {
   const [focus, setFocus] = useState<Focus | null>(null);
   const [selected, setSelected] = useState<SegProps | null>(null);
   const [how, setHow] = useState(false);
+  const [sheet, setSheet] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const run = useRef(0);
 
@@ -92,31 +93,34 @@ export default function Page() {
         undertowIds={undertowIds} todayIds={todayIds} compare={compare && !!done} selectedId={selected?.id ?? null}
         focus={focus} compassNonce={compassNonce} onSelect={setSelected} onBearing={setBearing} />
 
-      <header className="pointer-events-none fixed left-10 top-9 z-10">
+      <header className="pointer-events-none fixed left-4 top-4 z-10 md:left-10 md:top-9">
         <h1 className="text-[15px] font-normal tracking-[0.42em]">ROADQURE</h1>
         <div className="muted mt-1 text-[13px]">Miami Beach · hidden road damage</div>
       </header>
-      <nav className="fixed right-10 top-9 z-20 flex items-center gap-6 text-[14px]">
-        <span className="muted" title={scenario.data_note}>Demo data</span>
+      <nav className="fixed right-4 top-4 z-20 flex items-center gap-4 text-[14px] md:right-10 md:top-9 md:gap-6">
+        <span className="muted hidden sm:inline" title={scenario.data_note}>Demo data</span>
         <button onClick={() => setHow((v) => !v)} className="text-water hover:text-paper" aria-expanded={how}>How it works</button>
       </nav>
 
       <StreetCard seg={selected} onClose={() => setSelected(null)} />
 
-      <div className="scroll-hidden fixed bottom-24 right-8 top-[88px] z-10 flex w-[400px] max-w-[calc(100vw-32px)] flex-col gap-4 overflow-y-auto">
+      <div className={`scroll-hidden fixed inset-x-3 bottom-[224px] z-10 max-h-[calc(100dvh-350px)] ${sheet ? "flex" : "hidden md:flex"} flex-col gap-3 overflow-y-auto md:inset-x-auto md:bottom-24 md:right-8 md:top-[88px] md:max-h-none md:w-[400px] md:gap-4`}>
         <ControlPanel scenario={scenario} waterOn={waterOn} onWater={setWaterOn} budgetUnits={budgetUnits}
           onBudget={(u) => { setBudgetUnits(u); resetSolve(); }} solving={phase === "solving"} onSolve={onSolve} />
         <SolvePanel phase={phase} step={step} reveal={reveal} result={result} scenario={scenario} compare={compare} onCompare={setCompare} offline={offline} />
         {error && <p className="glass p-5 text-sm">{error}</p>}
       </div>
 
+      <button onClick={() => setSheet((v) => !v)} aria-expanded={sheet}
+        className="glass fixed bottom-[176px] left-4 z-10 !rounded-full px-5 py-2.5 text-sm md:hidden">{sheet ? "Hide controls ▾" : "Controls ▴"}</button>
+
       <TideBar scenario={scenario} month={month} onMonth={setMonth} compare={compare && !!done} />
 
-      <div className="fixed bottom-8 right-8 z-10 flex items-center gap-3">
+      <div className="fixed right-4 top-[60px] z-10 flex items-center gap-2 md:bottom-8 md:right-8 md:top-auto md:gap-3">
         <div className="glass flex gap-1 !rounded-full p-1" role="group" aria-label="Map view">
           {["2D", "3D"].map((m) => (
             <button key={m} onClick={() => setThreeD(m === "3D")} aria-pressed={threeD === (m === "3D")}
-              className={`rounded-full px-4 py-2 text-sm transition-colors duration-500 ${threeD === (m === "3D") ? "bg-paper text-ink" : "muted"}`}>{m}</button>
+              className={`rounded-full px-4 py-2.5 text-sm md:py-2 transition-colors duration-500 ${threeD === (m === "3D") ? "bg-paper text-ink" : "muted"}`}>{m}</button>
           ))}
         </div>
         <button onClick={() => setCompassNonce((n) => n + 1)} aria-label="Reset map rotation" className="glass grid h-11 w-11 place-items-center !rounded-full">

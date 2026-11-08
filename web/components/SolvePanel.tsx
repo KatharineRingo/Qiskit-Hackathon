@@ -31,7 +31,7 @@ export default function SolvePanel({ phase, step, reveal, result, scenario, comp
 
   if (phase === "solving" || !result) {
     return (
-      <section className="glass fade-up p-7" aria-live="polite" aria-label="Searching">
+      <section className="glass fade-up p-5 md:p-7" aria-live="polite" aria-label="Searching">
         <ol className="space-y-3 text-[15px]">
           {steps.map((s, i) => (
             <li key={s} className={`flex items-start gap-3 transition-opacity duration-500 ${i > step ? "opacity-40" : ""}`}>
@@ -53,10 +53,10 @@ export default function SolvePanel({ phase, step, reveal, result, scenario, comp
     .map((id) => scenario.segments.features.find((f) => f.properties.id === id)!.properties)
     .sort((a, b) => a.street.localeCompare(b.street) || a.block.localeCompare(b.block));
   return (
-    <section className="glass fade-up p-7" aria-live="polite" aria-label="Result">
+    <section className="glass fade-up p-5 md:p-7" aria-live="polite" aria-label="Result">
       <div className="step-no uppercase">{result.headline.label}</div>
       <div className="mt-1 flex items-start gap-3">
-        <div className="text-[84px] font-light leading-none tabular-nums tracking-tight">{fmtPct(shown)}<span className="text-[36px]">%</span></div>
+        <div className="text-[60px] font-light md:text-[84px] leading-none tabular-nums tracking-tight">{fmtPct(shown)}<span className="text-[36px]">%</span></div>
         <p className="muted mt-3 text-[13px] leading-snug">vs. {fmtPct(result.headline.today)}% fixing the most-complained roads</p>
       </div>
       <ul className="mt-5 divide-y divide-white/10 text-[15px]">

@@ -25,14 +25,14 @@ export function Switch({ on, onChange, label }: { on: boolean; onChange: (v: boo
 export default function ControlPanel({ scenario, waterOn, onWater, budgetUnits, onBudget, solving, onSolve }: Props) {
   const r = scenario.budget_range, rate = r.dollars_per_crew_day;
   return (
-    <section className="glass p-7" aria-label="Controls">
+    <section className="glass p-5 md:p-7" aria-label="Controls">
       <div className="flex items-baseline gap-3"><span className="step-no">01</span><h2 className="text-[17px] font-medium">Hidden damage</h2></div>
-      <p className="muted mt-3 text-[15px] leading-snug">Orange streets look fine on top but soak from below at high tide.</p>
-      <label className="mt-4 flex items-center justify-between gap-4 text-[15px]">
+      <p className="muted mt-3 hidden text-[15px] leading-snug md:block">Orange streets look fine on top but soak from below at high tide.</p>
+      <label className="mt-3 flex items-center md:mt-4 justify-between gap-4 text-[15px]">
         <span>See the water underneath</span><Switch on={waterOn} onChange={onWater} label="See the water underneath" />
       </label>
 
-      <hr className="my-6 border-white/10" />
+      <hr className="my-4 border-white/10 md:my-6" />
       <div className="flex items-baseline justify-between">
         <div className="flex items-baseline gap-3"><span className="step-no">02</span><h2 className="text-[17px] font-medium">Repair budget</h2></div>
         <span className="text-[22px] font-light tabular-nums">{usd(budgetUnits * rate)}</span>
@@ -41,7 +41,7 @@ export default function ControlPanel({ scenario, waterOn, onWater, budgetUnits, 
         onChange={(e) => onBudget(Number(e.target.value))} aria-label="Repair budget in dollars" aria-valuetext={usd(budgetUnits * rate)} />
       <div className="muted -mt-1 flex justify-between text-[12px] tabular-nums"><span>{usd(r.min_units * rate)}</span><span>{usd(r.max_units * rate)}</span></div>
 
-      <hr className="my-6 border-white/10" />
+      <hr className="my-4 border-white/10 md:my-6" />
       <div className="flex items-baseline gap-3"><span className="step-no">03</span><h2 className="text-[17px] font-medium">Best repairs</h2></div>
       <button className="btn mt-4 w-full" onClick={onSolve} disabled={solving}>{solving ? "Searching…" : "Find the best repairs"}</button>
     </section>

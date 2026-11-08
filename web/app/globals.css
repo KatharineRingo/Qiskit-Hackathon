@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root { color-scheme: dark; }
-html, body { height: 100%; background: #05060a; color: #f0efeb; overflow: hidden; }
+html, body { height: 100%; overscroll-behavior: none; touch-action: manipulation; background: #05060a; color: #f0efeb; overflow: hidden; }
 body { font-family: var(--font-inter-tight), system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
 
 @layer components {
@@ -28,6 +28,8 @@ input[type="range"]::-moz-range-track { height: 2px; background: rgba(240, 239, 
 input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; margin-top: -7px; border-radius: 50%; background: #4b93ff; box-shadow: 0 0 14px 3px rgba(75, 147, 255, 0.6); border: 0; }
 input[type="range"]::-moz-range-thumb { width: 16px; height: 16px; border-radius: 50%; background: #4b93ff; border: 0; }
 input[type="range"]:focus-visible { outline: 2px solid #4b93ff; outline-offset: 4px; }
+
+@media (pointer: coarse) { input[type="range"]::-webkit-slider-thumb { width: 22px; height: 22px; margin-top: -10px; } }
 
 .scroll-hidden { scrollbar-width: none; }
 .scroll-hidden::-webkit-scrollbar { display: none; }

@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter_Tight, JetBrains_Mono } from "next/font/google";
 import "maplibre-gl/dist/maplibre-gl.css";
 import "./globals.css";
@@ -20,6 +20,8 @@ export const metadata: Metadata = {
     description: "King tides soak Miami Beach roads from below. RoadQure shows the hidden damage and the best repairs for a budget.",
   },
 };
+
+export const viewport: Viewport = { width: "device-width", initialScale: 1, viewportFit: "cover", themeColor: "#05060a" };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (

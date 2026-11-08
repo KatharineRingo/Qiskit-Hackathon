@@ -21,7 +21,7 @@ export default function HowItWorks({ open, onClose, scenario, results }: { open:
   const q = scenario.optimizer.num_qubits;
   return (
     <aside role="dialog" aria-label="How it works" aria-hidden={!open}
-      className={`glass fixed bottom-8 right-8 top-20 z-30 w-[440px] max-w-[calc(100vw-32px)] overflow-y-auto p-8 transition-all duration-700 ${open ? "translate-x-0 opacity-100" : "pointer-events-none translate-x-8 opacity-0"}`}>
+      className={`glass fixed inset-x-3 bottom-3 top-14 z-30 overflow-y-auto p-5 md:inset-x-auto md:bottom-8 md:right-8 md:top-20 md:w-[440px] md:p-8 transition-all duration-700 ${open ? "translate-x-0 opacity-100" : "pointer-events-none translate-x-8 opacity-0"}`}>
       <div className="flex items-center justify-between">
         <h2 className="text-[22px] font-light">How it works</h2>
         <button onClick={onClose} aria-label="Close" className="muted text-2xl leading-none hover:text-paper">×</button>
